@@ -156,17 +156,19 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="relative h-[400px] m-8 overflow-hidden bg-gradient-to-r from-purple-600 to-pink-600 rounded-2xl">
+      <div className="relative h-[400px] m-8 overflow-hidden rounded-2xl bg-black">
+        {/* Background image */}
         <Image
           src={currentFeaturedEvent.banner || "/placeholder.svg"}
           alt="Banner background"
           fill
-          className="object-cover opacity-30"
+          className="object-cover"
         />
-        <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center text-white px-4">
-            <div className="mb-6 flex justify-center">
-              <div className="relative h-32 w-32 rounded-lg overflow-hidden border-4 border-white shadow-2xl">
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 via-80% to-black/60" />
+        <div className="absolute inset-0 flex items-center justify-start">
+          <div className="text-center text-white px-24 flex flex-row">
+            <div className="mb-6">
+              <div className="relative h-32 w-32 rounded-lg overflow-hidden shadow-2xl">
                 <Image
                   src={currentFeaturedEvent.logo || "/placeholder.svg"}
                   alt={currentFeaturedEvent.name}
@@ -175,19 +177,22 @@ export default function EventsPage() {
                 />
               </div>
             </div>
-            <h1 className="text-4xl font-bold mb-4">{currentFeaturedEvent.name}</h1>
-            <div className="mb-4">
-              <p className="text-lg font-semibold mb-2">Featuring:</p>
-              <p className="text-base">{currentFeaturedEvent.featuring.join(", ")}</p>
-            </div>
-            <div className="flex items-center justify-center gap-6 text-sm">
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4" />
-                <span>{currentFeaturedEvent.location}</span>
+
+            <div className="items-start text-left ml-6">
+              <h1 className="text-4xl font-bold mb-4">{currentFeaturedEvent.name}</h1>
+              <div className="mb-4">
+                <p className="text-lg font-semibold mb-2">Featuring:</p>
+                <p className="text-base">{currentFeaturedEvent.featuring.join(", ")}</p>
               </div>
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
-                <span>{currentFeaturedEvent.date}</span>
+              <div className="flex gap-6 text-sm">
+                <div className="flex gap-2">
+                  <MapPin className="h-4 w-4" />
+                  <span>{currentFeaturedEvent.location}</span>
+                </div>
+                <div className="flex gap-2">
+                  <Calendar className="h-4 w-4" />
+                  <span>{currentFeaturedEvent.date}</span>
+                </div>
               </div>
             </div>
           </div>
