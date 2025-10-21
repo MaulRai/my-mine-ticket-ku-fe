@@ -289,38 +289,72 @@ export default function EventsPage() {
       <div className="container mx-auto px-4 py-8 mt-8">
         <div className="mb-8 flex justify-between items-center gap-4">
           {/* Time Filter Buttons - Left */}
-          <div className="flex gap-3">
-            {["This Week", "This Month", "All"].map((timeFilter) => (
-              <Button
-                key={timeFilter}
-                variant={selectedTimeFilter === timeFilter ? "default" : "outline"}
-                onClick={() => setSelectedTimeFilter(timeFilter)}
-                className="rounded-full"
-              >
-                {timeFilter}
-              </Button>
-            ))}
+          <div className="inline-flex items-center gap-1 bg-gray-900/60 backdrop-blur-md border border-white/10 p-1.5 rounded-full">
+            {["This Week", "This Month", "All"].map((timeFilter) => {
+              const isActive = selectedTimeFilter === timeFilter;
+              return (
+                <Button
+                  key={timeFilter}
+                  variant="ghost"
+                  onClick={() => setSelectedTimeFilter(timeFilter)}
+                  className={`
+                    relative rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300
+                    ${isActive
+                      ? "text-white shadow-md bg-gradient-to-b from-gray-400 via-gray-600 to-gray-700"
+                      : "text-gray-300 hover:text-white hover:bg-white/10"}
+                  `}
+                >
+                  {timeFilter}
+                </Button>
+
+              );
+            })}
           </div>
 
+
           {/* Category Dropdown - Right */}
-          <div className="relative">
+          <div className="relative w-fit">
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="h-10 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer appearance-none pr-10"
+              className="
+      h-10 px-5 pr-10 rounded-full bg-gradient-to-b 
+      from-gray-300/60 via-gray-500/60 to-gray-700/60
+      border border-white/20 text-white font-medium
+      backdrop-blur-md cursor-pointer appearance-none
+      transition-all duration-200 focus:ring-2 focus:ring-white/30
+      hover:from-gray-200/70 hover:to-gray-600/70
+    "
             >
               {categories.map((category) => (
-                <option key={category} value={category}>
+                <option
+                  key={category}
+                  value={category}
+                  className="bg-gray-800 text-white"
+                >
                   {category}
                 </option>
               ))}
             </select>
+
+            {/* Custom caret icon */}
             <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              <svg
+                className="h-4 w-4 text-white/80"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
               </svg>
             </div>
           </div>
+
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
