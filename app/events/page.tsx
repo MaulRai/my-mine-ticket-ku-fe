@@ -54,8 +54,7 @@ const featuredEvents = [
     date: "October 12, 2025",
     banner: "/images/example/banner-5.png",
   },
-];
-
+]
 
 const allEvents = [
   {
@@ -133,6 +132,18 @@ export default function EventsPage() {
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [selectedTimeFilter, setSelectedTimeFilter] = useState("This Week")
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    setProgress(0)
+    const progressInterval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) return 100
+        return prev + 100 / 50 // 5000ms / 100ms = 50 steps
+      })
+    }, 100)
+    return () => clearInterval(progressInterval)
+  }, [currentBannerIndex])
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -179,7 +190,7 @@ export default function EventsPage() {
     <div className="min-h-screen bg-background">
       <div className="relative h-[400px] m-8 mb-16 overflow-visible rounded-2xl bg-black">
         {/* Background image */}
-        <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+        <div className={`transition-opacity duration-300 ${isTransitioning ? "opacity-0" : "opacity-100"}`}>
           <Image
             src={currentFeaturedEvent.banner || "/placeholder.svg"}
             alt="Banner background"
@@ -188,7 +199,9 @@ export default function EventsPage() {
           />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/20 via-80% to-black/30 rounded-2xl" />
-        <div className={`absolute inset-0 flex items-center justify-start transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+        <div
+          className={`absolute inset-0 flex items-center justify-start transition-opacity duration-300 ${isTransitioning ? "opacity-0" : "opacity-100"}`}
+        >
           <div className="text-center text-white px-24 flex flex-row">
             <div className="mb-6">
               <div className="relative h-32 w-32 rounded-lg overflow-hidden shadow-2xl">
@@ -236,16 +249,24 @@ export default function EventsPage() {
           <ChevronRight className="h-6 w-6 text-white" />
         </button>
 
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-          {featuredEvents.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentBannerIndex(index)}
-              className={`h-2 rounded-full transition-all ${index === currentBannerIndex ? "w-8 bg-white" : "w-2 bg-white/50"
-                }`}
-              aria-label={`Go to banner ${index + 1}`}
-            />
-          ))}
+        <div className="absolute bottom-20 left-1/2 -translate-x-1/2 w-full max-w-2xl px-8">
+          <div className="flex gap-2">
+            {featuredEvents.map((_, index) => (
+              <div key={index} className="flex-1 h-1 bg-white/20 rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-white rounded-full transition-all duration-100 ease-linear"
+                  style={{
+                    width:
+                      index < currentBannerIndex
+                        ? "100%" // Completed slides
+                        : index === currentBannerIndex
+                          ? `${progress}%` // Current slide with progress
+                          : "0%", // Upcoming slides
+                  }}
+                />
+              </div>
+            ))}
+          </div>
         </div>
 
         {/* Search Bar Overlay */}
