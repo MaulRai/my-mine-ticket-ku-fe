@@ -1,6 +1,23 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Lato, Montserrat } from "next/font/google";
+import localFont from 'next/font/local';
 import "./globals.css";
+
+const headingFont = localFont({
+  src: './fonts/BBHSansHegarty-Regular.ttf', // sesuaikan path
+  variable: '--font-heading',
+});
+
+const subheadingFont = localFont({
+  src: './fonts/BricolageGrotesque-VariableFont_opsz,wdth,wght.ttf', // sesuaikan path
+  variable: '--font-subheading',
+});
+
+const bodyFont = Lato({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-body',
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${bodyFont.variable} ${subheadingFont.variable} ${headingFont.variable} antialiased`}
       >
         {children}
       </body>

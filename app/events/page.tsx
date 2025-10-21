@@ -6,70 +6,62 @@ import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { Search, MapPin, Calendar } from "lucide-react"
+import { Search, MapPin, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
 
 const featuredEvents = [
   {
     id: 1,
-    name: "Summer Music Festival 2025",
-    logo: "/images/example-cover.png",
-    featuring: ["Artist A", "Artist B", "Artist C"],
+    name: "Neon Waves Festival",
+    logo: "/images/example/cover-1.png",
+    featuring: ["Girls Gang", "Reality Club", "Hindia"],
     location: "Jakarta Convention Center",
     date: "June 15, 2025",
-    banner: "/images/example-banner.png",
+    banner: "/images/example/banner-1.png",
   },
   {
     id: 2,
-    name: "Art & Culture Expo",
-    logo: "/images/example-cover.png",
-    featuring: ["Gallery X", "Museum Y"],
+    name: "Islands of Sound 2025",
+    logo: "/images/example/cover-2.png",
+    featuring: ["The Adams", "Kunto Aji", "Pamungkas"],
     location: "Bali Art Center",
     date: "July 20, 2025",
-    banner: "/images/example-banner.png",
+    banner: "/images/example/banner-2.png",
   },
   {
     id: 3,
-    name: "Tech Conference 2025",
-    logo: "/images/example-cover.png",
-    featuring: ["Speaker 1", "Speaker 2", "Speaker 3"],
+    name: "Sonic Future Conference",
+    logo: "/images/example/cover-3.png",
+    featuring: ["Rumahsakit", "Efek Rumah Kaca", "Feast."],
     location: "Surabaya Convention Hall",
     date: "August 10, 2025",
-    banner: "/images/example-banner.png",
+    banner: "/images/example/banner-3.png",
   },
   {
     id: 4,
-    name: "Food Festival",
-    logo: "/images/example-cover.png",
-    featuring: ["Chef A", "Chef B"],
+    name: "Taste & Tunes Fest",
+    logo: "/images/example/cover-4.png",
+    featuring: ["Morfem", "White Shoes & The Couples Company", "Sisitipsi"],
     location: "Bandung Square",
     date: "September 5, 2025",
-    banner: "/images/example-banner.png",
+    banner: "/images/example/banner-4.png",
   },
   {
     id: 5,
-    name: "Sports Championship",
-    logo: "/images/example-cover.png",
-    featuring: ["Team A", "Team B", "Team C"],
+    name: "Rhythm Arena 2025",
+    logo: "/images/example/cover-5.png",
+    featuring: ["The Jansen", "Barasuara", "Goodnight Electric"],
     location: "Gelora Bung Karno",
     date: "October 12, 2025",
-    banner: "/images/example-banner.png",
+    banner: "/images/example/banner-5.png",
   },
-  {
-    id: 6,
-    name: "Fashion Week 2025",
-    logo: "/images/example-cover.png",
-    featuring: ["Designer X", "Designer Y"],
-    location: "Grand Indonesia",
-    date: "November 18, 2025",
-    banner: "/images/example-banner.png",
-  },
-]
+];
+
 
 const allEvents = [
   {
     id: 1,
     name: "Rock Concert Night",
-    logo: "/images/example-cover.png",
+    logo: "/images/example/example-cover.png",
     category: "Music",
     location: "Jakarta",
     date: "Dec 25, 2025",
@@ -77,7 +69,7 @@ const allEvents = [
   {
     id: 2,
     name: "Modern Art Exhibition",
-    logo: "/images/example-cover.png",
+    logo: "/images/example/example-cover.png",
     category: "Art & Exhibition",
     location: "Bali",
     date: "Jan 10, 2026",
@@ -85,7 +77,7 @@ const allEvents = [
   {
     id: 3,
     name: "Marathon 2025",
-    logo: "/images/example-cover.png",
+    logo: "/images/example/example-cover.png",
     category: "Sport",
     location: "Surabaya",
     date: "Feb 14, 2026",
@@ -93,7 +85,7 @@ const allEvents = [
   {
     id: 4,
     name: "Jazz Festival",
-    logo: "/images/example-cover.png",
+    logo: "/images/example/example-cover.png",
     category: "Music",
     location: "Bandung",
     date: "Mar 20, 2026",
@@ -101,7 +93,7 @@ const allEvents = [
   {
     id: 5,
     name: "Photography Showcase",
-    logo: "/images/example-cover.png",
+    logo: "/images/example/example-cover.png",
     category: "Art & Exhibition",
     location: "Yogyakarta",
     date: "Apr 5, 2026",
@@ -109,7 +101,7 @@ const allEvents = [
   {
     id: 6,
     name: "Basketball Tournament",
-    logo: "/images/example-cover.png",
+    logo: "/images/example/example-cover.png",
     category: "Sport",
     location: "Jakarta",
     date: "May 15, 2026",
@@ -117,7 +109,7 @@ const allEvents = [
   {
     id: 7,
     name: "EDM Party",
-    logo: "/images/example-cover.png",
+    logo: "/images/example/example-cover.png",
     category: "Music",
     location: "Bali",
     date: "Jun 30, 2026",
@@ -125,7 +117,7 @@ const allEvents = [
   {
     id: 8,
     name: "Sculpture Exhibition",
-    logo: "/images/example-cover.png",
+    logo: "/images/example/example-cover.png",
     category: "Art & Exhibition",
     location: "Jakarta",
     date: "Jul 22, 2026",
@@ -136,15 +128,43 @@ const categories = ["All", "Music", "Art & Exhibition", "Sport"]
 
 export default function EventsPage() {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0)
+  const [nextBannerIndex, setNextBannerIndex] = useState(0)
+  const [isTransitioning, setIsTransitioning] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentBannerIndex((prev) => (prev + 1) % featuredEvents.length)
+      const nextIndex = (currentBannerIndex + 1) % featuredEvents.length
+      setNextBannerIndex(nextIndex)
+      setIsTransitioning(true)
+      setTimeout(() => {
+        setCurrentBannerIndex(nextIndex)
+        setIsTransitioning(false)
+      }, 300)
     }, 5000)
     return () => clearInterval(interval)
-  }, [])
+  }, [currentBannerIndex])
+
+  const handlePrevBanner = () => {
+    const nextIndex = (currentBannerIndex - 1 + featuredEvents.length) % featuredEvents.length
+    setNextBannerIndex(nextIndex)
+    setIsTransitioning(true)
+    setTimeout(() => {
+      setCurrentBannerIndex(nextIndex)
+      setIsTransitioning(false)
+    }, 600)
+  }
+
+  const handleNextBanner = () => {
+    const nextIndex = (currentBannerIndex + 1) % featuredEvents.length
+    setNextBannerIndex(nextIndex)
+    setIsTransitioning(true)
+    setTimeout(() => {
+      setCurrentBannerIndex(nextIndex)
+      setIsTransitioning(false)
+    }, 600)
+  }
 
   const filteredEvents = allEvents.filter((event) => {
     const matchesSearch = event.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -156,16 +176,18 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="relative h-[400px] m-8 overflow-hidden rounded-2xl bg-black">
+      <div className="relative h-[400px] m-8 mb-16 overflow-visible rounded-2xl bg-black">
         {/* Background image */}
-        <Image
-          src={currentFeaturedEvent.banner || "/placeholder.svg"}
-          alt="Banner background"
-          fill
-          className="object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 via-80% to-black/60" />
-        <div className="absolute inset-0 flex items-center justify-start">
+        <div className={`transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
+          <Image
+            src={currentFeaturedEvent.banner || "/placeholder.svg"}
+            alt="Banner background"
+            fill
+            className="object-cover rounded-2xl"
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 via-80% to-black/30 rounded-2xl" />
+        <div className={`absolute inset-0 flex items-center justify-start transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
           <div className="text-center text-white px-24 flex flex-row">
             <div className="mb-6">
               <div className="relative h-32 w-32 rounded-lg overflow-hidden shadow-2xl">
@@ -179,17 +201,16 @@ export default function EventsPage() {
             </div>
 
             <div className="items-start text-left ml-6">
-              <h1 className="text-4xl font-bold mb-4">{currentFeaturedEvent.name}</h1>
+              <h1 className="text-3xl font-heading mb-4">{currentFeaturedEvent.name}</h1>
               <div className="mb-4">
-                <p className="text-lg font-semibold mb-2">Featuring:</p>
-                <p className="text-base">{currentFeaturedEvent.featuring.join(", ")}</p>
+                <p className="text-lg font-subheading font-semibold">{currentFeaturedEvent.featuring.join(", ")}</p>
               </div>
-              <div className="flex gap-6 text-sm">
-                <div className="flex gap-2">
+              <div className="glass-effect inline-flex items-center gap-6 text-sm font-subheading font-semibold w-auto">
+                <div className="flex items-center gap-2">
                   <MapPin className="h-4 w-4" />
                   <span>{currentFeaturedEvent.location}</span>
                 </div>
-                <div className="flex gap-2">
+                <div className="flex items-center mr-2 gap-2">
                   <Calendar className="h-4 w-4" />
                   <span>{currentFeaturedEvent.date}</span>
                 </div>
@@ -197,6 +218,23 @@ export default function EventsPage() {
             </div>
           </div>
         </div>
+
+        {/* Navigation Buttons */}
+        <button
+          onClick={handlePrevBanner}
+          className="glass-effect absolute left-4 top-1/2 -translate-y-1/2 p-3 rounded-full hover:bg-white/30 transition-all"
+          aria-label="Previous banner"
+        >
+          <ChevronLeft className="h-6 w-6 text-white" />
+        </button>
+        <button
+          onClick={handleNextBanner}
+          className="glass-effect absolute right-4 top-1/2 -translate-y-1/2 p-3 rounded-full hover:bg-white/30 transition-all"
+          aria-label="Next banner"
+        >
+          <ChevronRight className="h-6 w-6 text-white" />
+        </button>
+
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
           {featuredEvents.map((_, index) => (
             <button
@@ -208,22 +246,25 @@ export default function EventsPage() {
             />
           ))}
         </div>
-      </div>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <div className="relative max-w-2xl mx-auto">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-            <Input
-              type="text"
-              placeholder="Search events..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 h-12 text-base"
-            />
+        {/* Search Bar Overlay */}
+        <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-full max-w-2xl px-8">
+          <div className="clear-glass-effect bg-black/80 p-2">
+            <div className="relative">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-white/70" />
+              <Input
+                type="text"
+                placeholder="Search events..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="pl-10 h-12 text-base bg-transparent border-none text-white placeholder:text-white/60 focus-visible:ring-0 focus-visible:ring-offset-0"
+              />
+            </div>
           </div>
         </div>
+      </div>
 
+      <div className="container mx-auto px-4 py-8 mt-8">
         <div className="mb-8 flex justify-center gap-3 flex-wrap">
           {categories.map((category) => (
             <Button

@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
+@import url('https://fonts.googleapis.com/css2?family=BBH+Sans+Hegarty:wght@400;500;600;700&family=Lato:wght@400;500;700&display=swap');
 
 @custom-variant dark (&:is(.dark *));
 
@@ -44,6 +45,9 @@
 }
 
 :root {
+  --font-heading: var(--font-heading);
+  --font-subheading: var(--font-subheading);
+  --font-body: var(--font-body);
   --radius: 0.625rem;
   --foreground: oklch(1 0 0);
   --background: oklch(0.145 0 0);
@@ -116,7 +120,74 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .font-heading {
+    font-family: var(--font-heading), sans-serif;
+  }
+
+  .font-subheading {
+    font-family: var(--font-subheading), sans-serif;
+  }
+
+  .font-body {
+    font-family: var(--font-body), sans-serif;
+  }
+
+  @layer utilities {
+    .glass-effect {
+      position: relative;
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.15) 0%,
+          rgba(255, 255, 255, 0.05) 100%);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      border-radius: 1rem;
+      padding: 4px;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+
+    .glass-effect::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left,
+          rgba(255, 255, 255, 0.3),
+          transparent 40%);
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    .clear-glass-effect {
+      position: relative;
+      background: linear-gradient(135deg,
+          rgba(255, 255, 255, 0.15) 0%,
+          rgba(255, 255, 255, 0.05) 100%);
+      backdrop-filter: blur(16px) saturate(180%);
+      -webkit-backdrop-filter: blur(16px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+      border-radius: 1rem;
+      padding: 4px;
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+
+    .clear-glass-effect::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+   
+      pointer-events: none;
+      border-radius: inherit;
+    }
   }
 }
