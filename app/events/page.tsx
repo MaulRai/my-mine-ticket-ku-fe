@@ -132,6 +132,7 @@ export default function EventsPage() {
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
+  const [selectedTimeFilter, setSelectedTimeFilter] = useState("This Week")
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -186,7 +187,7 @@ export default function EventsPage() {
             className="object-cover rounded-2xl"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/10 via-80% to-black/30 rounded-2xl" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/20 via-80% to-black/30 rounded-2xl" />
         <div className={`absolute inset-0 flex items-center justify-start transition-opacity duration-300 ${isTransitioning ? 'opacity-0' : 'opacity-100'}`}>
           <div className="text-center text-white px-24 flex flex-row">
             <div className="mb-6">
@@ -265,17 +266,40 @@ export default function EventsPage() {
       </div>
 
       <div className="container mx-auto px-4 py-8 mt-8">
-        <div className="mb-8 flex justify-center gap-3 flex-wrap">
-          {categories.map((category) => (
-            <Button
-              key={category}
-              variant={selectedCategory === category ? "default" : "outline"}
-              onClick={() => setSelectedCategory(category)}
-              className="rounded-full"
+        <div className="mb-8 flex justify-between items-center gap-4">
+          {/* Time Filter Buttons - Left */}
+          <div className="flex gap-3">
+            {["This Week", "This Month", "All"].map((timeFilter) => (
+              <Button
+                key={timeFilter}
+                variant={selectedTimeFilter === timeFilter ? "default" : "outline"}
+                onClick={() => setSelectedTimeFilter(timeFilter)}
+                className="rounded-full"
+              >
+                {timeFilter}
+              </Button>
+            ))}
+          </div>
+
+          {/* Category Dropdown - Right */}
+          <div className="relative">
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="h-10 px-4 py-2 rounded-full border border-input bg-background hover:bg-accent hover:text-accent-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 cursor-pointer appearance-none pr-10"
             >
-              {category}
-            </Button>
-          ))}
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category}
+                </option>
+              ))}
+            </select>
+            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+              <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </div>
+          </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
