@@ -13,7 +13,7 @@ const featuredEvents = [
     id: 1,
     name: "Neon Waves Festival",
     logo: "/images/example/cover-1.png",
-    featuring: ["Girls Gang", "Reality Club", "Hindia"],
+    featuring: ["Grrrls Gang", "Reality Club", "Hindia"],
     location: "Jakarta Convention Center",
     date: "June 15, 2025",
     banner: "/images/example/banner-1.png",
@@ -188,7 +188,7 @@ export default function EventsPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <div className="relative h-[400px] m-8 mb-16 overflow-visible rounded-2xl bg-black">
+      <div className="relative h-[400px] m-8 my-4 overflow-visible rounded-2xl bg-black">
         {/* Background image */}
         <div className={`transition-opacity duration-300 ${isTransitioning ? "opacity-0" : "opacity-100"}`}>
           <Image
@@ -286,52 +286,39 @@ export default function EventsPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 py-8 mt-8">
-        <div className="mb-8 flex justify-between items-center gap-4">
+      <div className="container mx-auto px-4 py-8">
+        <div className="mb-6 flex justify-between items-center gap-4">
           {/* Time Filter Buttons - Left */}
           <div className="inline-flex items-center gap-1 bg-gray-900/60 backdrop-blur-md border border-white/10 p-1.5 rounded-full">
             {["This Week", "This Month", "All"].map((timeFilter) => {
-              const isActive = selectedTimeFilter === timeFilter;
+              const isActive = selectedTimeFilter === timeFilter
               return (
                 <Button
                   key={timeFilter}
                   variant="ghost"
                   onClick={() => setSelectedTimeFilter(timeFilter)}
-                  className={`
-                    relative rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300
-                    ${isActive
-                      ? "text-white shadow-md bg-gradient-to-b from-gray-400 via-gray-600 to-gray-700"
-                      : "text-gray-300 hover:text-white hover:bg-white/10"}
-                  `}
+                  className={`relative rounded-full px-4 py-1.5 text-sm font-medium transition-all duration-300
+                    ${
+                      isActive
+                        ? "text-white shadow-md bg-gradient-to-b from-gray-400 via-gray-600 to-gray-700"
+                        : "text-gray-300 hover:text-white hover:bg-white/10"
+                    }`}
                 >
                   {timeFilter}
                 </Button>
-
-              );
+              )
             })}
           </div>
-
 
           {/* Category Dropdown - Right */}
           <div className="relative w-fit">
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="
-      h-10 px-5 pr-10 rounded-full bg-gradient-to-b 
-      from-gray-300/60 via-gray-500/60 to-gray-700/60
-      border border-white/20 text-white font-medium
-      backdrop-blur-md cursor-pointer appearance-none
-      transition-all duration-200 focus:ring-2 focus:ring-white/30
-      hover:from-gray-200/70 hover:to-gray-600/70
-    "
+              className="h-10 px-5 pr-10 rounded-full bg-gradient-to-b from-gray-300/60 via-gray-500/60 to-gray-700/60 border border-white/20 text-white font-medium backdrop-blur-md cursor-pointer appearance-none transition-all duration-200 focus:ring-2 focus:ring-white/30 hover:from-gray-200/70 hover:to-gray-600/70"
             >
               {categories.map((category) => (
-                <option
-                  key={category}
-                  value={category}
-                  className="bg-gray-800 text-white"
-                >
+                <option key={category} value={category} className="bg-gray-800 text-white">
                   {category}
                 </option>
               ))}
@@ -339,41 +326,55 @@ export default function EventsPage() {
 
             {/* Custom caret icon */}
             <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
-              <svg
-                className="h-4 w-4 text-white/80"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 9l-7 7-7-7"
-                />
+              <svg className="h-4 w-4 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </div>
           </div>
-
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredEvents.map((event) => (
-            <Card key={event.id} className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer">
-              <div className="relative h-48 w-full">
-                <Image src={event.logo || "/placeholder.svg"} alt={event.name} fill className="object-cover" />
+            <Card
+              key={event.id}
+              className="group overflow-hidden pb-0 border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md hover:border-white/20 transition-all duration-300 hover:shadow-2xl hover:shadow-white/5 cursor-pointer hover:-translate-y-1"
+            >
+              <div className="relative h-48 w-full overflow-hidden">
+                <Image
+                  src={event.logo || "/placeholder.svg"}
+                  alt={event.name}
+                  fill
+                  className="object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                {/* Gradient overlay for better text contrast */}
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+
+                {/* Category badge positioned on image */}
+                <div className="absolute top-3 right-3">
+                  <Badge className="glass-effect text-white border-white/30 font-subheading font-semibold text-xs px-3 py-1">
+                    {event.category}
+                  </Badge>
+                </div>
               </div>
-              <CardContent className="p-4">
-                <Badge className="mb-2">{event.category}</Badge>
-                <h3 className="font-semibold text-lg mb-3 line-clamp-2">{event.name}</h3>
-                <div className="space-y-2 text-sm text-muted-foreground">
-                  <div className="flex items-center gap-2">
-                    <MapPin className="h-4 w-4" />
-                    <span>{event.location}</span>
+
+              <CardContent className="p-5 space-y-3">
+                <h3 className="font-subheading font-semibold text-lg text-white leading-tight line-clamp-2 group-hover:text-gray-100 transition-colors">
+                  {event.name}
+                </h3>
+
+                <div className="space-y-2.5 text-sm">
+                  <div className="flex items-center gap-2.5 text-gray-300 group-hover:text-white transition-colors">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 transition-colors">
+                      <MapPin className="h-4 w-4" />
+                    </div>
+                    <span className="font-subheading font-medium">{event.location}</span>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    <span>{event.date}</span>
+
+                  <div className="flex items-center gap-2.5 text-gray-300 group-hover:text-white transition-colors">
+                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 transition-colors">
+                      <Calendar className="h-4 w-4" />
+                    </div>
+                    <span className="font-subheading font-medium">{event.date}</span>
                   </div>
                 </div>
               </CardContent>
