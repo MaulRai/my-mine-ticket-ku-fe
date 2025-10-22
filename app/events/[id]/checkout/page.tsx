@@ -11,8 +11,32 @@ import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ArrowLeft, Ticket, Plus, Minus, Wallet, CheckCircle2, ExternalLink, AlertCircle } from "lucide-react"
 
+interface EventData {
+  id: number
+  name: string
+  logo: string
+  date: string
+  time: string
+  location: string
+  category?: string
+  regularTickets: number
+  regularTicketsSold: number
+  regularTicketPrice: number
+  vipTickets: number
+  vipTicketsSold: number
+  vipTicketPrice: number
+  ticketCategories?: Array<{
+    id: number
+    name: string
+    price: number
+    priceUSD: string
+    available: number
+    benefits: string[]
+  }>
+}
+
 // Mock data - in a real app, this would come from an API or database
-const eventData: Record<string, any> = {
+const eventData: Record<string, EventData> = {
   "1": {
     id: 1,
     name: "Neon Waves Festival",
@@ -473,7 +497,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                           className="mt-1"
                         />
                         <label htmlFor="terms" className="text-gray-300 font-body text-sm cursor-pointer">
-                          I agree to the event's{" "}
+                          I agree to the event&apos;s{" "}
                           <a href="#" className="text-blue-400 hover:text-blue-300 underline">
                             Terms & Conditions
                           </a>

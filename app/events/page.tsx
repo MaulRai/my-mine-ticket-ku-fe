@@ -127,7 +127,6 @@ const categories = ["All", "Music", "Art & Exhibition", "Sport"]
 
 export default function EventsPage() {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0)
-  const [nextBannerIndex, setNextBannerIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
@@ -148,7 +147,6 @@ export default function EventsPage() {
   useEffect(() => {
     const interval = setInterval(() => {
       const nextIndex = (currentBannerIndex + 1) % featuredEvents.length
-      setNextBannerIndex(nextIndex)
       setIsTransitioning(true)
       setTimeout(() => {
         setCurrentBannerIndex(nextIndex)
@@ -160,7 +158,6 @@ export default function EventsPage() {
 
   const handlePrevBanner = () => {
     const nextIndex = (currentBannerIndex - 1 + featuredEvents.length) % featuredEvents.length
-    setNextBannerIndex(nextIndex)
     setIsTransitioning(true)
     setTimeout(() => {
       setCurrentBannerIndex(nextIndex)
@@ -170,7 +167,6 @@ export default function EventsPage() {
 
   const handleNextBanner = () => {
     const nextIndex = (currentBannerIndex + 1) % featuredEvents.length
-    setNextBannerIndex(nextIndex)
     setIsTransitioning(true)
     setTimeout(() => {
       setCurrentBannerIndex(nextIndex)

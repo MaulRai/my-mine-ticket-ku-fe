@@ -21,8 +21,30 @@ import {
   Heart,
 } from "lucide-react"
 
+interface EventDataType {
+  id: number
+  name: string
+  logo: string
+  banner: string
+  category: string
+  featuring: string[]
+  location: string
+  address: string
+  date: string
+  time: string
+  capacity: string
+  regularTickets: number
+  regularTicketsSold: number
+  vipTickets: number
+  vipTicketsSold: number
+  description: string
+  ticketPrice: string
+  organizer: string
+  soldOut: boolean
+}
+
 // Mock data - in a real app, this would come from an API or database
-const eventData: Record<string, any> = {
+const eventData: Record<string, EventDataType> = {
   "1": {
     id: 1,
     name: "Neon Waves Festival",

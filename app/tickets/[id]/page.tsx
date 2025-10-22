@@ -272,9 +272,6 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
     )
   }
 
-  // Generate QR code data URL
-  const qrCodeData = `https://sophon.xyz/ticket/${ticket.nftCode}`
-
   return (
     <div className="min-h-screen bg-background pt-32 pb-12">
       <div className="container mx-auto px-4 max-w-7xl">
@@ -525,7 +522,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                       Earned
                     </Badge>
                     <p className="text-gray-400 font-body text-sm">
-                      Congratulations! You've earned this POAP badge for attending the event.
+                      Congratulations! You&apos;ve earned this POAP badge for attending the event.
                     </p>
                   </div>
                 ) : (
