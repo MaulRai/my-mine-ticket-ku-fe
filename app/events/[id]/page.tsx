@@ -6,6 +6,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
+import { useRouter } from "next/navigation"
 import {
   MapPin,
   Calendar,
@@ -34,13 +35,15 @@ const eventData: Record<string, any> = {
     date: "June 15, 2025",
     time: "18:00 - 23:00 WIB",
     capacity: "5,000 attendees",
-    totalTickets: 5000,
-    ticketsSold: 4850,
+    regularTickets: 4000,
+    regularTicketsSold: 3880,
+    vipTickets: 1000,
+    vipTicketsSold: 970,
     description:
       "Experience the ultimate music festival featuring Indonesia's hottest indie and alternative bands. Neon Waves Festival brings together the best of contemporary Indonesian music in an unforgettable night of performances, lights, and energy.",
     ticketPrice: "Starting from Rp 350,000",
     organizer: "Wave Entertainment",
-    soldOut: true, // Set to true to show marketplace
+    soldOut: true,
   },
   "2": {
     id: 2,
@@ -54,8 +57,10 @@ const eventData: Record<string, any> = {
     date: "July 20, 2025",
     time: "17:00 - 22:00 WITA",
     capacity: "3,500 attendees",
-    totalTickets: 3500,
-    ticketsSold: 2100,
+    regularTickets: 2800,
+    regularTicketsSold: 1680,
+    vipTickets: 700,
+    vipTicketsSold: 420,
     description:
       "A tropical music experience in the heart of Bali. Islands of Sound brings together soulful Indonesian artists for an evening of acoustic and indie performances in a stunning cultural venue.",
     ticketPrice: "Starting from Rp 450,000",
@@ -84,6 +89,7 @@ const resaleTickets = [
 
 export default function EventDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
+  const router = useRouter()
   const event = eventData[id] || eventData["1"]
   const [selectedTicket, setSelectedTicket] = useState<string | null>(null)
   const [marketPage, setMarketPage] = useState(0)
@@ -108,12 +114,23 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
         console.log("Error sharing:", error)
       }
     } else {
+      // Fallback: copy to clipboard
       navigator.clipboard.writeText(window.location.href)
       alert("Link copied to clipboard!")
     }
   }
 
-  const ticketsSoldPercentage = ((event.ticketsSold / event.totalTickets) * 100).toFixed(1)
+  const regularTicketsRemaining = event.regularTickets - event.regularTicketsSold
+  const vipTicketsRemaining = event.vipTickets - event.vipTicketsSold
+  const totalTickets = event.regularTickets + event.vipTickets
+  const totalTicketsSold = event.regularTicketsSold + event.vipTicketsSold
+  const ticketsSoldPercentage = ((totalTicketsSold / totalTickets) * 100).toFixed(1)
+
+  const handleCheckout = () => {
+    if (selectedTicket) {
+      router.push(`/events/${id}/checkout?ticket=${selectedTicket}`)
+    }
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -180,8 +197,8 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
               <div className="flex items-center gap-2 glass-effect px-4 py-2 rounded-full w-fit">
                 <Ticket className="h-5 w-5 text-white" />
                 <span className="text-white font-subheading font-semibold text-sm">
-                  {event.ticketsSold.toLocaleString("id-ID")} / {event.totalTickets.toLocaleString("id-ID")} tickets
-                  sold ({ticketsSoldPercentage}%)
+                  {totalTicketsSold.toLocaleString("id-ID")} / {totalTickets.toLocaleString("id-ID")} tickets sold (
+                  {ticketsSoldPercentage}%)
                 </span>
               </div>
             </div>
@@ -242,7 +259,14 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                         </div>
                       </div>
                       <p className="text-2xl font-heading text-white mb-1">Rp 350,000</p>
-                      <p className="text-gray-400 font-body text-xs">General admission</p>
+                      <p className="text-gray-400 font-body text-xs mb-2">General admission</p>
+                      <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                        <span className="text-gray-400 font-body text-xs">Remaining</span>
+                        <span className="text-white font-subheading font-semibold text-sm">
+                          {regularTicketsRemaining.toLocaleString("id-ID")} /{" "}
+                          {event.regularTickets.toLocaleString("id-ID")}
+                        </span>
+                      </div>
                     </div>
 
                     <div
@@ -264,12 +288,19 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                         </div>
                       </div>
                       <p className="text-2xl font-heading text-white mb-1">Rp 750,000</p>
-                      <p className="text-gray-400 font-body text-xs">Premium seating + exclusive perks</p>
+                      <p className="text-gray-400 font-body text-xs mb-2">Premium seating + exclusive perks</p>
+                      <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                        <span className="text-gray-400 font-body text-xs">Remaining</span>
+                        <span className="text-white font-subheading font-semibold text-sm">
+                          {vipTicketsRemaining.toLocaleString("id-ID")} / {event.vipTickets.toLocaleString("id-ID")}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
                   <Button
                     disabled={!selectedTicket}
+                    onClick={handleCheckout}
                     className="w-full h-12 bg-gradient-to-b from-gray-300 via-gray-500 to-gray-700 hover:from-gray-200 hover:to-gray-600 text-white font-subheading font-semibold text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     <Ticket className="h-5 w-5 mr-2" />
