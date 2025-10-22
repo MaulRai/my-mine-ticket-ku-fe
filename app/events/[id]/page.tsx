@@ -6,7 +6,19 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
-import { MapPin, Calendar, Clock, Users, ArrowLeft, Ticket, ChevronLeft, ChevronRight, Eye } from "lucide-react"
+import {
+  MapPin,
+  Calendar,
+  Clock,
+  Users,
+  ArrowLeft,
+  Ticket,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  Share,
+  Heart,
+} from "lucide-react"
 
 // Mock data - in a real app, this would come from an API or database
 const eventData: Record<string, any> = {
@@ -22,6 +34,8 @@ const eventData: Record<string, any> = {
     date: "June 15, 2025",
     time: "18:00 - 23:00 WIB",
     capacity: "5,000 attendees",
+    totalTickets: 5000,
+    ticketsSold: 4850,
     description:
       "Experience the ultimate music festival featuring Indonesia's hottest indie and alternative bands. Neon Waves Festival brings together the best of contemporary Indonesian music in an unforgettable night of performances, lights, and energy.",
     ticketPrice: "Starting from Rp 350,000",
@@ -40,6 +54,8 @@ const eventData: Record<string, any> = {
     date: "July 20, 2025",
     time: "17:00 - 22:00 WITA",
     capacity: "3,500 attendees",
+    totalTickets: 3500,
+    ticketsSold: 2100,
     description:
       "A tropical music experience in the heart of Bali. Islands of Sound brings together soulful Indonesian artists for an evening of acoustic and indie performances in a stunning cultural venue.",
     ticketPrice: "Starting from Rp 450,000",
@@ -72,12 +88,32 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
   const [selectedTicket, setSelectedTicket] = useState<string | null>(null)
   const [marketPage, setMarketPage] = useState(0)
   const [devSoldOutMode, setDevSoldOutMode] = useState(event.soldOut)
+  const [isFavorite, setIsFavorite] = useState(false)
 
   const TICKETS_PER_PAGE = 9
   const totalPages = Math.ceil(resaleTickets.length / TICKETS_PER_PAGE)
   const currentTickets = resaleTickets.slice(marketPage * TICKETS_PER_PAGE, (marketPage + 1) * TICKETS_PER_PAGE)
 
   const isSoldOut = devSoldOutMode
+
+  const handleShare = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: event.name,
+          text: `Check out ${event.name} - ${event.featuring.join(", ")}`,
+          url: window.location.href,
+        })
+      } catch (error) {
+        console.log("Error sharing:", error)
+      }
+    } else {
+      navigator.clipboard.writeText(window.location.href)
+      alert("Link copied to clipboard!")
+    }
+  }
+
+  const ticketsSoldPercentage = ((event.ticketsSold / event.totalTickets) * 100).toFixed(1)
 
   return (
     <div className="min-h-screen bg-background">
@@ -93,7 +129,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
       </button>
 
       {/* Hero Section with Banner */}
-      <div className="relative h-[320px] m-8 mt-0 mb-0 overflow-visible rounded-b-2xl bg-black">
+      <div className="relative h-[370px] m-8 mt-0 mb-0 overflow-visible rounded-b-2xl bg-black">
         <div className="absolute inset-0 overflow-hidden rounded-b-2xl">
           <Image src={event.banner || "/placeholder.svg"} alt="Event banner" fill className="object-cover" />
         </div>
@@ -102,10 +138,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
         <div className="absolute inset-0 flex items-end justify-start">
           <div className="text-white px-12 pb-12 flex flex-row items-start gap-6">
             <Link href="/events">
-              <button
-                className="glass-effect p-3 rounded-full hover:bg-white/30 transition-all z-10"
-                aria-label="Back"
-              >
+              <button className="glass-effect p-3 rounded-full hover:bg-white/30 transition-all z-10" aria-label="Back">
                 <ArrowLeft className="h-6 w-6 text-white" />
               </button>
             </Link>
@@ -117,16 +150,39 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
 
             {/* Event Info */}
             <div className="flex-1 pb-2">
-              <div className="mb-3">
+              <div className="mb-3 flex items-center gap-3">
                 <Badge className="glass-effect text-white border-white/30 font-subheading font-semibold text-sm px-4 py-1.5">
                   {event.category}
                 </Badge>
+                <button
+                  onClick={handleShare}
+                  className="glass-effect p-2 rounded-full hover:bg-white/30 transition-all"
+                  aria-label="Share event"
+                >
+                  <Share className="h-5 w-5 text-white" />
+                </button>
+                <button
+                  onClick={() => setIsFavorite(!isFavorite)}
+                  className={`glass-effect p-2 rounded-full hover:bg-white/30 transition-all ${
+                    isFavorite ? "bg-red-500/30" : ""
+                  }`}
+                  aria-label="Favorite event"
+                >
+                  <Heart className={`h-5 w-5 ${isFavorite ? "fill-red-500 text-red-500" : "text-white"}`} />
+                </button>
               </div>
               <h1 className="text-5xl font-heading mb-4 text-balance">{event.name}</h1>
               <div className="mb-4">
                 <p className="text-xl font-subheading font-semibold text-gray-200">
                   Featuring: {event.featuring.join(", ")}
                 </p>
+              </div>
+              <div className="flex items-center gap-2 glass-effect px-4 py-2 rounded-full w-fit">
+                <Ticket className="h-5 w-5 text-white" />
+                <span className="text-white font-subheading font-semibold text-sm">
+                  {event.ticketsSold.toLocaleString("id-ID")} / {event.totalTickets.toLocaleString("id-ID")} tickets
+                  sold ({ticketsSoldPercentage}%)
+                </span>
               </div>
             </div>
           </div>
@@ -169,16 +225,18 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                   <div className="space-y-3">
                     <div
                       onClick={() => setSelectedTicket("regular")}
-                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${selectedTicket === "regular"
-                        ? "border-white/40 bg-white/10"
-                        : "border-white/10 hover:border-white/20"
-                        }`}
+                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                        selectedTicket === "regular"
+                          ? "border-white/40 bg-white/10"
+                          : "border-white/10 hover:border-white/20"
+                      }`}
                     >
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-subheading font-semibold text-white">Regular Ticket</h3>
                         <div
-                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedTicket === "regular" ? "border-white bg-white" : "border-white/40"
-                            }`}
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                            selectedTicket === "regular" ? "border-white bg-white" : "border-white/40"
+                          }`}
                         >
                           {selectedTicket === "regular" && <div className="w-2.5 h-2.5 rounded-full bg-black" />}
                         </div>
@@ -189,16 +247,18 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
 
                     <div
                       onClick={() => setSelectedTicket("vip")}
-                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${selectedTicket === "vip"
-                        ? "border-white/40 bg-white/10"
-                        : "border-white/10 hover:border-white/20"
-                        }`}
+                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
+                        selectedTicket === "vip"
+                          ? "border-white/40 bg-white/10"
+                          : "border-white/10 hover:border-white/20"
+                      }`}
                     >
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-subheading font-semibold text-white">VIP Ticket</h3>
                         <div
-                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${selectedTicket === "vip" ? "border-white bg-white" : "border-white/40"
-                            }`}
+                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                            selectedTicket === "vip" ? "border-white bg-white" : "border-white/40"
+                          }`}
                         >
                           {selectedTicket === "vip" && <div className="w-2.5 h-2.5 rounded-full bg-black" />}
                         </div>
@@ -332,10 +392,11 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                                 <p className="text-gray-400 font-body text-xs">Seller: {ticket.seller}</p>
                               </div>
                               <Badge
-                                className={`${priceIncrease > 10
-                                  ? "bg-orange-500/20 text-orange-400 border-orange-500/30"
-                                  : "bg-green-500/20 text-green-400 border-green-500/30"
-                                  } font-subheading text-xs`}
+                                className={`${
+                                  priceIncrease > 10
+                                    ? "bg-orange-500/20 text-orange-400 border-orange-500/30"
+                                    : "bg-green-500/20 text-green-400 border-green-500/30"
+                                } font-subheading text-xs`}
                               >
                                 {priceIncrease > 0 ? "+" : ""}
                                 {priceIncrease.toFixed(0)}%
