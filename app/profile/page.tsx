@@ -1,7 +1,7 @@
 "use client"
 
-import { useState } from "react"
-import { useRouter } from "next/navigation"
+import { useState, useEffect } from "react"
+import { useRouter, useSearchParams } from "next/navigation"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -170,8 +170,16 @@ const myTickets = [
 ]
 
 export default function ProfilePage() {
-  const [activeTab, setActiveTab] = useState<Tab>("my-tickets")
+  const [activeTab, setActiveTab] = useState<Tab>("wallet-info")
   const router = useRouter()
+  const searchParams = useSearchParams()
+
+  useEffect(() => {
+    const tab = searchParams.get("tab")
+    if (tab === "my-tickets") {
+      setActiveTab("my-tickets")
+    }
+  }, [searchParams])
 
   return (
     <div className="min-h-screen bg-background pt-32 pb-12">
@@ -187,18 +195,6 @@ export default function ProfilePage() {
           <div className="inline-flex items-center gap-1 bg-gray-900/60 backdrop-blur-md border border-white/10 p-1.5 rounded-full">
             <Button
               variant="ghost"
-              onClick={() => setActiveTab("my-tickets")}
-              className={`relative rounded-full px-6 py-2 text-sm font-subheading font-medium transition-all duration-300
-                ${
-                  activeTab === "my-tickets"
-                    ? "text-white shadow-md bg-gradient-to-b from-gray-400 via-gray-600 to-gray-700"
-                    : "text-gray-300 hover:text-white hover:bg-white/10"
-                }`}
-            >
-              My Tickets
-            </Button>
-            <Button
-              variant="ghost"
               onClick={() => setActiveTab("wallet-info")}
               className={`relative rounded-full px-6 py-2 text-sm font-subheading font-medium transition-all duration-300
                 ${
@@ -208,6 +204,18 @@ export default function ProfilePage() {
                 }`}
             >
               Wallet Info
+            </Button>
+            <Button
+              variant="ghost"
+              onClick={() => setActiveTab("my-tickets")}
+              className={`relative rounded-full px-6 py-2 text-sm font-subheading font-medium transition-all duration-300
+                ${
+                  activeTab === "my-tickets"
+                    ? "text-white shadow-md bg-gradient-to-b from-gray-400 via-gray-600 to-gray-700"
+                    : "text-gray-300 hover:text-white hover:bg-white/10"
+                }`}
+            >
+              My Tickets
             </Button>
           </div>
         </div>

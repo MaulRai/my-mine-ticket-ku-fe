@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Image from "next/image"
+import Link from "next/link"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -59,6 +60,46 @@ const featuredEvents = [
 const allEvents = [
   {
     id: 1,
+    name: "Neon Waves Festival",
+    logo: "/images/example/cover-1.png",
+    category: "Music",
+    location: "Jakarta Convention Center",
+    date: "June 15, 2025",
+  },
+  {
+    id: 2,
+    name: "Islands of Sound 2025",
+    logo: "/images/example/cover-2.png",
+    category: "Music",
+    location: "Bali Art Center",
+    date: "July 20, 2025",
+  },
+  {
+    id: 3,
+    name: "Sonic Future Conference",
+    logo: "/images/example/cover-3.png",
+    category: "Music",
+    location: "Surabaya Convention Hall",
+    date: "August 10, 2025",
+  },
+  {
+    id: 4,
+    name: "Taste & Tunes Fest",
+    logo: "/images/example/cover-4.png",
+    category: "Music",
+    location: "Bandung Square",
+    date: "September 5, 2025",
+  },
+  {
+    id: 5,
+    name: "Rhythm Arena 2025",
+    logo: "/images/example/cover-5.png",
+    category: "Music",
+    location: "Gelora Bung Karno",
+    date: "October 12, 2025",
+  },
+  {
+    id: 6,
     name: "Rock Concert Night",
     logo: "/images/example/example-cover.png",
     category: "Music",
@@ -66,7 +107,7 @@ const allEvents = [
     date: "Dec 25, 2025",
   },
   {
-    id: 2,
+    id: 7,
     name: "Modern Art Exhibition",
     logo: "/images/example/example-cover.png",
     category: "Art & Exhibition",
@@ -74,7 +115,7 @@ const allEvents = [
     date: "Jan 10, 2026",
   },
   {
-    id: 3,
+    id: 8,
     name: "Marathon 2025",
     logo: "/images/example/example-cover.png",
     category: "Sport",
@@ -82,7 +123,7 @@ const allEvents = [
     date: "Feb 14, 2026",
   },
   {
-    id: 4,
+    id: 9,
     name: "Jazz Festival",
     logo: "/images/example/example-cover.png",
     category: "Music",
@@ -90,7 +131,7 @@ const allEvents = [
     date: "Mar 20, 2026",
   },
   {
-    id: 5,
+    id: 10,
     name: "Photography Showcase",
     logo: "/images/example/example-cover.png",
     category: "Art & Exhibition",
@@ -98,7 +139,7 @@ const allEvents = [
     date: "Apr 5, 2026",
   },
   {
-    id: 6,
+    id: 11,
     name: "Basketball Tournament",
     logo: "/images/example/example-cover.png",
     category: "Sport",
@@ -106,7 +147,7 @@ const allEvents = [
     date: "May 15, 2026",
   },
   {
-    id: 7,
+    id: 12,
     name: "EDM Party",
     logo: "/images/example/example-cover.png",
     category: "Music",
@@ -114,7 +155,7 @@ const allEvents = [
     date: "Jun 30, 2026",
   },
   {
-    id: 8,
+    id: 13,
     name: "Sculpture Exhibition",
     logo: "/images/example/example-cover.png",
     category: "Art & Exhibition",
@@ -331,50 +372,49 @@ export default function EventsPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {filteredEvents.map((event) => (
-            <Card
-              key={event.id}
-              className="group overflow-hidden pb-0 border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md hover:border-white/20 transition-all duration-300 hover:shadow-2xl hover:shadow-white/5 cursor-pointer hover:-translate-y-1"
-            >
-              <div className="relative h-48 w-full overflow-hidden">
-                <Image
-                  src={event.logo || "/placeholder.svg"}
-                  alt={event.name}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                {/* Gradient overlay for better text contrast */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
+            <Link key={event.id} href={`/events/${event.id}`}>
+              <Card className="group overflow-hidden pb-0 border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md hover:border-white/20 transition-all duration-300 hover:shadow-2xl hover:shadow-white/5 cursor-pointer hover:-translate-y-1">
+                <div className="relative h-48 w-full overflow-hidden">
+                  <Image
+                    src={event.logo || "/placeholder.svg"}
+                    alt={event.name}
+                    fill
+                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                  />
+                  {/* Gradient overlay for better text contrast */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
 
-                {/* Category badge positioned on image */}
-                <div className="absolute top-3 right-3">
-                  <Badge className="glass-effect text-white border-white/30 font-subheading font-semibold text-xs px-3 py-1">
-                    {event.category}
-                  </Badge>
-                </div>
-              </div>
-
-              <CardContent className="p-5 space-y-3">
-                <h3 className="font-subheading font-semibold text-lg text-white leading-tight line-clamp-2 group-hover:text-gray-100 transition-colors">
-                  {event.name}
-                </h3>
-
-                <div className="space-y-2.5 text-sm">
-                  <div className="flex items-center gap-2.5 text-gray-300 group-hover:text-white transition-colors">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 transition-colors">
-                      <MapPin className="h-4 w-4" />
-                    </div>
-                    <span className="font-subheading font-medium">{event.location}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2.5 text-gray-300 group-hover:text-white transition-colors">
-                    <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 transition-colors">
-                      <Calendar className="h-4 w-4" />
-                    </div>
-                    <span className="font-subheading font-medium">{event.date}</span>
+                  {/* Category badge positioned on image */}
+                  <div className="absolute top-3 right-3">
+                    <Badge className="glass-effect text-white border-white/30 font-subheading font-semibold text-xs px-3 py-1">
+                      {event.category}
+                    </Badge>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
+
+                <CardContent className="p-5 space-y-3">
+                  <h3 className="font-subheading font-semibold text-lg text-white leading-tight line-clamp-2 group-hover:text-gray-100 transition-colors">
+                    {event.name}
+                  </h3>
+
+                  <div className="space-y-2.5 text-sm">
+                    <div className="flex items-center gap-2.5 text-gray-300 group-hover:text-white transition-colors">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 transition-colors">
+                        <MapPin className="h-4 w-4" />
+                      </div>
+                      <span className="font-subheading font-medium">{event.location}</span>
+                    </div>
+
+                    <div className="flex items-center gap-2.5 text-gray-300 group-hover:text-white transition-colors">
+                      <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/5 border border-white/10 group-hover:bg-white/10 transition-colors">
+                        <Calendar className="h-4 w-4" />
+                      </div>
+                      <span className="font-subheading font-medium">{event.date}</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </Link>
           ))}
         </div>
 
