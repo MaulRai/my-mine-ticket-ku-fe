@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Lato, Montserrat } from "next/font/google";
 import localFont from 'next/font/local';
+import { Navbar } from "@/components/navbar";
 import "./globals.css";
 
 const headingFont = localFont({
@@ -42,8 +43,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${bodyFont.variable} ${subheadingFont.variable} ${headingFont.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${bodyFont.variable} 
+          ${subheadingFont.variable} ${headingFont.variable} antialiased`}
       >
+        <Navbar />
         {children}
       </body>
     </html>
