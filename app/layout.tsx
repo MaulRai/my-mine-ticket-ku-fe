@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono, Lato } from "next/font/google";
 import localFont from 'next/font/local';
-import { Navbar } from "@/components/navbar";
+import { ConditionalNavbar } from "@/components/conditional-navbar";
 import "./globals.css";
 
 const headingFont = localFont({
@@ -46,7 +46,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${bodyFont.variable} 
           ${subheadingFont.variable} ${headingFont.variable} antialiased`}
       >
-        <Navbar />
+        <ConditionalNavbar />
         {children}
       </body>
     </html>
