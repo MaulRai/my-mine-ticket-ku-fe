@@ -1,10 +1,12 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
-import { Wallet, CreditCard, ArrowUpRight, ArrowDownLeft, Plus, ExternalLink } from "lucide-react"
+import { Wallet, ArrowUpRight, ArrowDownLeft, Plus, ExternalLink, Ticket } from "lucide-react"
 
 type Tab = "my-tickets" | "wallet-info"
 
@@ -109,8 +111,67 @@ const transactions = [
   },
 ]
 
+// Mock ticket data with NFT codes and status
+const myTickets = [
+  {
+    id: 1,
+    eventName: "Neon Waves Festival",
+    eventCover: "/images/example/cover-1.png",
+    ticketCategory: "VIP",
+    nftCode: "NFT-23A91F8C4D2E",
+    purchaseDate: "2025-10-20",
+    status: "active",
+  },
+  {
+    id: 2,
+    eventName: "Islands of Sound 2025",
+    eventCover: "/images/example/cover-2.png",
+    ticketCategory: "Regular",
+    nftCode: "NFT-7B5E9A1C3F6D",
+    purchaseDate: "2025-10-15",
+    status: "active",
+  },
+  {
+    id: 3,
+    eventName: "Sonic Future Conference",
+    eventCover: "/images/example/cover-3.png",
+    ticketCategory: "VIP",
+    nftCode: "NFT-4D8F2A6B9E1C",
+    purchaseDate: "2025-09-28",
+    status: "used",
+  },
+  {
+    id: 4,
+    eventName: "Taste & Tunes Fest",
+    eventCover: "/images/example/cover-4.png",
+    ticketCategory: "Regular",
+    nftCode: "NFT-9C3E7F1A5B8D",
+    purchaseDate: "2025-09-15",
+    status: "active",
+  },
+  {
+    id: 5,
+    eventName: "Rhythm Arena 2025",
+    eventCover: "/images/example/cover-5.png",
+    ticketCategory: "VIP",
+    nftCode: "NFT-6A2D8E4C1F9B",
+    purchaseDate: "2025-08-30",
+    status: "used",
+  },
+  {
+    id: 6,
+    eventName: "Rock Concert Night",
+    eventCover: "/images/example/example-cover.png",
+    ticketCategory: "Regular",
+    nftCode: "NFT-1F7B3D9A5E2C",
+    purchaseDate: "2025-08-12",
+    status: "active",
+  },
+]
+
 export default function ProfilePage() {
-  const [activeTab, setActiveTab] = useState<Tab>("wallet-info")
+  const [activeTab, setActiveTab] = useState<Tab>("my-tickets")
+  const router = useRouter()
 
   return (
     <div className="min-h-screen bg-background pt-32 pb-12">
@@ -154,20 +215,99 @@ export default function ProfilePage() {
         {/* Tab Content */}
         {activeTab === "my-tickets" && (
           <div className="space-y-6">
-            <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
-              <CardContent className="p-12 text-center">
-                <div className="flex flex-col items-center gap-4">
-                  <div className="w-16 h-16 rounded-full bg-white/5 border border-white/10 flex items-center justify-center">
-                    <CreditCard className="h-8 w-8 text-gray-400" />
-                  </div>
-                  <h3 className="text-xl font-subheading font-semibold text-white">My Tickets Coming Soon</h3>
-                  <p className="text-gray-400 font-body max-w-md">
-                    This feature is currently under development. You will be able to view and manage all your purchased
-                    tickets here.
-                  </p>
+            <div className="mb-6">
+              <div className="flex items-center justify-between">
+                <h2 className="text-2xl font-subheading font-semibold text-white">My Tickets ({myTickets.length})</h2>
+                <div className="flex items-center gap-2">
+                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 font-subheading text-sm px-3 py-1">
+                    {myTickets.filter((t) => t.status === "active").length} Active
+                  </Badge>
+                  <Badge className="bg-white/10 text-white border-white/20 font-subheading text-sm px-3 py-1">
+                    {myTickets.filter((t) => t.status === "used").length} Used
+                  </Badge>
                 </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {myTickets.map((ticket) => (
+                <Card
+                  key={ticket.id}
+                  onClick={() => router.push(`/tickets/${ticket.id}`)}
+                  className="group overflow-hidden border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md hover:border-white/20 transition-all duration-300 hover:shadow-2xl hover:shadow-white/5 cursor-pointer hover:-translate-y-1"
+                >
+                  {/* Event Cover Image */}
+                  <div className="relative h-40 w-full overflow-hidden">
+                    <Image
+                      src={ticket.eventCover || "/placeholder.svg"}
+                      alt={ticket.eventName}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+
+                    {/* Status Badge on image */}
+                    <div className="absolute top-3 right-3">
+                      <Badge
+                        className={`font-subheading font-semibold text-xs px-3 py-1 ${
+                          ticket.status === "active"
+                            ? "bg-green-500/90 text-white border-green-400/50"
+                            : "bg-white/90 text-gray-900 border-white/50"
+                        }`}
+                      >
+                        {ticket.status === "active" ? "Active" : "Used"}
+                      </Badge>
+                    </div>
+
+                    {/* Ticket icon overlay */}
+                    <div className="absolute bottom-3 left-3">
+                      <div className="glass-effect p-2 rounded-full">
+                        <Ticket className="h-5 w-5 text-white" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <CardContent className="p-5 space-y-3">
+                    {/* Event Name */}
+                    <h3 className="font-subheading font-semibold text-lg text-white leading-tight line-clamp-2 group-hover:text-gray-100 transition-colors">
+                      {ticket.eventName}
+                    </h3>
+
+                    {/* Ticket Category */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-gray-400 font-body text-sm">Category</span>
+                      <Badge
+                        className={`font-subheading font-semibold text-xs px-3 py-1 ${
+                          ticket.ticketCategory === "VIP"
+                            ? "bg-purple-500/20 text-purple-300 border-purple-500/30"
+                            : "bg-blue-500/20 text-blue-300 border-blue-500/30"
+                        }`}
+                      >
+                        {ticket.ticketCategory}
+                      </Badge>
+                    </div>
+
+                    {/* NFT Code */}
+                    <div className="p-3 rounded-lg bg-white/5 border border-white/10">
+                      <p className="text-xs text-gray-400 font-body mb-1">NFT Code</p>
+                      <p className="text-sm text-white font-mono">#{ticket.nftCode.substring(0, 13)}...</p>
+                    </div>
+
+                    {/* Purchase Date */}
+                    <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                      <span className="text-gray-400 font-body text-xs">Purchased</span>
+                      <span className="text-white font-subheading font-medium text-sm">
+                        {new Date(ticket.purchaseDate).toLocaleDateString("en-US", {
+                          month: "short",
+                          day: "numeric",
+                          year: "numeric",
+                        })}
+                      </span>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         )}
 

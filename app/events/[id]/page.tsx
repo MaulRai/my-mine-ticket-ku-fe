@@ -91,7 +91,6 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
   const { id } = use(params)
   const router = useRouter()
   const event = eventData[id] || eventData["1"]
-  const [selectedTicket, setSelectedTicket] = useState<string | null>(null)
   const [marketPage, setMarketPage] = useState(0)
   const [devSoldOutMode, setDevSoldOutMode] = useState(event.soldOut)
   const [isFavorite, setIsFavorite] = useState(false)
@@ -127,9 +126,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
   const ticketsSoldPercentage = ((totalTicketsSold / totalTickets) * 100).toFixed(1)
 
   const handleCheckout = () => {
-    if (selectedTicket) {
-      router.push(`/events/${id}/checkout?ticket=${selectedTicket}`)
-    }
+    router.push(`/events/${id}/checkout`)
   }
 
   return (
@@ -240,23 +237,9 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                   </div>
 
                   <div className="space-y-3">
-                    <div
-                      onClick={() => setSelectedTicket("regular")}
-                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
-                        selectedTicket === "regular"
-                          ? "border-white/40 bg-white/10"
-                          : "border-white/10 hover:border-white/20"
-                      }`}
-                    >
+                    <div className="p-4 rounded-lg border-2 border-white/10 hover:border-white/20 transition-all">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-subheading font-semibold text-white">Regular Ticket</h3>
-                        <div
-                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                            selectedTicket === "regular" ? "border-white bg-white" : "border-white/40"
-                          }`}
-                        >
-                          {selectedTicket === "regular" && <div className="w-2.5 h-2.5 rounded-full bg-black" />}
-                        </div>
                       </div>
                       <p className="text-2xl font-heading text-white mb-1">Rp 350,000</p>
                       <p className="text-gray-400 font-body text-xs mb-2">General admission</p>
@@ -269,23 +252,9 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                       </div>
                     </div>
 
-                    <div
-                      onClick={() => setSelectedTicket("vip")}
-                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
-                        selectedTicket === "vip"
-                          ? "border-white/40 bg-white/10"
-                          : "border-white/10 hover:border-white/20"
-                      }`}
-                    >
+                    <div className="p-4 rounded-lg border-2 border-white/10 hover:border-white/20 transition-all">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-subheading font-semibold text-white">VIP Ticket</h3>
-                        <div
-                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                            selectedTicket === "vip" ? "border-white bg-white" : "border-white/40"
-                          }`}
-                        >
-                          {selectedTicket === "vip" && <div className="w-2.5 h-2.5 rounded-full bg-black" />}
-                        </div>
                       </div>
                       <p className="text-2xl font-heading text-white mb-1">Rp 750,000</p>
                       <p className="text-gray-400 font-body text-xs mb-2">Premium seating + exclusive perks</p>
@@ -299,9 +268,8 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                   </div>
 
                   <Button
-                    disabled={!selectedTicket}
                     onClick={handleCheckout}
-                    className="w-full h-12 bg-gradient-to-b from-gray-300 via-gray-500 to-gray-700 hover:from-gray-200 hover:to-gray-600 text-white font-subheading font-semibold text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full h-12 bg-gradient-to-b from-gray-400 via-gray-500 to-gray-700 hover:from-gray-300 hover:to-gray-600 text-white font-subheading font-semibold text-base transition-all duration-300"
                   >
                     <Ticket className="h-5 w-5 mr-2" />
                     Purchase Ticket
