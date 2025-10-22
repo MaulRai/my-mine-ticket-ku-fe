@@ -64,6 +64,9 @@ export default function RegisterPage() {
           {/* Register Card */}
           <div className="glass-effect p-8">
             <div className="mb-8 text-center">
+              <div className="mb-6 flex justify-center">
+                <img src="/images/app-logo.png" alt="App Logo" className="h-auto w-100" />
+              </div>
               <h1 className="font-heading mb-2 text-4xl text-white">Create Account</h1>
               <p className="font-body text-white/60">Join us and start collecting tickets</p>
             </div>

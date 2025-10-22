@@ -42,6 +42,9 @@ export default function LoginPage() {
           {/* Login Card */}
           <div className="glass-effect p-8">
             <div className="mb-8 text-center">
+              <div className="mb-6 flex justify-center">
+                <img src="/images/app-logo.png" alt="App Logo" className="h-auto w-100" />
+              </div>
               <h1 className="font-heading mb-2 text-4xl text-white">Welcome Back</h1>
               <p className="font-body text-white/60">Sign in to access your tickets</p>
             </div>
