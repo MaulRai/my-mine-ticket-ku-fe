@@ -32,7 +32,7 @@ export function Navbar() {
                 Explore Tickets
               </Button>
             </Link>
-            <Link href="#">
+            <Link href="/profile">
               <Button
                 variant="ghost"
                 className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
