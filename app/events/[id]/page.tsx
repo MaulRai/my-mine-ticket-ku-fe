@@ -65,7 +65,7 @@ const eventData: Record<string, EventDataType> = {
       "Experience the ultimate music festival featuring Indonesia's hottest indie and alternative bands. Neon Waves Festival brings together the best of contemporary Indonesian music in an unforgettable night of performances, lights, and energy.",
     ticketPrice: "Starting from Rp 350,000",
     organizer: "Wave Entertainment",
-    soldOut: true,
+    soldOut: false,
   },
   "2": {
     id: 2,

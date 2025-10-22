@@ -235,7 +235,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
       const mouseX = e.clientX - centerX
       const mouseY = e.clientY - centerY
 
-      const maxTilt = 15
+      const maxTilt = 5
       const rotateY = (mouseX / (rect.width / 2)) * maxTilt
       const rotateX = -(mouseY / (rect.height / 2)) * maxTilt
 
