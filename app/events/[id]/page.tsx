@@ -168,57 +168,57 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
       )}
 
       {/* Hero Section with Banner */}
-      <div className="relative h-[370px] m-8 mt-0 mb-0 overflow-visible rounded-b-2xl bg-black">
+      <div className="relative h-[250px] sm:h-[300px] md:h-[370px] m-4 sm:m-6 md:m-8 mt-0 mb-0 overflow-visible rounded-b-2xl bg-black">
         <div className="absolute inset-0 overflow-hidden rounded-b-2xl">
           <Image src={event.banner || "/placeholder.svg"} alt="Event banner" fill className="object-cover" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 via-60% to-black/80 rounded-b-2xl" />
 
         <div className="absolute inset-0 flex items-end justify-start">
-          <div className="text-white px-12 pb-12 flex flex-row items-start gap-6">
+          <div className="text-white px-4 sm:px-6 md:px-12 pb-6 sm:pb-8 md:pb-12 flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
             <Link href="/events">
-              <button className="glass-effect p-3 rounded-full hover:bg-white/30 transition-all z-10" aria-label="Back">
-                <ArrowLeft className="h-6 w-6 text-white" />
+              <button className="glass-effect p-2 sm:p-3 rounded-full hover:bg-white/30 transition-all z-10" aria-label="Back">
+                <ArrowLeft className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </button>
             </Link>
 
             {/* Event Logo */}
-            <div className="relative h-40 w-40 rounded-xl overflow-hidden shadow-2xl border-4 border-white/20">
+            <div className="relative h-24 w-24 sm:h-32 sm:w-32 md:h-40 md:w-40 rounded-xl overflow-hidden shadow-2xl border-2 sm:border-4 border-white/20">
               <Image src={event.logo || "/placeholder.svg"} alt={event.name} fill className="object-cover" />
             </div>
 
             {/* Event Info */}
-            <div className="flex-1 pb-2">
-              <div className="mb-3 flex items-center gap-3">
-                <Badge className="glass-effect text-white border-white/30 font-subheading font-semibold text-sm px-4 py-1.5">
+            <div className="flex-1 pb-2 w-full sm:w-auto">
+              <div className="mb-2 sm:mb-3 flex items-center gap-2 sm:gap-3 flex-wrap">
+                <Badge className="glass-effect text-white border-white/30 font-subheading font-semibold text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5">
                   {event.category}
                 </Badge>
                 <button
                   onClick={handleShare}
-                  className="glass-effect p-2 rounded-full hover:bg-white/30 transition-all"
+                  className="glass-effect p-1.5 sm:p-2 rounded-full hover:bg-white/30 transition-all"
                   aria-label="Share event"
                 >
-                  <Share className="h-5 w-5 text-white" />
+                  <Share className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                 </button>
                 <button
                   onClick={() => setIsFavorite(!isFavorite)}
-                  className={`glass-effect p-2 rounded-full hover:bg-white/30 transition-all ${
+                  className={`glass-effect p-1.5 sm:p-2 rounded-full hover:bg-white/30 transition-all ${
                     isFavorite ? "bg-red-500/30" : ""
                   }`}
                   aria-label="Favorite event"
                 >
-                  <Heart className={`h-5 w-5 ${isFavorite ? "fill-red-500 text-red-500" : "text-white"}`} />
+                  <Heart className={`h-4 w-4 sm:h-5 sm:w-5 ${isFavorite ? "fill-red-500 text-red-500" : "text-white"}`} />
                 </button>
               </div>
-              <h1 className="text-5xl font-heading mb-4 text-balance">{event.name}</h1>
-              <div className="mb-4">
-                <p className="text-xl font-subheading font-semibold text-gray-200">
+              <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-heading mb-2 sm:mb-4 text-balance">{event.name}</h1>
+              <div className="mb-2 sm:mb-4">
+                <p className="text-sm sm:text-base md:text-lg lg:text-xl font-subheading font-semibold text-gray-200">
                   Featuring: {event.featuring.join(", ")}
                 </p>
               </div>
-              <div className="flex items-center gap-2 glass-effect px-4 py-2 rounded-full w-fit">
-                <Ticket className="h-5 w-5 text-white" />
-                <span className="text-white font-subheading font-semibold text-sm">
+              <div className="flex items-center gap-2 glass-effect px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-fit">
+                <Ticket className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                <span className="text-white font-subheading font-semibold text-xs sm:text-sm">
                   {totalTicketsSold.toLocaleString("id-ID")} / {totalTickets.toLocaleString("id-ID")} tickets sold (
                   {ticketsSoldPercentage}%)
                 </span>
@@ -227,24 +227,24 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
           </div>
         </div>
 
-        {/* Ticket Purchase Card - Positioned at border */}
-        <div className="absolute top-[calc(100%-5rem)] right-12 w-96 z-20">
+        {/* Ticket Purchase Card - Positioned at border (Desktop only) */}
+        <div className="hidden lg:block absolute top-[calc(100%-5rem)] right-4 sm:right-6 md:right-12 w-full max-w-[calc(100%-2rem)] sm:max-w-[calc(100%-3rem)] md:w-96 z-20">
           <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md shadow-2xl">
-            <CardContent className="p-6 space-y-6">
+            <CardContent className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5 md:space-y-6">
               {isSoldOut ? (
                 <>
                   <div>
-                    <h2 className="text-2xl font-heading text-white mb-2">Tickets Sold Out</h2>
-                    <p className="text-gray-400 font-body text-sm">
+                    <h2 className="text-xl sm:text-2xl font-heading text-white mb-2">Tickets Sold Out</h2>
+                    <p className="text-gray-400 font-body text-xs sm:text-sm">
                       All tickets have been sold. Check the resale marketplace below for available tickets.
                     </p>
                   </div>
-                  <div className="p-4 rounded-lg border-2 border-red-500/30 bg-red-500/10">
-                    <div className="flex items-center gap-3 mb-2">
-                      <Ticket className="h-6 w-6 text-red-400" />
-                      <h3 className="font-subheading font-semibold text-red-400">No Tickets Available</h3>
+                  <div className="p-3 sm:p-4 rounded-lg border-2 border-red-500/30 bg-red-500/10">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                      <Ticket className="h-5 w-5 sm:h-6 sm:w-6 text-red-400" />
+                      <h3 className="font-subheading font-semibold text-sm sm:text-base text-red-400">No Tickets Available</h3>
                     </div>
-                    <p className="text-gray-300 font-body text-sm">
+                    <p className="text-gray-300 font-body text-xs sm:text-sm">
                       Browse resale tickets from verified sellers in the marketplace section below.
                     </p>
                   </div>
@@ -257,35 +257,35 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
               ) : (
                 <>
                   <div>
-                    <h2 className="text-2xl font-heading text-white mb-2">Get Your Tickets</h2>
-                    <p className="text-gray-400 font-body text-sm">Secure your spot at this amazing event</p>
+                    <h2 className="text-xl sm:text-2xl font-heading text-white mb-2">Get Your Tickets</h2>
+                    <p className="text-gray-400 font-body text-xs sm:text-sm">Secure your spot at this amazing event</p>
                   </div>
 
-                  <div className="space-y-3">
-                    <div className="p-4 rounded-lg border-2 border-white/10 hover:border-white/20 transition-all">
+                  <div className="space-y-2 sm:space-y-3">
+                    <div className="p-3 sm:p-4 rounded-lg border-2 border-white/10 hover:border-white/20 transition-all">
                       <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-subheading font-semibold text-white">Regular Ticket</h3>
+                        <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">Regular Ticket</h3>
                       </div>
-                      <p className="text-2xl font-heading text-white mb-1">Rp 350,000</p>
+                      <p className="text-xl sm:text-2xl font-heading text-white mb-1">Rp 350,000</p>
                       <p className="text-gray-400 font-body text-xs mb-2">General admission</p>
                       <div className="flex items-center justify-between pt-2 border-t border-white/10">
                         <span className="text-gray-400 font-body text-xs">Remaining</span>
-                        <span className="text-white font-subheading font-semibold text-sm">
+                        <span className="text-white font-subheading font-semibold text-xs sm:text-sm">
                           {regularTicketsRemaining.toLocaleString("id-ID")} /{" "}
                           {event.regularTickets.toLocaleString("id-ID")}
                         </span>
                       </div>
                     </div>
 
-                    <div className="p-4 rounded-lg border-2 border-white/10 hover:border-white/20 transition-all">
+                    <div className="p-3 sm:p-4 rounded-lg border-2 border-white/10 hover:border-white/20 transition-all">
                       <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-subheading font-semibold text-white">VIP Ticket</h3>
+                        <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">VIP Ticket</h3>
                       </div>
-                      <p className="text-2xl font-heading text-white mb-1">Rp 750,000</p>
+                      <p className="text-xl sm:text-2xl font-heading text-white mb-1">Rp 750,000</p>
                       <p className="text-gray-400 font-body text-xs mb-2">Premium seating + exclusive perks</p>
                       <div className="flex items-center justify-between pt-2 border-t border-white/10">
                         <span className="text-gray-400 font-body text-xs">Remaining</span>
-                        <span className="text-white font-subheading font-semibold text-sm">
+                        <span className="text-white font-subheading font-semibold text-xs sm:text-sm">
                           {vipTicketsRemaining.toLocaleString("id-ID")} / {event.vipTickets.toLocaleString("id-ID")}
                         </span>
                       </div>
@@ -294,9 +294,9 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
 
                   <Button
                     onClick={handleCheckout}
-                    className="w-full h-12 bg-gradient-to-b from-gray-400 via-gray-500 to-gray-700 hover:from-gray-300 hover:to-gray-600 text-white font-subheading font-semibold text-base transition-all duration-300"
+                    className="w-full h-10 sm:h-11 md:h-12 bg-gradient-to-b from-gray-400 via-gray-500 to-gray-700 hover:from-gray-300 hover:to-gray-600 text-white font-subheading font-semibold text-sm sm:text-base transition-all duration-300"
                   >
-                    <Ticket className="h-5 w-5 mr-2" />
+                    <Ticket className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                     Purchase Ticket
                   </Button>
 
@@ -313,72 +313,158 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
       </div>
 
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-8 pt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-4 sm:px-6 md:px-8 py-6 sm:py-8 pt-8 sm:pt-10 md:pt-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {/* Event Details - Left side with space for ticket card */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-4 sm:space-y-6">
+            {/* Ticket Purchase Card - Mobile/Tablet First */}
+            <div className="lg:hidden">
+              <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md shadow-2xl">
+                <CardContent className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5 md:space-y-6">
+                  {isSoldOut ? (
+                    <>
+                      <div>
+                        <h2 className="text-xl sm:text-2xl font-heading text-white mb-2">Tickets Sold Out</h2>
+                        <p className="text-gray-400 font-body text-xs sm:text-sm">
+                          All tickets have been sold. Check the resale marketplace below for available tickets.
+                        </p>
+                      </div>
+                      <div className="p-3 sm:p-4 rounded-lg border-2 border-red-500/30 bg-red-500/10">
+                        <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                          <Ticket className="h-5 w-5 sm:h-6 sm:w-6 text-red-400" />
+                          <h3 className="font-subheading font-semibold text-sm sm:text-base text-red-400">
+                            No Tickets Available
+                          </h3>
+                        </div>
+                        <p className="text-gray-300 font-body text-xs sm:text-sm">
+                          Browse resale tickets from verified sellers in the marketplace section below.
+                        </p>
+                      </div>
+                      <div className="pt-4 border-t border-white/10">
+                        <p className="text-gray-400 font-body text-xs text-center">
+                          Organized by <span className="text-white font-semibold">{event.organizer}</span>
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div>
+                        <h2 className="text-xl sm:text-2xl font-heading text-white mb-2">Get Your Tickets</h2>
+                        <p className="text-gray-400 font-body text-xs sm:text-sm">Secure your spot at this amazing event</p>
+                      </div>
+
+                      <div className="space-y-2 sm:space-y-3">
+                        <div className="p-3 sm:p-4 rounded-lg border-2 border-white/10 hover:border-white/20 transition-all">
+                          <div className="flex justify-between items-start mb-2">
+                            <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">Regular Ticket</h3>
+                          </div>
+                          <p className="text-xl sm:text-2xl font-heading text-white mb-1">Rp 350,000</p>
+                          <p className="text-gray-400 font-body text-xs mb-2">General admission</p>
+                          <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                            <span className="text-gray-400 font-body text-xs">Remaining</span>
+                            <span className="text-white font-subheading font-semibold text-xs sm:text-sm">
+                              {regularTicketsRemaining.toLocaleString("id-ID")} /{" "}
+                              {event.regularTickets.toLocaleString("id-ID")}
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="p-3 sm:p-4 rounded-lg border-2 border-white/10 hover:border-white/20 transition-all">
+                          <div className="flex justify-between items-start mb-2">
+                            <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">VIP Ticket</h3>
+                          </div>
+                          <p className="text-xl sm:text-2xl font-heading text-white mb-1">Rp 750,000</p>
+                          <p className="text-gray-400 font-body text-xs mb-2">Premium seating + exclusive perks</p>
+                          <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                            <span className="text-gray-400 font-body text-xs">Remaining</span>
+                            <span className="text-white font-subheading font-semibold text-xs sm:text-sm">
+                              {vipTicketsRemaining.toLocaleString("id-ID")} / {event.vipTickets.toLocaleString("id-ID")}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <Button
+                        onClick={handleCheckout}
+                        className="w-full h-10 sm:h-11 md:h-12 bg-gradient-to-b from-gray-400 via-gray-500 to-gray-700 hover:from-gray-300 hover:to-gray-600 text-white font-subheading font-semibold text-sm sm:text-base transition-all duration-300"
+                      >
+                        <Ticket className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+                        Purchase Ticket
+                      </Button>
+
+                      <div className="pt-4 border-t border-white/10">
+                        <p className="text-gray-400 font-body text-xs text-center">
+                          Organized by <span className="text-white font-semibold">{event.organizer}</span>
+                        </p>
+                      </div>
+                    </>
+                  )}
+                </CardContent>
+              </Card>
+            </div>
+
             {/* About Section */}
             <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-heading text-white mb-4">About This Event</h2>
-                <p className="text-gray-300 font-body leading-relaxed text-base">{event.description}</p>
+              <CardContent className="p-4 sm:p-5 md:p-6">
+                <h2 className="text-xl sm:text-2xl font-heading text-white mb-3 sm:mb-4">About This Event</h2>
+                <p className="text-gray-300 font-body leading-relaxed text-sm sm:text-base">{event.description}</p>
               </CardContent>
             </Card>
 
             {/* Event Information Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md hover:border-white/20 transition-all">
-                <CardContent className="px-6 py-2">
-                  <div className="flex items-start gap-4">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 border border-white/20">
-                      <MapPin className="h-6 w-6 text-white" />
+                <CardContent className="px-4 sm:px-6 py-2">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 border border-white/20 shrink-0">
+                      <MapPin className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-subheading font-semibold text-white mb-1">Location</h3>
-                      <p className="text-gray-300 font-body text-sm">{event.location}</p>
-                      <p className="text-gray-400 font-body text-xs mt-1">{event.address}</p>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-subheading font-semibold text-sm sm:text-base text-white mb-1">Location</h3>
+                      <p className="text-gray-300 font-body text-xs sm:text-sm">{event.location}</p>
+                      <p className="text-gray-400 font-body text-xs mt-1 break-words">{event.address}</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md hover:border-white/20 transition-all">
-                <CardContent className="px-6 py-2">
-                  <div className="flex items-start gap-4">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 border border-white/20">
-                      <Calendar className="h-6 w-6 text-white" />
+                <CardContent className="px-4 sm:px-6 py-2">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 border border-white/20 shrink-0">
+                      <Calendar className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-subheading font-semibold text-white mb-1">Date</h3>
-                      <p className="text-gray-300 font-body text-sm">{event.date}</p>
+                      <h3 className="font-subheading font-semibold text-sm sm:text-base text-white mb-1">Date</h3>
+                      <p className="text-gray-300 font-body text-xs sm:text-sm">{event.date}</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md hover:border-white/20 transition-all">
-                <CardContent className="px-6 py-2">
-                  <div className="flex items-start gap-4">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 border border-white/20">
-                      <Clock className="h-6 w-6 text-white" />
+                <CardContent className="px-4 sm:px-6 py-2">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 border border-white/20 shrink-0">
+                      <Clock className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-subheading font-semibold text-white mb-1">Time</h3>
-                      <p className="text-gray-300 font-body text-sm">{event.time}</p>
+                      <h3 className="font-subheading font-semibold text-sm sm:text-base text-white mb-1">Time</h3>
+                      <p className="text-gray-300 font-body text-xs sm:text-sm">{event.time}</p>
                     </div>
                   </div>
                 </CardContent>
               </Card>
 
               <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md hover:border-white/20 transition-all">
-                <CardContent className="px-6 py-2">
-                  <div className="flex items-start gap-4">
-                    <div className="flex items-center justify-center w-12 h-12 rounded-full bg-white/10 border border-white/20">
-                      <Users className="h-6 w-6 text-white" />
+                <CardContent className="px-4 sm:px-6 py-2">
+                  <div className="flex items-start gap-3 sm:gap-4">
+                    <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-white/10 border border-white/20 shrink-0">
+                      <Users className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-subheading font-semibold text-white mb-1">Capacity</h3>
-                      <p className="text-gray-300 font-body text-sm">{event.capacity}</p>
+                      <h3 className="font-subheading font-semibold text-sm sm:text-base text-white mb-1">Capacity</h3>
+                      <p className="text-gray-300 font-body text-xs sm:text-sm">{event.capacity}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -387,19 +473,19 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
 
             {isSoldOut && (
               <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-6">
+                <CardContent className="p-4 sm:p-5 md:p-6">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 mb-4 sm:mb-6">
                     <div>
-                      <h2 className="text-2xl font-heading text-white mb-2">Resale Marketplace</h2>
-                      <p className="text-gray-400 font-body text-sm">Verified resale tickets from other attendees</p>
+                      <h2 className="text-xl sm:text-2xl font-heading text-white mb-2">Resale Marketplace</h2>
+                      <p className="text-gray-400 font-body text-xs sm:text-sm">Verified resale tickets from other attendees</p>
                     </div>
-                    <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 font-subheading font-semibold">
+                    <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 font-subheading font-semibold text-xs sm:text-sm px-3 py-1 w-fit">
                       {resaleTickets.length} Available
                     </Badge>
                   </div>
 
                   {/* Marketplace Grid */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 mb-4 sm:mb-6">
                     {currentTickets.map((ticket) => {
                       const priceIncrease = ((ticket.price - ticket.originalPrice) / ticket.originalPrice) * 100
                       return (
@@ -407,34 +493,34 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                           key={ticket.id}
                           className="border-white/10 bg-gradient-to-br from-gray-800/50 to-gray-900/50 hover:border-white/30 transition-all cursor-pointer"
                         >
-                          <CardContent className="p-4">
-                            <div className="flex items-start justify-between mb-3">
-                              <div>
-                                <h3 className="font-subheading font-semibold text-white text-sm mb-1">
+                          <CardContent className="p-3 sm:p-4">
+                            <div className="flex items-start justify-between mb-2 sm:mb-3 gap-2">
+                              <div className="flex-1 min-w-0">
+                                <h3 className="font-subheading font-semibold text-white text-xs sm:text-sm mb-1">
                                   {ticket.type} Ticket
                                 </h3>
-                                <p className="text-gray-400 font-body text-xs">Seller: {ticket.seller}</p>
+                                <p className="text-gray-400 font-body text-xs truncate">Seller: {ticket.seller}</p>
                               </div>
                               <Badge
                                 className={`${
                                   priceIncrease > 10
                                     ? "bg-orange-500/20 text-orange-400 border-orange-500/30"
                                     : "bg-green-500/20 text-green-400 border-green-500/30"
-                                } font-subheading text-xs`}
+                                } font-subheading text-xs shrink-0`}
                               >
                                 {priceIncrease > 0 ? "+" : ""}
                                 {priceIncrease.toFixed(0)}%
                               </Badge>
                             </div>
-                            <div className="mb-3">
-                              <p className="text-2xl font-heading text-white">
+                            <div className="mb-2 sm:mb-3">
+                              <p className="text-xl sm:text-2xl font-heading text-white">
                                 Rp {ticket.price.toLocaleString("id-ID")}
                               </p>
                               <p className="text-gray-500 font-body text-xs line-through">
                                 Rp {ticket.originalPrice.toLocaleString("id-ID")}
                               </p>
                             </div>
-                            <Button className="w-full h-9 bg-gradient-to-b from-gray-400 via-gray-600 to-gray-700 hover:from-gray-300 hover:to-gray-600 text-white font-subheading font-semibold text-sm">
+                            <Button className="w-full h-8 sm:h-9 bg-gradient-to-b from-gray-400 via-gray-600 to-gray-700 hover:from-gray-300 hover:to-gray-600 text-white font-subheading font-semibold text-xs sm:text-sm">
                               Buy Now
                             </Button>
                           </CardContent>
