@@ -15,7 +15,7 @@ export function Navbar() {
         <div className="glass-effect flex items-center justify-between px-4 py-3">
           {/* Logo */}
           <Link href="/events" className="flex items-center gap-2 transition-opacity hover:opacity-80">
-            <div className="relative w-32 h-8 sm:w-48 sm:h-10 md:w-64">
+            <div className="relative w-48 h-8 sm:w-48 sm:h-10 md:w-64">
               <Image src="/images/app-logo.png" alt="App Logo" fill className="object-contain" />
             </div>
           </Link>

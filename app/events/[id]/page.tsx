@@ -17,8 +17,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Eye,
-  Share,
   Heart,
+  Share2,
 } from "lucide-react"
 
 interface EventDataType {
@@ -168,7 +168,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
       )}
 
       {/* Hero Section with Banner */}
-      <div className="relative h-[250px] sm:h-[300px] md:h-[370px] m-4 sm:m-6 md:m-8 mt-0 mb-0 overflow-visible rounded-b-2xl bg-black">
+      <div className="relative h-[370px] m-4 sm:m-6 md:m-8 mt-0 mb-0 overflow-visible rounded-b-2xl bg-black">
         <div className="absolute inset-0 overflow-hidden rounded-b-2xl">
           <Image src={event.banner || "/placeholder.svg"} alt="Event banner" fill className="object-cover" />
         </div>
@@ -198,7 +198,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                   className="glass-effect p-1.5 sm:p-2 rounded-full hover:bg-white/30 transition-all"
                   aria-label="Share event"
                 >
-                  <Share className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
+                  <Share2 className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                 </button>
                 <button
                   onClick={() => setIsFavorite(!isFavorite)}
