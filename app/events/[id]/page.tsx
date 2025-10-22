@@ -114,14 +114,15 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
   const router = useRouter()
   const event = eventData[id] || eventData["1"]
   const [marketPage, setMarketPage] = useState(0)
-  const [devSoldOutMode, setDevSoldOutMode] = useState(event.soldOut)
+  const [devSoldOutMode, setDevSoldOutMode] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
 
   const TICKETS_PER_PAGE = 9
   const totalPages = Math.ceil(resaleTickets.length / TICKETS_PER_PAGE)
   const currentTickets = resaleTickets.slice(marketPage * TICKETS_PER_PAGE, (marketPage + 1) * TICKETS_PER_PAGE)
 
-  const isSoldOut = devSoldOutMode
+  const isSoldOut = devSoldOutMode || event.soldOut
+  const isDevMode = process.env.NODE_ENV === "development"
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -153,16 +154,18 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
 
   return (
     <div className="min-h-screen bg-background">
-      <button
-        onClick={() => setDevSoldOutMode(!devSoldOutMode)}
-        className="fixed top-24 right-6 z-50 glass-effect px-4 py-2 rounded-full hover:bg-white/30 transition-all flex items-center gap-2 border border-white/20"
-        title="Toggle between normal and sold-out mode"
-      >
-        <Eye className="h-4 w-4 text-white" />
-        <span className="text-white font-subheading text-sm font-semibold">
-          DEV: {devSoldOutMode ? "Sold Out" : "Available"}
-        </span>
-      </button>
+      {isDevMode && (
+        <button
+          onClick={() => setDevSoldOutMode(!devSoldOutMode)}
+          className="fixed top-24 right-6 z-50 glass-effect px-4 py-2 rounded-full hover:bg-white/30 transition-all flex items-center gap-2 border border-white/20"
+          title="Toggle between normal and sold-out mode"
+        >
+          <Eye className="h-4 w-4 text-white" />
+          <span className="text-white font-subheading text-sm font-semibold">
+            DEV: {devSoldOutMode ? "Sold Out" : "Available"}
+          </span>
+        </button>
+      )}
 
       {/* Hero Section with Banner */}
       <div className="relative h-[370px] m-8 mt-0 mb-0 overflow-visible rounded-b-2xl bg-black">

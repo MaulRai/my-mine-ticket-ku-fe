@@ -224,7 +224,7 @@ export default function EventsPage() {
   const currentFeaturedEvent = featuredEvents[currentBannerIndex]
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-[#000000] via-[#000a1a] to-[#000000]">
       <div className="relative h-[400px] m-8 my-4 overflow-visible rounded-2xl bg-black">
         {/* Background image */}
         <div className={`transition-opacity duration-300 ${isTransitioning ? "opacity-0" : "opacity-100"}`}>
