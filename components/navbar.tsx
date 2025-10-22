@@ -24,7 +24,7 @@ export function Navbar() {
                 My Tickets
               </Button>
             </Link>
-            <Link href="/events">
+            <Link href="/explore-tickets">
               <Button
                 variant="ghost"
                 className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
