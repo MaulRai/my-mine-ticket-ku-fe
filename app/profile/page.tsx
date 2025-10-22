@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -169,7 +169,7 @@ const myTickets = [
   },
 ]
 
-export default function ProfilePage() {
+function ProfileContent() {
   const [activeTab, setActiveTab] = useState<Tab>("wallet-info")
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -453,5 +453,22 @@ export default function ProfilePage() {
         )}
       </div>
     </div>
+  )
+}
+
+export default function ProfilePage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background pt-32 pb-12">
+        <div className="container mx-auto px-4 max-w-6xl">
+          <div className="mb-8">
+            <h1 className="text-4xl font-heading text-white mb-2">My Profile</h1>
+            <p className="text-gray-400 font-body">Loading...</p>
+          </div>
+        </div>
+      </div>
+    }>
+      <ProfileContent />
+    </Suspense>
   )
 }

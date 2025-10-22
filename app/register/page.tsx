@@ -4,6 +4,7 @@ import type React from "react"
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -65,7 +66,7 @@ export default function RegisterPage() {
           <div className="glass-effect p-8">
             <div className="mb-8 text-center">
               <div className="mb-6 flex justify-center">
-                <img src="/images/app-logo.png" alt="App Logo" className="h-auto w-100" />
+                <Image src="/images/app-logo.png" alt="App Logo" width={400} height={80} className="h-auto w-100" />
               </div>
               <h1 className="font-heading mb-2 text-4xl text-white">Create Account</h1>
               <p className="font-body text-white/60">Join us and start collecting tickets</p>

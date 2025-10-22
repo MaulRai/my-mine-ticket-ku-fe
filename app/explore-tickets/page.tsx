@@ -78,8 +78,8 @@ export default function ExploreTicketsPage() {
           {/* Random Button Section */}
           <div className="space-y-4">
             <p className="font-body text-lg text-gray-400">
-              Don't have a ticket identifier? Discover a recently issued NFT ticket and explore its complete journey
-              from creation to current status.
+              Don&apos;t have a ticket identifier? Discover a recently issued NFT ticket and explore its complete
+              journey from creation to current status.
             </p>
             <Button
               onClick={handleRandomTicket}
