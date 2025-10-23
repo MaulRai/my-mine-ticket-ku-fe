@@ -127,86 +127,56 @@
 }
 
 @layer utilities {
-  .font-heading {
-    font-family: var(--font-heading), sans-serif;
+  .glass-fx {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.08);
+    background-image: linear-gradient(135deg,
+        rgba(255, 255, 255, 0.2) 0%,
+        rgba(255, 255, 255, 0.05) 100%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+    padding: 0.5rem 0.75rem;
+
+    /* Ini penting untuk Windows/Chromium */
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    will-change: backdrop-filter;
+    isolation: isolate;
+    /* menjaga blur tetap kontekstual */
   }
 
-  .font-subheading {
-    font-family: var(--font-subheading), sans-serif;
+  .glass-fx::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top left,
+        rgba(255, 255, 255, 0.25),
+        transparent 40%);
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 0;
   }
 
-  .font-body {
-    font-family: var(--font-body), sans-serif;
+  .clear-glass-fx {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 1rem;
+    padding: 0.5rem 0.75rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    will-change: backdrop-filter;
+    isolation: isolate;
   }
 
-  @layer utilities {
-    .glass-fx {
-      position: relative;
-      /* Solid fallback background for Windows/unsupported browsers */
-      background: rgba(252, 252, 252, 0.95);
-
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-      border-radius: 1rem;
-      padding: 4px 8px;
-
-      /* Force hardware acceleration */
-      transform: translateZ(0);
-    }
-
-    /* Only apply backdrop-filter on supported browsers */
-    @supports (backdrop-filter: blur(20px)) {
-      .glass-fx {
-        background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.15) 0%,
-            rgba(255, 255, 255, 0.05) 100%);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
-      }
-    }
-
-    .glass-fx::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at top left,
-          rgba(255, 255, 255, 0.3),
-          transparent 40%);
-      pointer-events: none;
-      border-radius: inherit;
-    }
-
-    .clear-glass-fx {
-      position: relative;
-      /* Solid fallback background for Windows/unsupported browsers */
-      background: rgba(252, 252, 252, 0.95);
-
-      border: 1px solid rgba(255, 255, 255, 0.25);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-      border-radius: 1rem;
-      padding: 4px 8px;
-
-      /* Force hardware acceleration */
-      transform: translateZ(0);
-    }
-
-    /* Only apply backdrop-filter on supported browsers */
-    @supports (backdrop-filter: blur(20px)) {
-      .clear-glass-fx {
-        background: linear-gradient(135deg,
-            rgba(255, 255, 255, 0.15) 0%,
-            rgba(255, 255, 255, 0.05) 100%);
-        backdrop-filter: blur(20px) saturate(180%);
-        -webkit-backdrop-filter: blur(20px) saturate(180%);
-      }
-    }
-
-    .clear-glass-fx::before {
-      content: "";
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      border-radius: inherit;
-    }
+  .clear-glass-fx::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    z-index: 0;
   }
 }
