@@ -6,14 +6,7 @@ import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Sparkles, Shield, Users, TrendingUp } from "lucide-react"
 
-const rotatingTexts = [
-  "Penyelenggara",
-  "Artis",
-  "Penggemar",
-  "Sponsor",
-  "Investor",
-  "Semua Orang",
-]
+const rotatingTexts = ["Penyelenggara", "Artis", "Penggemar", "Sponsor", "Investor", "Semua Orang"]
 
 export default function Home() {
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
@@ -34,11 +27,11 @@ export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a]">
       {/* Ambient animated background */}
-      <div className="absolute inset-0 overflow-hidden opacity-40">
+      <div className="fixed inset-0 overflow-hidden opacity-40 pointer-events-none">
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-blue-900/30 to-transparent animate-pulse-slow" />
         <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-800/25 to-transparent animate-pulse-slow animation-delay-2000" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-900/20 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-800/20 rounded-full blur-3xl animate-float animation-delay-4000" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-900/20 rounded-full blur-3xl animate-float-drift" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-800/20 rounded-full blur-3xl animate-float-drift animation-delay-4000" />
       </div>
 
       {/* Main Content */}
@@ -48,10 +41,10 @@ export default function Home() {
           <div className="max-w-6xl mx-auto text-center space-y-8">
             {/* App Icon */}
             <div className="flex justify-center">
-              <Image 
-                src="/images/app-icon.png" 
-                alt="MyMineTicketKu Logo" 
-                width={120} 
+              <Image
+                src="/images/app-icon.png"
+                alt="MyMineTicketKu Logo"
+                width={120}
                 height={120}
                 className="object-contain"
               />
@@ -75,8 +68,8 @@ export default function Home() {
 
             {/* Subtext */}
             <p className="text-lg sm:text-xl md:text-2xl text-gray-300 font-body leading-relaxed max-w-4xl mx-auto px-4">
-              Memberdayakan ekosistem kreatif melalui sistem tiket berbasis <span className="italic">blockchain</span> yang transparan, terverifikasi,
-              dan berbagi hasil secara otomatis.
+              Memberdayakan ekosistem kreatif melalui sistem tiket berbasis <span className="italic">blockchain</span>{" "}
+              yang transparan, terverifikasi, dan berbagi hasil secara otomatis.
             </p>
 
             {/* CTA Buttons */}
@@ -104,7 +97,7 @@ export default function Home() {
         </section>
 
         {/* Vision Statement Section */}
-        <section className="py-20 px-4 border-t border-white/10">
+        <section className="py-20 px-4">
           <div className="max-w-6xl mx-auto">
             {/* Section Header */}
             <div className="text-center mb-16 space-y-4">
@@ -134,8 +127,8 @@ export default function Home() {
               <div className="glass-fx bg-black/40 p-8 rounded-2xl border border-white/10">
                 <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
                   Baik Anda seorang artis, penyelenggara, sponsor, maupun penggemar,{" "}
-                  <span className="text-white font-semibold">MyMineTicketKu</span> menjadikan setiap tiket sebagai
-                  bukti keaslian, kepemilikan, dan keberhasilan bersama di dunia hiburan Web3.
+                  <span className="text-white font-semibold">MyMineTicketKu</span> menjadikan setiap tiket sebagai bukti
+                  keaslian, kepemilikan, dan keberhasilan bersama di dunia hiburan Web3.
                 </p>
               </div>
             </div>
@@ -143,18 +136,17 @@ export default function Home() {
             {/* [INSERT VISUALIZATION B HERE: Interactive diagram showing blockchain flow or ecosystem] */}
             <div className="mt-16 p-8 bg-gradient-to-br from-blue-600/10 to-blue-700/5 rounded-2xl border border-blue-500/20">
               <p className="text-center text-gray-400 font-body italic">
-                [Insert visualization/image: Interactive diagram menampilkan alur blockchain dari pembelian tiket hingga pembagian hasil otomatis]
+                [Insert visualization/image: Interactive diagram menampilkan alur blockchain dari pembelian tiket hingga
+                pembagian hasil otomatis]
               </p>
             </div>
           </div>
         </section>
 
         {/* Features Section */}
-        <section className="py-20 px-4 bg-black/20">
+        <section className="py-20 px-4">
           <div className="max-w-6xl mx-auto">
-            <h3 className="text-3xl sm:text-4xl font-heading text-white text-center mb-12">
-              Mengapa MyMineTicketKu?
-            </h3>
+            <h3 className="text-3xl sm:text-4xl font-heading text-white text-center mb-12">Mengapa MyMineTicketKu?</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Feature 1 */}
@@ -164,7 +156,8 @@ export default function Home() {
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Terverifikasi Blockchain</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
-                  Setiap tiket diamankan secara kriptografi dan dapat diverifikasi di blockchain untuk menghilangkan penipuan.
+                  Setiap tiket diamankan secara kriptografi dan dapat diverifikasi di blockchain untuk menghilangkan
+                  penipuan.
                 </p>
               </div>
 
@@ -175,7 +168,8 @@ export default function Home() {
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Pembagian Hasil Otomatis</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
-                  Smart contract mengotomatiskan pembagian pendapatan kepada artis, penyelenggara, dan pihak terkait secara transparan.
+                  Smart contract mengotomatiskan pembagian pendapatan kepada artis, penyelenggara, dan pihak terkait
+                  secara transparan.
                 </p>
               </div>
 
@@ -229,18 +223,22 @@ export default function Home() {
       {/* Custom animations */}
       <style jsx>{`
         @keyframes pulse-slow {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 0.6; }
+          0%, 100% { opacity: 0.25; }
+          33% { opacity: 0.35; }
+          66% { opacity: 0.45; }
         }
-        @keyframes float {
-          0%, 100% { transform: translateY(0px); }
-          50% { transform: translateY(-20px); }
+        @keyframes float-drift {
+          0% { transform: translate(0px, 0px); opacity: 0.2; }
+          25% { transform: translate(30px, -25px); opacity: 0.25; }
+          50% { transform: translate(-20px, -40px); opacity: 0.3; }
+          75% { transform: translate(-35px, -15px); opacity: 0.25; }
+          100% { transform: translate(0px, 0px); opacity: 0.2; }
         }
         .animate-pulse-slow {
-          animation: pulse-slow 8s ease-in-out infinite;
+          animation: pulse-slow 12s ease-in-out infinite;
         }
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
+        .animate-float-drift {
+          animation: float-drift 20s ease-in-out infinite;
         }
         .animation-delay-2000 {
           animation-delay: 2s;
