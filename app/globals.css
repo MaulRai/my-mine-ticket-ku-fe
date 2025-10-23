@@ -128,55 +128,36 @@
 
 @layer utilities {
   .glass-fx {
-    position: relative;
-    background-color: rgba(255, 255, 255, 0.08);
-    background-image: linear-gradient(135deg,
-        rgba(255, 255, 255, 0.2) 0%,
-        rgba(255, 255, 255, 0.05) 100%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 1rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-    padding: 0.5rem 0.75rem;
-
-    /* Ini penting untuk Windows/Chromium */
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    will-change: backdrop-filter;
-    isolation: isolate;
-    /* menjaga blur tetap kontekstual */
+    @apply relative rounded-xl border border-white/25 bg-white/10 backdrop-blur-md shadow-xl;
   }
 
   .glass-fx::before {
     content: "";
-    position: absolute;
-    inset: 0;
+    @apply absolute inset-0 rounded-xl pointer-events-none;
     background: radial-gradient(circle at top left,
         rgba(255, 255, 255, 0.25),
         transparent 40%);
-    pointer-events: none;
-    border-radius: inherit;
-    z-index: 0;
   }
 
   .clear-glass-fx {
-    position: relative;
-    background-color: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 1rem;
-    padding: 0.5rem 0.75rem;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-    backdrop-filter: blur(16px) saturate(180%);
-    -webkit-backdrop-filter: blur(16px) saturate(180%);
-    will-change: backdrop-filter;
-    isolation: isolate;
+    @apply relative rounded-xl border border-white/20 bg-white/5 backdrop-blur-lg shadow-lg;
   }
 
   .clear-glass-fx::before {
     content: "";
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    border-radius: inherit;
-    z-index: 0;
+    @apply absolute inset-0 rounded-xl pointer-events-none;
+  }
+
+  /* Tambahan variasi jika mau lebih kuat efeknya */
+  .strong-glass-fx {
+    @apply relative rounded-2xl border border-white/30 bg-white/20 backdrop-blur-xl shadow-2xl;
+  }
+
+  .strong-glass-fx::before {
+    content: "";
+    @apply absolute inset-0 rounded-2xl pointer-events-none;
+    background: radial-gradient(circle at top right,
+        rgba(255, 255, 255, 0.4),
+        transparent 45%);
   }
 }
