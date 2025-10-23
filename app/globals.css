@@ -142,20 +142,8 @@
   @layer utilities {
     .glass-fx {
       position: relative;
-      /* Fallback for browsers without backdrop-filter support */
-      background: rgba(255, 255, 255, 0.2);
-
-      /* Modern glass effect */
-      background: linear-gradient(135deg,
-          rgba(255, 255, 255, 0.15) 0%,
-          rgba(255, 255, 255, 0.05) 100%);
-
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-
-      /* Enhanced for Windows - try stronger blur */
-      backdrop-filter: blur(20px) saturate(200%);
-      -webkit-backdrop-filter: blur(20px) saturate(200%);
+      /* Solid fallback background for Windows/unsupported browsers */
+      background: rgba(252, 252, 252, 0.95);
 
       border: 1px solid rgba(255, 255, 255, 0.25);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
@@ -164,7 +152,17 @@
 
       /* Force hardware acceleration */
       transform: translateZ(0);
-      will-change: backdrop-filter;
+    }
+
+    /* Only apply backdrop-filter on supported browsers */
+    @supports (backdrop-filter: blur(20px)) {
+      .glass-fx {
+        background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.05) 100%);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+      }
     }
 
     .glass-fx::before {
@@ -180,20 +178,8 @@
 
     .clear-glass-fx {
       position: relative;
-      /* Fallback for browsers without backdrop-filter support */
-      background: rgba(255, 255, 255, 0.2);
-
-      /* Modern glass effect */
-      background: linear-gradient(135deg,
-          rgba(255, 255, 255, 0.15) 0%,
-          rgba(255, 255, 255, 0.05) 100%);
-
-      backdrop-filter: blur(16px) saturate(180%);
-      -webkit-backdrop-filter: blur(16px) saturate(180%);
-
-      /* Enhanced for Windows - try stronger blur */
-      backdrop-filter: blur(20px) saturate(200%);
-      -webkit-backdrop-filter: blur(20px) saturate(200%);
+      /* Solid fallback background for Windows/unsupported browsers */
+      background: rgba(252, 252, 252, 0.95);
 
       border: 1px solid rgba(255, 255, 255, 0.25);
       box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
@@ -202,7 +188,17 @@
 
       /* Force hardware acceleration */
       transform: translateZ(0);
-      will-change: backdrop-filter;
+    }
+
+    /* Only apply backdrop-filter on supported browsers */
+    @supports (backdrop-filter: blur(20px)) {
+      .clear-glass-fx {
+        background: linear-gradient(135deg,
+            rgba(255, 255, 255, 0.15) 0%,
+            rgba(255, 255, 255, 0.05) 100%);
+        backdrop-filter: blur(20px) saturate(180%);
+        -webkit-backdrop-filter: blur(20px) saturate(180%);
+      }
     }
 
     .clear-glass-fx::before {
@@ -211,15 +207,6 @@
       inset: 0;
       pointer-events: none;
       border-radius: inherit;
-    }
-
-    /* Feature detection fallback for both classes */
-    @supports not (backdrop-filter: blur(1px)) {
-
-      .glass-fx,
-      .clear-glass-fx {
-        background: rgba(255, 255, 255, 0.25);
-      }
     }
   }
 }
