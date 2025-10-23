@@ -186,8 +186,8 @@ function ProfileContent() {
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-heading text-white mb-2">My Profile</h1>
-          <p className="text-gray-400 font-body">Manage your tickets and wallet information</p>
+          <h1 className="text-4xl font-heading text-white mb-2">Profil Saya</h1>
+          <p className="text-gray-400 font-body">Kelola tiket dan informasi dompet Anda</p>
         </div>
 
         {/* Tab Navigation */}
@@ -203,7 +203,7 @@ function ProfileContent() {
                     : "text-gray-300 hover:text-white hover:bg-white/10"
                 }`}
             >
-              Wallet Info
+              Info Dompet
             </Button>
             <Button
               variant="ghost"
@@ -215,7 +215,7 @@ function ProfileContent() {
                     : "text-gray-300 hover:text-white hover:bg-white/10"
                 }`}
             >
-              My Tickets
+              Tiket Saya
             </Button>
           </div>
         </div>
@@ -225,13 +225,13 @@ function ProfileContent() {
           <div className="space-y-6">
             <div className="mb-6">
               <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-subheading font-semibold text-white">My Tickets ({myTickets.length})</h2>
+                <h2 className="text-2xl font-subheading font-semibold text-white">Tiket Saya ({myTickets.length})</h2>
                 <div className="flex items-center gap-2">
                   <Badge className="bg-green-500/20 text-green-400 border-green-500/30 font-subheading text-sm px-3 py-1">
-                    {myTickets.filter((t) => t.status === "active").length} Active
+                    {myTickets.filter((t) => t.status === "active").length} Aktif
                   </Badge>
                   <Badge className="bg-white/10 text-white border-white/20 font-subheading text-sm px-3 py-1">
-                    {myTickets.filter((t) => t.status === "used").length} Used
+                    {myTickets.filter((t) => t.status === "used").length} Terpakai
                   </Badge>
                 </div>
               </div>
@@ -263,7 +263,7 @@ function ProfileContent() {
                             : "bg-white/90 text-gray-900 border-white/50"
                         }`}
                       >
-                        {ticket.status === "active" ? "Active" : "Used"}
+                        {ticket.status === "active" ? "Aktif" : "Terpakai"}
                       </Badge>
                     </div>
 
@@ -283,7 +283,7 @@ function ProfileContent() {
 
                     {/* Ticket Category */}
                     <div className="flex items-center justify-between">
-                      <span className="text-gray-400 font-body text-sm">Category</span>
+                      <span className="text-gray-400 font-body text-sm">Kategori</span>
                       <Badge
                         className={`font-subheading font-semibold text-xs px-3 py-1 ${
                           ticket.ticketCategory === "VIP"
@@ -297,17 +297,17 @@ function ProfileContent() {
 
                     {/* NFT Code */}
                     <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                      <p className="text-xs text-gray-400 font-body mb-1">NFT Code</p>
+                      <p className="text-xs text-gray-400 font-body mb-1">Kode NFT</p>
                       <p className="text-sm text-white font-mono">#{ticket.nftCode.substring(0, 13)}...</p>
                     </div>
 
                     {/* Purchase Date */}
                     <div className="flex items-center justify-between pt-2 border-t border-white/10">
-                      <span className="text-gray-400 font-body text-xs">Purchased</span>
+                      <span className="text-gray-400 font-body text-xs">Dibeli</span>
                       <span className="text-white font-subheading font-medium text-sm">
-                        {new Date(ticket.purchaseDate).toLocaleDateString("en-US", {
-                          month: "short",
+                        {new Date(ticket.purchaseDate).toLocaleDateString("id-ID", {
                           day: "numeric",
+                          month: "short",
                           year: "numeric",
                         })}
                       </span>
@@ -324,10 +324,10 @@ function ProfileContent() {
             {/* Connected Wallets Section */}
             <div>
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-2xl font-subheading font-semibold text-white">Connected Wallets</h2>
+                <h2 className="text-2xl font-subheading font-semibold text-white">Dompet Terhubung</h2>
                 <Button className="bg-gradient-to-b from-gray-400 via-gray-600 to-gray-700 hover:from-gray-300 hover:via-gray-500 hover:to-gray-600 text-white font-subheading font-medium">
                   <Plus className="h-4 w-4 mr-2" />
-                  Add Wallet
+                  Tambah Dompet
                 </Button>
               </div>
 
@@ -352,19 +352,19 @@ function ProfileContent() {
                         </div>
                         {wallet.isDefault && (
                           <Badge className="bg-green-500/20 text-green-400 border-green-500/30 text-xs font-body">
-                            Default
+                            Utama
                           </Badge>
                         )}
                       </div>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <div className="p-3 rounded-lg bg-white/5 border border-white/10">
-                        <p className="text-xs text-gray-400 font-body mb-1">Address</p>
+                        <p className="text-xs text-gray-400 font-body mb-1">Alamat</p>
                         <p className="text-sm text-white font-mono truncate">{wallet.address}</p>
                       </div>
                       <div className="flex items-end justify-between">
                         <div>
-                          <p className="text-xs text-gray-400 font-body mb-1">Balance</p>
+                          <p className="text-xs text-gray-400 font-body mb-1">Saldo</p>
                           <p className="text-lg font-subheading font-semibold text-white">{wallet.balance}</p>
                           <p className="text-sm text-gray-400 font-body">{wallet.balanceUSD}</p>
                         </div>
@@ -380,7 +380,7 @@ function ProfileContent() {
 
             {/* Transaction History Section */}
             <div>
-              <h2 className="text-2xl font-subheading font-semibold text-white mb-4">Transaction History</h2>
+              <h2 className="text-2xl font-subheading font-semibold text-white mb-4">Riwayat Transaksi</h2>
 
               <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
                 <CardContent className="p-0">
@@ -462,8 +462,8 @@ export default function ProfilePage() {
       <div className="min-h-screen bg-background pt-32 pb-12">
         <div className="container mx-auto px-4 max-w-6xl">
           <div className="mb-8">
-            <h1 className="text-4xl font-heading text-white mb-2">My Profile</h1>
-            <p className="text-gray-400 font-body">Loading...</p>
+            <h1 className="text-4xl font-heading text-white mb-2">Profil Saya</h1>
+            <p className="text-gray-400 font-body">Memuat...</p>
           </div>
         </div>
       </div>

@@ -259,13 +259,13 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
     return (
       <div className="min-h-screen bg-background pt-32 pb-12">
         <div className="container mx-auto px-4 max-w-4xl text-center">
-          <h1 className="text-3xl font-heading text-white mb-4">Ticket Not Found</h1>
+          <h1 className="text-3xl font-heading text-white mb-4">Tiket Tidak Ditemukan</h1>
           <Button
             onClick={() => router.push("/profile")}
             className="bg-linear-to-b from-gray-400 via-gray-600 to-gray-700"
           >
             <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Profile
+            Kembali ke Profil
           </Button>
         </div>
       </div>
@@ -282,7 +282,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
           className="mb-6 text-gray-400 hover:text-white hover:bg-white/10"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Back to My Tickets
+          Kembali ke Tiket Saya
         </Button>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -317,7 +317,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                       : "bg-white text-gray-900 border-white"
                   }`}
                 >
-                  {ticket.status === "active" ? "Active / To Be Redeemed" : "Used"}
+                  {ticket.status === "active" ? "Aktif / Belum Ditukar" : "Terpakai"}
                 </Badge>
               </div>
 
@@ -328,12 +328,12 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                   <div className="flex items-center gap-2">
                     <Calendar className="h-4 w-4" />
                     <span>
-                      {new Date(ticket.eventDate).toLocaleDateString("en-US", {
-                        month: "long",
+                      {new Date(ticket.eventDate).toLocaleDateString("id-ID", {
                         day: "numeric",
+                        month: "long",
                         year: "numeric",
                       })}{" "}
-                      at {ticket.eventTime}
+                      pukul {ticket.eventTime}
                     </span>
                   </div>
                   <span className="text-gray-600">•</span>
@@ -357,14 +357,14 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                       className="w-full h-auto"
                     />
                   </div>
-                  <p className="text-center text-xs text-gray-400 font-body mt-2">Scan at venue check-in</p>
+                  <p className="text-center text-xs text-gray-400 font-body mt-2">Pindai saat check-in di venue</p>
                 </div>
 
                 {/* Ticket Details */}
                 <div className="flex-1 space-y-4">
                   {/* Ticket Category */}
                   <div className="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/10">
-                    <span className="text-gray-400 font-body text-sm">Ticket Category</span>
+                    <span className="text-gray-400 font-body text-sm">Kategori Tiket</span>
                     <Badge
                       className={`font-subheading font-bold text-sm px-4 py-1.5 ${
                         ticket.ticketCategory === "VIP"
@@ -380,7 +380,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                   <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                     <div className="flex items-center gap-2 mb-2">
                       <Hash className="h-4 w-4 text-gray-400" />
-                      <span className="text-gray-400 font-body text-sm">NFT Code</span>
+                      <span className="text-gray-400 font-body text-sm">Kode NFT</span>
                     </div>
                     <p className="text-lg text-white font-mono font-semibold">#{ticket.nftCode}</p>
                   </div>
@@ -389,7 +389,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                   <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                     <div className="flex items-center gap-2 mb-2">
                       <DollarSign className="h-4 w-4 text-gray-400" />
-                      <span className="text-gray-400 font-body text-sm">Sale Price</span>
+                      <span className="text-gray-400 font-body text-sm">Harga Jual</span>
                     </div>
                     <p className="text-lg text-white font-subheading font-bold">{ticket.salePrice}</p>
                     <p className="text-sm text-gray-400 font-body">{ticket.salePriceUSD}</p>
@@ -399,12 +399,12 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                   <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                     <div className="flex items-center gap-2 mb-2">
                       <Clock className="h-4 w-4 text-gray-400" />
-                      <span className="text-gray-400 font-body text-sm">Purchase Date</span>
+                      <span className="text-gray-400 font-body text-sm">Tanggal Pembelian</span>
                     </div>
                     <p className="text-lg text-white font-subheading font-semibold">
-                      {new Date(ticket.purchaseDate).toLocaleDateString("en-US", {
-                        month: "long",
+                      {new Date(ticket.purchaseDate).toLocaleDateString("id-ID", {
                         day: "numeric",
+                        month: "long",
                         year: "numeric",
                       })}
                     </p>
@@ -416,7 +416,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
               <div className="p-4 rounded-lg bg-linear-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20">
                 <div className="flex items-center justify-between gap-4">
                   <div className="flex-1 min-w-0">
-                    <p className="text-gray-400 font-body text-sm mb-1">Transaction Hash on Sophon</p>
+                    <p className="text-gray-400 font-body text-sm mb-1">Hash Transaksi di Sophon</p>
                     <p className="text-white font-mono text-sm truncate">{ticket.transactionHash}</p>
                   </div>
                   <Button
@@ -426,7 +426,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                     onClick={() => window.open(`https://sophon.xyz/tx/${ticket.transactionHash}`, "_blank")}
                   >
                     <ExternalLink className="h-4 w-4 mr-2" />
-                    View
+                    Lihat
                   </Button>
                 </div>
               </div>
@@ -437,7 +437,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
           {ticket.transactionHistory.length > 0 && (
             <Card className="border-white/10 bg-linear-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
               <CardContent className="p-6">
-                <h2 className="text-xl font-subheading font-semibold text-white mb-4">Transaction History</h2>
+                <h2 className="text-xl font-subheading font-semibold text-white mb-4">Riwayat Transaksi</h2>
                 <div className="space-y-3">
                 {ticket.transactionHistory.map((transaction, index) => (
                   <div
@@ -455,21 +455,21 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                                 : "border-blue-500/30 text-blue-400"
                             }`}
                           >
-                            {transaction.type === "purchase" ? "Primary Sale" : "Resale"}
+                            {transaction.type === "purchase" ? "Penjualan Primer" : "Jual Beli"}
                           </Badge>
                           {index === ticket.transactionHistory.length - 1 && (
                             <Badge variant="outline" className="text-xs font-body border-purple-500/30 text-purple-400">
-                              Current Owner
+                              Pemilik Saat Ini
                             </Badge>
                           )}
                         </div>
                         <div className="space-y-1 text-sm">
                           <div className="flex items-center gap-2 text-gray-400 font-body">
-                            <span>From:</span>
+                            <span>Dari:</span>
                             <span className="text-white font-mono">{transaction.from}</span>
                           </div>
                           <div className="flex items-center gap-2 text-gray-400 font-body">
-                            <span>To:</span>
+                            <span>Ke:</span>
                             <span className="text-white font-mono">{transaction.to}</span>
                           </div>
                         </div>
@@ -477,7 +477,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                       <div className="text-right">
                         <p className="text-lg font-subheading font-bold text-white">{transaction.price}</p>
                         <p className="text-xs text-gray-400 font-body mt-1">
-                          {transaction.date} at {transaction.time}
+                          {transaction.date} pukul {transaction.time}
                         </p>
                       </div>
                     </div>
@@ -495,7 +495,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
               <div className="w-10 h-10 rounded-full bg-linear-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
                 <Award className="h-5 w-5 text-white" />
               </div>
-              <h2 className="text-xl font-subheading font-semibold text-white">Proof of Attendance Protocol (POAP)</h2>
+              <h2 className="text-xl font-subheading font-semibold text-white">Bukti Protokol Kehadiran (POAP)</h2>
             </div>
 
             <div className="flex flex-col md:flex-row items-center gap-6 p-6 rounded-lg bg-linear-to-br from-yellow-500/10 to-orange-500/10 border border-yellow-500/20">
@@ -509,7 +509,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                   />
                   {!ticket.poapBadge.earned && (
                     <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center">
-                      <span className="text-white font-subheading font-bold text-sm">Locked</span>
+                      <span className="text-white font-subheading font-bold text-sm">Terkunci</span>
                     </div>
                   )}
                 </div>
@@ -519,19 +519,19 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                 {ticket.poapBadge.earned ? (
                   <div>
                     <Badge className="bg-green-500/20 text-green-400 border-green-500/30 font-subheading mb-2">
-                      Earned
+                      Diperoleh
                     </Badge>
                     <p className="text-gray-400 font-body text-sm">
-                      Congratulations! You&apos;ve earned this POAP badge for attending the event.
+                      Selamat! Anda telah memperoleh lencana POAP ini karena menghadiri acara.
                     </p>
                   </div>
                 ) : (
                   <div>
                     <Badge className="bg-gray-500/20 text-gray-400 border-gray-500/30 font-subheading mb-2">
-                      Not Yet Earned
+                      Belum Diperoleh
                     </Badge>
                     <p className="text-gray-400 font-body text-sm">
-                      Attend the event and check in at the venue to earn this exclusive POAP badge.
+                      Hadiri acara dan check-in di venue untuk memperoleh lencana POAP eksklusif ini.
                     </p>
                   </div>
                 )}
@@ -591,11 +591,11 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                 {/* Event Details */}
                 <div className="space-y-3 text-sm">
                   <div>
-                    <p className="text-gray-400 font-body text-xs mb-1">Date & Time</p>
+                    <p className="text-gray-400 font-body text-xs mb-1">Tanggal & Waktu</p>
                     <p className="text-white font-subheading font-semibold">
-                      {new Date(ticket.eventDate).toLocaleDateString("en-US", {
-                        month: "short",
+                      {new Date(ticket.eventDate).toLocaleDateString("id-ID", {
                         day: "numeric",
+                        month: "short",
                         year: "numeric",
                       })}
                     </p>
@@ -603,12 +603,12 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                   </div>
 
                   <div>
-                    <p className="text-gray-400 font-body text-xs mb-1">Location</p>
+                    <p className="text-gray-400 font-body text-xs mb-1">Lokasi</p>
                     <p className="text-white font-subheading font-semibold text-sm">{ticket.eventLocation}</p>
                   </div>
 
                   <div>
-                    <p className="text-gray-400 font-body text-xs mb-1">NFT Code</p>
+                    <p className="text-gray-400 font-body text-xs mb-1">Kode NFT</p>
                     <p className="text-white font-mono text-xs break-all">#{ticket.nftCode}</p>
                   </div>
                 </div>

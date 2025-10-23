@@ -39,12 +39,11 @@ export default function ExploreTicketsPage() {
         <div className="max-w-4xl w-full space-y-12 text-center">
           {/* Header */}
           <div className="space-y-6">
-            <h1 className="font-heading text-5xl md:text-7xl text-white tracking-tight">Explore Tickets</h1>
+            <h1 className="font-heading text-5xl md:text-7xl text-white tracking-tight">Jelajahi Tiket</h1>
             <p className="font-body text-xl md:text-2xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-              Witness the <span className="font-bold text-white">#TicketingRevolution</span> in action. NFT
-              ticketing brings blockchain benefits to a mainstream global audience. Explore the complete Open Ticketing
-              Ecosystem: from real-time statistics to the full lifecycle and authenticity verification of individual
-              tickets.
+              Jadilah saksi <span className="font-bold text-white">#RevolusiTiketing</span> secara langsung. Tiketing NFT
+              menghadirkan manfaat blockchain untuk audiens global. Jelajahi Ekosistem Tiketing Terbuka yang lengkap: dari
+              statistik real-time hingga siklus hidup lengkap dan verifikasi keaslian tiket individual.
             </p>
           </div>
 
@@ -57,7 +56,7 @@ export default function ExploreTicketsPage() {
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <Input
                       type="text"
-                      placeholder="Enter NFT Ticket identifier..."
+                      placeholder="Masukkan identifier Tiket NFT..."
                       value={ticketId}
                       onChange={(e) => setTicketId(e.target.value)}
                       className="pl-12 pr-4 py-6 text-lg bg-black/50 border-white/10 text-white placeholder:text-gray-500 focus:bg-black/60 focus:border-purple-500/30 transition-all"
@@ -68,7 +67,7 @@ export default function ExploreTicketsPage() {
                     size="lg"
                     className="px-8 py-6 bg-gradient-to-r from-purple-600/80 to-purple-500/80 hover:from-purple-600 hover:to-purple-500 text-white font-semibold shadow-lg shadow-purple-500/20 transition-all"
                   >
-                    Search
+                    Cari
                   </Button>
                 </div>
               </div>
@@ -78,17 +77,17 @@ export default function ExploreTicketsPage() {
           {/* Random Button Section */}
           <div className="space-y-4">
             <p className="font-body text-lg text-gray-400">
-              Don&apos;t have a ticket identifier? Discover a recently issued NFT ticket and explore its complete
-              journey from creation to current status.
+              Tidak punya identifier tiket? Temukan tiket NFT yang baru diterbitkan dan jelajahi perjalanan lengkapnya
+              dari pembuatan hingga status saat ini.
             </p>
             <Button
               onClick={handleRandomTicket}
               size="lg"
               variant="outline"
-              className="px-8 py-6 bg-black/40 border-2 border-white/20 hover:bg-black/60 hover:border-purple-500/50 text-white font-semibold backdrop-blur-sm transition-all group"
+              className="px-8 py-6 bg-black/40 border-2 border-white/20 hover:bg-black/60 hover:border-purple-500/50 text-white hover:text-purple-500 font-semibold backdrop-blur-sm transition-all group"
             >
               <Shuffle className="w-5 h-5 mr-2 group-hover:rotate-180 transition-transform duration-500" />
-              View Random Ticket
+              Lihat Tiket Acak
             </Button>
           </div>
 
@@ -98,27 +97,27 @@ export default function ExploreTicketsPage() {
               <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mx-auto">
                 <span className="text-2xl">🔗</span>
               </div>
-              <h3 className="font-subheading text-xl font-semibold text-white">Blockchain Verified</h3>
+              <h3 className="font-subheading text-xl font-semibold text-white">Terverifikasi Blockchain</h3>
               <p className="font-body text-gray-400 text-sm leading-relaxed">
-                Every ticket is cryptographically secured and verifiable on the blockchain
+                Setiap tiket diamankan secara kriptografi dan dapat diverifikasi di blockchain
               </p>
             </div>
             <div className="clear-glass-fx bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
               <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mx-auto">
                 <span className="text-2xl">📊</span>
               </div>
-              <h3 className="font-subheading text-xl font-semibold text-white">Real-Time Tracking</h3>
+              <h3 className="font-subheading text-xl font-semibold text-white">Pelacakan Real-Time</h3>
               <p className="font-body text-gray-400 text-sm leading-relaxed">
-                Monitor ticket lifecycle events and ownership transfers in real-time
+                Pantau peristiwa siklus hidup tiket dan transfer kepemilikan secara real-time
               </p>
             </div>
             <div className="clear-glass-fx bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
               <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mx-auto">
                 <span className="text-2xl">✅</span>
               </div>
-              <h3 className="font-subheading text-xl font-semibold text-white">Authenticity Guaranteed</h3>
+              <h3 className="font-subheading text-xl font-semibold text-white">Keaslian Terjamin</h3>
               <p className="font-body text-gray-400 text-sm leading-relaxed">
-                Eliminate fraud with immutable proof of ticket authenticity and ownership
+                Hilangkan penipuan dengan bukti keaslian dan kepemilikan tiket yang tidak dapat diubah
               </p>
             </div>
           </div>

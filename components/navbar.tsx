@@ -27,7 +27,7 @@ export function Navbar() {
                 variant="ghost"
                 className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
               >
-                My Tickets
+                Tiket Saya
               </Button>
             </Link>
             <Link href="/explore-tickets">
@@ -35,7 +35,7 @@ export function Navbar() {
                 variant="ghost"
                 className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
               >
-                Explore Tickets
+                Jelajahi Tiket
               </Button>
             </Link>
             <Link href="/profile">
@@ -43,7 +43,7 @@ export function Navbar() {
                 variant="ghost"
                 className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
               >
-                Profile
+                Profil
               </Button>
             </Link>
           </div>
@@ -70,7 +70,7 @@ export function Navbar() {
                 variant="ghost"
                 className="w-full justify-start font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white"
               >
-                My Tickets
+                Tiket Saya
               </Button>
             </Link>
             <Link href="/explore-tickets" onClick={() => setIsMenuOpen(false)}>
@@ -78,7 +78,7 @@ export function Navbar() {
                 variant="ghost"
                 className="w-full justify-start font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white"
               >
-                Explore Tickets
+                Jelajahi Tiket
               </Button>
             </Link>
             <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
@@ -86,7 +86,7 @@ export function Navbar() {
                 variant="ghost"
                 className="w-full justify-start font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white"
               >
-                Profile
+                Profil
               </Button>
             </Link>
           </div>

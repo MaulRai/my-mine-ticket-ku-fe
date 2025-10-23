@@ -10,14 +10,14 @@ import { Badge } from "@/components/ui/badge"
 import { Search, MapPin, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
 import { allEvents, featuredEvents } from "@/lib/events-data"
 
-const categories = ["All", "Music", "Art & Exhibition", "Sport"]
+const categories = ["Semua", "Musik", "Seni & Pameran", "Olahraga"]
 
 export default function EventsPage() {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("All")
-  const [selectedTimeFilter, setSelectedTimeFilter] = useState("This Week")
+  const [selectedCategory, setSelectedCategory] = useState("Semua")
+  const [selectedTimeFilter, setSelectedTimeFilter] = useState("Semua")
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
@@ -61,10 +61,54 @@ export default function EventsPage() {
     }, 600)
   }
 
+  // Helper function to parse Indonesian date format
+  const parseIndonesianDate = (dateString: string): Date => {
+    const monthMap: Record<string, number> = {
+      Januari: 0,
+      Februari: 1,
+      Maret: 2,
+      April: 3,
+      Mei: 4,
+      Juni: 5,
+      Juli: 6,
+      Agustus: 7,
+      September: 8,
+      Oktober: 9,
+      November: 10,
+      Desember: 11,
+    }
+
+    const parts = dateString.split(" ")
+    const day = parseInt(parts[0])
+    const month = monthMap[parts[1]]
+    const year = parseInt(parts[2])
+
+    return new Date(year, month, day)
+  }
+
+  const filterEventsByTime = (event: typeof allEvents[0]) => {
+    const eventDate = parseIndonesianDate(event.date)
+    const today = new Date()
+    today.setHours(0, 0, 0, 0) // Reset time to start of day
+
+    if (selectedTimeFilter === "Seminggu ke Depan") {
+      const oneWeekFromNow = new Date(today)
+      oneWeekFromNow.setDate(today.getDate() + 7)
+      return eventDate >= today && eventDate <= oneWeekFromNow
+    } else if (selectedTimeFilter === "Sebulan ke Depan") {
+      const oneMonthFromNow = new Date(today)
+      oneMonthFromNow.setMonth(today.getMonth() + 1)
+      return eventDate >= today && eventDate <= oneMonthFromNow
+    }
+    // "Semua" filter
+    return true
+  }
+
   const filteredEvents = allEvents.filter((event) => {
     const matchesSearch = event.name.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = selectedCategory === "All" || event.category === selectedCategory
-    return matchesSearch && matchesCategory
+    const matchesCategory = selectedCategory === "Semua" || event.category === selectedCategory
+    const matchesTime = filterEventsByTime(event)
+    return matchesSearch && matchesCategory && matchesTime
   })
 
   const currentFeaturedEvent = featuredEvents[currentBannerIndex]
@@ -159,7 +203,7 @@ export default function EventsPage() {
               <Search className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-white/70" />
               <Input
                 type="text"
-                placeholder="Search events..."
+                placeholder="Cari acara..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-8 sm:pl-10 h-10 sm:h-12 text-sm sm:text-base bg-transparent border-none text-white placeholder:text-white/60 focus-visible:ring-0 focus-visible:ring-offset-0"
@@ -173,7 +217,7 @@ export default function EventsPage() {
         <div className="mb-6 flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-4">
           {/* Time Filter Buttons - Left */}
           <div className="inline-flex items-center gap-1 bg-gray-900/60 backdrop-blur-md border border-white/10 p-1.5 rounded-full w-full sm:w-auto justify-center">
-            {["This Week", "This Month", "All"].map((timeFilter) => {
+            {["Semua", "Seminggu ke Depan", "Sebulan ke Depan"].map((timeFilter) => {
               const isActive = selectedTimeFilter === timeFilter
               return (
                 <Button
@@ -266,7 +310,7 @@ export default function EventsPage() {
 
         {filteredEvents.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-muted-foreground text-sm sm:text-base md:text-lg">No events found matching your criteria.</p>
+            <p className="text-muted-foreground text-sm sm:text-base md:text-lg">Tidak ada acara yang sesuai dengan kriteria Anda.</p>
           </div>
         )}
       </div>

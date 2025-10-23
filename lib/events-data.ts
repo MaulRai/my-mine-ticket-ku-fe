@@ -68,16 +68,16 @@ const locations = [
 
 // Static dates from Oct 25 to late Dec (10 events)
 const dates = [
-  "October 25, 2025",
-  "November 1, 2025",
-  "November 8, 2025",
-  "November 15, 2025",
-  "November 22, 2025",
-  "November 29, 2025",
-  "December 6, 2025",
-  "December 13, 2025",
-  "December 20, 2025",
-  "December 28, 2025",
+  "25 Oktober 2025",
+  "1 November 2025",
+  "8 November 2025",
+  "15 November 2025",
+  "22 November 2025",
+  "29 November 2025",
+  "6 Desember 2025",
+  "13 Desember 2025",
+  "20 Desember 2025",
+  "28 Desember 2025",
 ]
 
 // Static banner assignments (1-5)
@@ -106,7 +106,7 @@ export const allEvents = eventNames.map((eventName, index) => ({
   location: locations[index],
   date: dates[index],
   banner: `/images/example/banner-${banners[index]}.png`,
-  category: "Music",
+  category: "Musik",
 }))
 
 // Featured events (first 5 events)
