@@ -33,11 +33,11 @@ export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a]">
       {/* Ambient animated background */}
-      <div className="absolute inset-0 overflow-hidden opacity-30">
-        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-purple-500/20 to-transparent animate-pulse-slow" />
-        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-purple-400/15 to-transparent animate-pulse-slow animation-delay-2000" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-float" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-float animation-delay-4000" />
+      <div className="absolute inset-0 overflow-hidden opacity-40">
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-blue-900/30 to-transparent animate-pulse-slow" />
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-blue-800/25 to-transparent animate-pulse-slow animation-delay-2000" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-900/20 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-800/20 rounded-full blur-3xl animate-float animation-delay-4000" />
       </div>
 
       {/* Main Content */}
@@ -47,19 +47,19 @@ export default function Home() {
           <div className="max-w-6xl mx-auto text-center space-y-8">
             {/* [INSERT VISUALIZATION A HERE: Animated logo or brand mark] */}
             <div className="mb-8 flex justify-center">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center shadow-lg shadow-purple-500/30 animate-pulse-slow">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-800 to-cyan-950 flex items-center justify-center shadow-lg shadow-blue-500/30 animate-pulse-slow">
                 <Sparkles className="w-10 h-10 text-white" />
               </div>
             </div>
 
             {/* Main Heading with Animation */}
-            <div className="space-y-4">
+            <div className="space-y-2">
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading text-white leading-tight">
-                Ticketing Web3 untuk
+                <span className="italic">Ticketing</span> Web3 untuk
               </h1>
-              <div className="h-20 sm:h-24 md:h-28 flex items-center justify-center">
+              <div className="h-20 sm:h-24 md:h-28 lg:h-32 flex items-center justify-center overflow-visible">
                 <h2
-                  className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 bg-clip-text text-transparent transition-all duration-500 ${
+                  className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading bg-gradient-to-b from-white via-blue-200 to-blue-900 bg-clip-text text-transparent transition-all duration-500 leading-tight ${
                     isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"
                   }`}
                 >
@@ -70,7 +70,7 @@ export default function Home() {
 
             {/* Subtext */}
             <p className="text-lg sm:text-xl md:text-2xl text-gray-300 font-body leading-relaxed max-w-4xl mx-auto px-4">
-              Memberdayakan ekosistem kreatif melalui sistem tiket berbasis blockchain yang transparan, terverifikasi,
+              Memberdayakan ekosistem kreatif melalui sistem tiket berbasis <span className="italic">blockchain</span> yang transparan, terverifikasi,
               dan berbagi hasil secara otomatis.
             </p>
 
@@ -79,7 +79,7 @@ export default function Home() {
               <Link href="/events">
                 <Button
                   size="lg"
-                  className="px-8 py-6 text-base sm:text-lg bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 text-white font-subheading font-semibold shadow-lg shadow-purple-500/30 transition-all"
+                  className="px-8 py-6 text-base sm:text-lg bg-white hover:bg-gray-100 text-black font-subheading font-semibold shadow-lg shadow-white/20 transition-all"
                 >
                   Jelajahi Acara
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -112,7 +112,7 @@ export default function Home() {
             <div className="space-y-8 max-w-4xl mx-auto">
               <div className="glass-fx bg-black/40 p-8 rounded-2xl border border-white/10">
                 <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
-                  Semua dimulai dari <span className="text-purple-400 font-semibold">tokenisasi tiket acara</span> —
+                  Semua dimulai dari <span className="text-blue-400 font-semibold">tokenisasi tiket acara</span> —
                   membawa konser dan pameran ke blockchain untuk membantu penyelenggara, artis, dan penggemar
                   memverifikasi keaslian, menghilangkan penipuan, serta mengotomatiskan pembagian hasil.
                 </p>
@@ -136,7 +136,7 @@ export default function Home() {
             </div>
 
             {/* [INSERT VISUALIZATION B HERE: Interactive diagram showing blockchain flow or ecosystem] */}
-            <div className="mt-16 p-8 bg-gradient-to-br from-purple-500/10 to-purple-700/5 rounded-2xl border border-purple-500/20">
+            <div className="mt-16 p-8 bg-gradient-to-br from-blue-600/10 to-blue-700/5 rounded-2xl border border-blue-500/20">
               <p className="text-center text-gray-400 font-body italic">
                 [Insert visualization/image: Interactive diagram menampilkan alur blockchain dari pembelian tiket hingga pembagian hasil otomatis]
               </p>
@@ -153,9 +153,9 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Feature 1 */}
-              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all group">
-                <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition-all">
-                  <Shield className="h-6 w-6 text-purple-400" />
+              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
+                <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
+                  <Shield className="h-6 w-6 text-blue-400" />
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Terverifikasi Blockchain</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
@@ -164,9 +164,9 @@ export default function Home() {
               </div>
 
               {/* Feature 2 */}
-              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all group">
-                <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition-all">
-                  <TrendingUp className="h-6 w-6 text-purple-400" />
+              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
+                <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
+                  <TrendingUp className="h-6 w-6 text-blue-400" />
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Pembagian Hasil Otomatis</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
@@ -175,9 +175,9 @@ export default function Home() {
               </div>
 
               {/* Feature 3 */}
-              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all group">
-                <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition-all">
-                  <Users className="h-6 w-6 text-purple-400" />
+              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
+                <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
+                  <Users className="h-6 w-6 text-blue-400" />
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Ekosistem Terhubung</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
@@ -186,9 +186,9 @@ export default function Home() {
               </div>
 
               {/* Feature 4 */}
-              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all group">
-                <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition-all">
-                  <Sparkles className="h-6 w-6 text-purple-400" />
+              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
+                <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
+                  <Sparkles className="h-6 w-6 text-blue-400" />
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">NFT & POAP Badge</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
@@ -211,7 +211,7 @@ export default function Home() {
             <Link href="/events">
               <Button
                 size="lg"
-                className="px-10 py-7 text-lg bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 text-white font-subheading font-semibold shadow-xl shadow-purple-500/40 transition-all"
+                className="px-10 py-7 text-lg bg-white hover:bg-gray-100 text-black font-subheading font-semibold shadow-xl shadow-white/20 transition-all"
               >
                 Mulai Sekarang
                 <ArrowRight className="ml-2 h-6 w-6" />
