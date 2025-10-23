@@ -57,9 +57,8 @@ export default function Home() {
               </h1>
               <div className="h-20 sm:h-24 md:h-28 lg:h-32 flex items-center justify-center overflow-visible">
                 <h2
-                  className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading bg-gradient-to-b from-white via-[#afa7d7] to-[#1b1166] bg-clip-text text-transparent transition-all duration-500 leading-tight ${
-                    isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"
-                  }`}
+                  className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading bg-gradient-to-b from-white via-[#afa7d7] to-[#1b1166] bg-clip-text text-transparent transition-all duration-500 leading-tight ${isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"
+                    }`}
                 >
                   {rotatingTexts[currentTextIndex]}
                 </h2>
@@ -111,24 +110,28 @@ export default function Home() {
               <div className="glass-fx bg-black/20 p-8 rounded-2xl border border-white/10">
                 <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
                   Semua dimulai dari <span className="text-[#4a0dc3] font-semibold">tokenisasi tiket acara</span> —
-                  membawa konser dan pameran ke blockchain untuk membantu penyelenggara, artis, dan penggemar
-                  memverifikasi keaslian, menghilangkan penipuan, serta mengotomatiskan pembagian hasil.
+                  membawa konser dan pameran ke blockchain untuk membantu <span className="italic">event organizer</span>, artis,
+                  <span className="italic">partner</span>, dan penggemar memverifikasi keaslian, menghilangkan penipuan, serta
+                  mengotomatiskan <span className="italic">revenue sharing</span>.
                 </p>
               </div>
 
               <div className="glass-fx bg-black/20 p-8 rounded-2xl border border-white/10">
                 <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
-                  <span className="text-white font-semibold">MyMineTicketKu</span> menghadirkan sistem tiket yang
-                  efisien melalui NFT, smart contract, dan pembagian pendapatan yang transparan, memberdayakan seluruh
-                  ekosistem kreatif.
+                  <span className="text-white font-semibold">MyMineTicketKu</span> menghadirkan sistem <span className="italic">ticketing</span> yang
+                  efisien melalui NFT, <span className="italic">smart contract</span>, dan <span className="italic">transparent revenue sharing</span>,
+                  memberdayakan seluruh ekosistem kreatif.
+
                 </p>
               </div>
 
               <div className="glass-fx bg-black/20 p-8 rounded-2xl border border-white/10">
                 <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
-                  Baik Anda seorang artis, penyelenggara, sponsor, maupun penggemar,{" "}
-                  <span className="text-white font-semibold">MyMineTicketKu</span> menjadikan setiap tiket sebagai bukti
-                  keaslian, kepemilikan, dan keberhasilan bersama di dunia hiburan Web3.
+                  Baik Anda seorang artis, <span className="italic">event organizer</span>, <span className="italic">partner</span>, maupun penggemar,{" "}
+                  <span className="text-white font-semibold">MyMineTicketKu</span> menjadikan setiap ticket sebagai bukti
+                  <span className="italic">authenticity</span>, <span className="italic">ownership</span>, dan keberhasilan bersama di dunia
+                  <span className="italic">entertainment-Web3</span>.
+
                 </p>
               </div>
             </div>
@@ -156,8 +159,8 @@ export default function Home() {
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Terverifikasi Blockchain</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
-                  Setiap tiket diamankan secara kriptografi dan dapat diverifikasi di blockchain untuk menghilangkan
-                  penipuan.
+                  Setiap ticket terukir abadi dalam <span className="italic">blockchain</span> dimana jejak digital yang tak
+                  terhapus, kepercayaan yang terverifikasi di setiap langkah perjalanan Anda.
                 </p>
               </div>
 
@@ -168,8 +171,8 @@ export default function Home() {
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Pembagian Hasil Otomatis</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
-                  Smart contract mengotomatiskan pembagian pendapatan kepada artis, penyelenggara, dan pihak terkait
-                  secara transparan.
+                  Biarkan teknologi berbicara. <span className="italic">Smart contract</span> mengalirkan <span className="italic">revenue</span> secara transparan
+                  kepada artis, <span className="italic">event organizer</span>, dan setiap pihak yang berhak secara adil, otomatis, tanpa perantara.
                 </p>
               </div>
 
@@ -180,7 +183,8 @@ export default function Home() {
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Ekosistem Terhubung</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
-                  Menghubungkan penyelenggara, artis, sponsor, dan penggemar dalam satu platform yang efisien.
+                  Satu platform, ribuan kemungkinan. Menghubungkan <span className="italic">event organizer</span>, 
+                  artis, sponsor, dan penggemar dalam harmoni ekosistem yang saling menghidupkan.
                 </p>
               </div>
 
@@ -191,7 +195,8 @@ export default function Home() {
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">NFT & POAP Badge</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
-                  Tiket NFT sebagai bukti kepemilikan digital dan POAP badge eksklusif untuk setiap kehadiran acara.
+                  Kenangan yang bernyawa. Tiket NFT sebagai bukti digital <span className="italic">ownership</span> 
+                  dan POAP badge eksklusif untuk setiap momen spesial yang Anda hadiri
                 </p>
               </div>
             </div>
