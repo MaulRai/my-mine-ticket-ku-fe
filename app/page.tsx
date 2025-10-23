@@ -1,103 +1,252 @@
-import Image from "next/image";
+"use client"
+
+import { useState, useEffect } from "react"
+import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { ArrowRight, Sparkles, Shield, Users, TrendingUp } from "lucide-react"
+
+const rotatingTexts = [
+  "Penyelenggara",
+  "Artis",
+  "Penggemar",
+  "Sponsor",
+  "Investor",
+  "Semua Orang",
+]
 
 export default function Home() {
-  return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  const [currentTextIndex, setCurrentTextIndex] = useState(0)
+  const [isAnimating, setIsAnimating] = useState(false)
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimating(true)
+      setTimeout(() => {
+        setCurrentTextIndex((prev) => (prev + 1) % rotatingTexts.length)
+        setIsAnimating(false)
+      }, 500)
+    }, 3000)
+
+    return () => clearInterval(interval)
+  }, [])
+
+  return (
+    <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a]">
+      {/* Ambient animated background */}
+      <div className="absolute inset-0 overflow-hidden opacity-30">
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-purple-500/20 to-transparent animate-pulse-slow" />
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-purple-400/15 to-transparent animate-pulse-slow animation-delay-2000" />
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-float" />
+        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-400/10 rounded-full blur-3xl animate-float animation-delay-4000" />
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 min-h-screen flex flex-col">
+        {/* Hero Section */}
+        <section className="flex-1 flex items-center justify-center px-4 py-20 pt-32">
+          <div className="max-w-6xl mx-auto text-center space-y-8">
+            {/* [INSERT VISUALIZATION A HERE: Animated logo or brand mark] */}
+            <div className="mb-8 flex justify-center">
+              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-purple-500 to-purple-700 flex items-center justify-center shadow-lg shadow-purple-500/30 animate-pulse-slow">
+                <Sparkles className="w-10 h-10 text-white" />
+              </div>
+            </div>
+
+            {/* Main Heading with Animation */}
+            <div className="space-y-4">
+              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading text-white leading-tight">
+                Ticketing Web3 untuk
+              </h1>
+              <div className="h-20 sm:h-24 md:h-28 flex items-center justify-center">
+                <h2
+                  className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 bg-clip-text text-transparent transition-all duration-500 ${
+                    isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"
+                  }`}
+                >
+                  {rotatingTexts[currentTextIndex]}
+                </h2>
+              </div>
+            </div>
+
+            {/* Subtext */}
+            <p className="text-lg sm:text-xl md:text-2xl text-gray-300 font-body leading-relaxed max-w-4xl mx-auto px-4">
+              Memberdayakan ekosistem kreatif melalui sistem tiket berbasis blockchain yang transparan, terverifikasi,
+              dan berbagi hasil secara otomatis.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
+              <Link href="/events">
+                <Button
+                  size="lg"
+                  className="px-8 py-6 text-base sm:text-lg bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 text-white font-subheading font-semibold shadow-lg shadow-purple-500/30 transition-all"
+                >
+                  Jelajahi Acara
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <Link href="/explore-tickets">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="px-8 py-6 text-base sm:text-lg border-2 border-white/20 bg-black/40 hover:bg-white/10 text-white font-subheading font-semibold backdrop-blur-sm transition-all"
+                >
+                  Verifikasi Tiket NFT
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Vision Statement Section */}
+        <section className="py-20 px-4 border-t border-white/10">
+          <div className="max-w-6xl mx-auto">
+            {/* Section Header */}
+            <div className="text-center mb-16 space-y-4">
+              <h3 className="text-3xl sm:text-4xl md:text-5xl font-heading text-white">
+                Kami melihat masa depan acara dengan cara yang berbeda.
+              </h3>
+            </div>
+
+            {/* Vision Content */}
+            <div className="space-y-8 max-w-4xl mx-auto">
+              <div className="glass-fx bg-black/40 p-8 rounded-2xl border border-white/10">
+                <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
+                  Semua dimulai dari <span className="text-purple-400 font-semibold">tokenisasi tiket acara</span> —
+                  membawa konser dan pameran ke blockchain untuk membantu penyelenggara, artis, dan penggemar
+                  memverifikasi keaslian, menghilangkan penipuan, serta mengotomatiskan pembagian hasil.
+                </p>
+              </div>
+
+              <div className="glass-fx bg-black/40 p-8 rounded-2xl border border-white/10">
+                <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
+                  <span className="text-white font-semibold">MyMineTicketKu</span> menghadirkan sistem tiket yang
+                  efisien melalui NFT, smart contract, dan pembagian pendapatan yang transparan, memberdayakan seluruh
+                  ekosistem kreatif.
+                </p>
+              </div>
+
+              <div className="glass-fx bg-black/40 p-8 rounded-2xl border border-white/10">
+                <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
+                  Baik Anda seorang artis, penyelenggara, sponsor, maupun penggemar,{" "}
+                  <span className="text-white font-semibold">MyMineTicketKu</span> menjadikan setiap tiket sebagai
+                  bukti keaslian, kepemilikan, dan keberhasilan bersama di dunia hiburan Web3.
+                </p>
+              </div>
+            </div>
+
+            {/* [INSERT VISUALIZATION B HERE: Interactive diagram showing blockchain flow or ecosystem] */}
+            <div className="mt-16 p-8 bg-gradient-to-br from-purple-500/10 to-purple-700/5 rounded-2xl border border-purple-500/20">
+              <p className="text-center text-gray-400 font-body italic">
+                [Insert visualization/image: Interactive diagram menampilkan alur blockchain dari pembelian tiket hingga pembagian hasil otomatis]
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Features Section */}
+        <section className="py-20 px-4 bg-black/20">
+          <div className="max-w-6xl mx-auto">
+            <h3 className="text-3xl sm:text-4xl font-heading text-white text-center mb-12">
+              Mengapa MyMineTicketKu?
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              {/* Feature 1 */}
+              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all group">
+                <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition-all">
+                  <Shield className="h-6 w-6 text-purple-400" />
+                </div>
+                <h4 className="font-subheading text-xl font-semibold text-white mb-2">Terverifikasi Blockchain</h4>
+                <p className="font-body text-gray-400 text-sm leading-relaxed">
+                  Setiap tiket diamankan secara kriptografi dan dapat diverifikasi di blockchain untuk menghilangkan penipuan.
+                </p>
+              </div>
+
+              {/* Feature 2 */}
+              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all group">
+                <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition-all">
+                  <TrendingUp className="h-6 w-6 text-purple-400" />
+                </div>
+                <h4 className="font-subheading text-xl font-semibold text-white mb-2">Pembagian Hasil Otomatis</h4>
+                <p className="font-body text-gray-400 text-sm leading-relaxed">
+                  Smart contract mengotomatiskan pembagian pendapatan kepada artis, penyelenggara, dan pihak terkait secara transparan.
+                </p>
+              </div>
+
+              {/* Feature 3 */}
+              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all group">
+                <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition-all">
+                  <Users className="h-6 w-6 text-purple-400" />
+                </div>
+                <h4 className="font-subheading text-xl font-semibold text-white mb-2">Ekosistem Terhubung</h4>
+                <p className="font-body text-gray-400 text-sm leading-relaxed">
+                  Menghubungkan penyelenggara, artis, sponsor, dan penggemar dalam satu platform yang efisien.
+                </p>
+              </div>
+
+              {/* Feature 4 */}
+              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-purple-500/30 transition-all group">
+                <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-purple-500/20 transition-all">
+                  <Sparkles className="h-6 w-6 text-purple-400" />
+                </div>
+                <h4 className="font-subheading text-xl font-semibold text-white mb-2">NFT & POAP Badge</h4>
+                <p className="font-body text-gray-400 text-sm leading-relaxed">
+                  Tiket NFT sebagai bukti kepemilikan digital dan POAP badge eksklusif untuk setiap kehadiran acara.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* CTA Section */}
+        <section className="py-20 px-4">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-heading text-white">
+              Siap bergabung dengan revolusi ticketing Web3?
+            </h3>
+            <p className="text-lg sm:text-xl text-gray-300 font-body">
+              Mulai perjalanan Anda bersama MyMineTicketKu hari ini.
+            </p>
+            <Link href="/events">
+              <Button
+                size="lg"
+                className="px-10 py-7 text-lg bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 text-white font-subheading font-semibold shadow-xl shadow-purple-500/40 transition-all"
+              >
+                Mulai Sekarang
+                <ArrowRight className="ml-2 h-6 w-6" />
+              </Button>
+            </Link>
+          </div>
+        </section>
+      </div>
+
+      {/* Custom animations */}
+      <style jsx>{`
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.6; }
+        }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 8s ease-in-out infinite;
+        }
+        .animate-float {
+          animation: float 6s ease-in-out infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+        .bg-gradient-radial {
+          background: radial-gradient(circle, var(--tw-gradient-stops));
+        }
+      `}</style>
     </div>
-  );
+  )
 }
