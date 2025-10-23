@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { ArrowRight, Sparkles, Shield, Users, TrendingUp } from "lucide-react"
 
@@ -45,21 +46,25 @@ export default function Home() {
         {/* Hero Section */}
         <section className="flex-1 flex items-center justify-center px-4 py-20 pt-32">
           <div className="max-w-6xl mx-auto text-center space-y-8">
-            {/* [INSERT VISUALIZATION A HERE: Animated logo or brand mark] */}
-            <div className="mb-8 flex justify-center">
-              <div className="w-20 h-20 rounded-full bg-gradient-to-br from-blue-800 to-cyan-950 flex items-center justify-center shadow-lg shadow-blue-500/30 animate-pulse-slow">
-                <Sparkles className="w-10 h-10 text-white" />
-              </div>
+            {/* App Icon */}
+            <div className="flex justify-center">
+              <Image 
+                src="/images/app-icon.png" 
+                alt="MyMineTicketKu Logo" 
+                width={120} 
+                height={120}
+                className="object-contain"
+              />
             </div>
 
             {/* Main Heading with Animation */}
-            <div className="space-y-2">
+            <div className="space-y-1">
               <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading text-white leading-tight">
                 <span className="italic">Ticketing</span> Web3 untuk
               </h1>
               <div className="h-20 sm:h-24 md:h-28 lg:h-32 flex items-center justify-center overflow-visible">
                 <h2
-                  className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading bg-gradient-to-b from-white via-blue-200 to-blue-900 bg-clip-text text-transparent transition-all duration-500 leading-tight ${
+                  className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading bg-gradient-to-b from-white via-[#afa7d7] to-[#1b1166] bg-clip-text text-transparent transition-all duration-500 leading-tight ${
                     isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"
                   }`}
                 >
