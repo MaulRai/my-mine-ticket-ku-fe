@@ -12,7 +12,7 @@ export function Navbar() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:px-8">
       <div className="mx-auto max-w-7xl">
-        <div className="glass-effect flex items-center justify-between px-4 py-3">
+        <div className="glass-fx flex items-center justify-between px-4 py-3">
           {/* Logo */}
           <Link href="/events" className="flex items-center gap-2 transition-opacity hover:opacity-80">
             <div className="relative w-48 h-8 sm:w-48 sm:h-10 md:w-64">
@@ -51,7 +51,7 @@ export function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden glass-effect p-2 rounded-lg hover:bg-white/10 transition-colors"
+            className="md:hidden glass-fx p-2 rounded-lg hover:bg-white/10 transition-colors"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? (
@@ -64,7 +64,7 @@ export function Navbar() {
 
         {/* Mobile Menu */}
         {isMenuOpen && (
-          <div className="md:hidden mt-2 glass-effect px-4 py-3 space-y-2">
+          <div className="md:hidden mt-2 glass-fx px-4 py-3 space-y-2">
             <Link href="/profile?tab=my-tickets" onClick={() => setIsMenuOpen(false)}>
               <Button
                 variant="ghost"

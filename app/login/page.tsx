@@ -41,7 +41,7 @@ export default function LoginPage() {
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           {/* Login Card */}
-          <div className="glass-effect p-8">
+          <div className="glass-fx p-8">
             <div className="mb-8 text-center">
               <div className="mb-6 flex justify-center">
                 <Image src="/images/app-logo.png" alt="App Logo" width={400} height={80} className="h-auto w-100" />

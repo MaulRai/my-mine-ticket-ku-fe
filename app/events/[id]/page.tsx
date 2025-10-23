@@ -157,7 +157,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
       {isDevMode && (
         <button
           onClick={() => setDevSoldOutMode(!devSoldOutMode)}
-          className="fixed top-24 right-6 z-50 glass-effect px-4 py-2 rounded-full hover:bg-white/30 transition-all flex items-center gap-2 border border-white/20"
+          className="fixed top-24 right-6 z-50 glass-fx px-4 py-2 rounded-full hover:bg-white/30 transition-all flex items-center gap-2 border border-white/20"
           title="Toggle between normal and sold-out mode"
         >
           <Eye className="h-4 w-4 text-white" />
@@ -177,7 +177,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
         <div className="absolute inset-0 flex items-end justify-start">
           <div className="text-white px-4 sm:px-6 md:px-12 pb-6 sm:pb-8 md:pb-12 flex flex-col sm:flex-row items-start gap-4 sm:gap-6">
             <Link href="/events">
-              <button className="glass-effect p-2 sm:p-3 rounded-full hover:bg-white/30 transition-all z-10" aria-label="Back">
+              <button className="glass-fx p-2 sm:p-3 rounded-full hover:bg-white/30 transition-all z-10" aria-label="Back">
                 <ArrowLeft className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
               </button>
             </Link>
@@ -190,19 +190,19 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
             {/* Event Info */}
             <div className="flex-1 pb-2 w-full sm:w-auto">
               <div className="mb-2 sm:mb-3 flex items-center gap-2 sm:gap-3 flex-wrap">
-                <Badge className="glass-effect text-white border-white/30 font-subheading font-semibold text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5">
+                <Badge className="glass-fx text-white border-white/30 font-subheading font-semibold text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5">
                   {event.category}
                 </Badge>
                 <button
                   onClick={handleShare}
-                  className="glass-effect p-1.5 sm:p-2 rounded-full hover:bg-white/30 transition-all"
+                  className="glass-fx p-1.5 sm:p-2 rounded-full hover:bg-white/30 transition-all"
                   aria-label="Share event"
                 >
                   <Share2 className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                 </button>
                 <button
                   onClick={() => setIsFavorite(!isFavorite)}
-                  className={`glass-effect p-1.5 sm:p-2 rounded-full hover:bg-white/30 transition-all ${
+                  className={`glass-fx p-1.5 sm:p-2 rounded-full hover:bg-white/30 transition-all ${
                     isFavorite ? "bg-red-500/30" : ""
                   }`}
                   aria-label="Favorite event"
@@ -216,7 +216,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                   Featuring: {event.featuring.join(", ")}
                 </p>
               </div>
-              <div className="flex items-center gap-2 glass-effect px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-fit">
+              <div className="flex items-center gap-2 glass-fx px-3 sm:px-4 py-1.5 sm:py-2 rounded-full w-fit">
                 <Ticket className="h-4 w-4 sm:h-5 sm:w-5 text-white" />
                 <span className="text-white font-subheading font-semibold text-xs sm:text-sm">
                   {totalTicketsSold.toLocaleString("id-ID")} / {totalTickets.toLocaleString("id-ID")} tickets sold (

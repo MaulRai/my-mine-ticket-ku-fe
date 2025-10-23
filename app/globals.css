@@ -140,7 +140,7 @@
   }
 
   @layer utilities {
-    .glass-effect {
+    .glass-fx {
       position: relative;
       background: linear-gradient(135deg,
           rgba(255, 255, 255, 0.15) 0%,
@@ -155,7 +155,7 @@
       padding-right: 8px;
     }
 
-    .glass-effect::before {
+    .glass-fx::before {
       content: "";
       position: absolute;
       inset: 0;
@@ -166,7 +166,7 @@
       border-radius: inherit;
     }
 
-    .clear-glass-effect {
+    .clear-glass-fx {
       position: relative;
       background: linear-gradient(135deg,
           rgba(255, 255, 255, 0.15) 0%,
@@ -181,7 +181,7 @@
       padding-right: 8px;
     }
 
-    .clear-glass-effect::before {
+    .clear-glass-fx::before {
       content: "";
       position: absolute;
       inset: 0;

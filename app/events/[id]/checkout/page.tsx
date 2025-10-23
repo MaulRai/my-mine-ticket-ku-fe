@@ -207,7 +207,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
         {/* Header */}
         <div className="mb-8">
           <Link href={`/events/${id}`}>
-            <button className="glass-effect p-3 rounded-full hover:bg-white/30 transition-all mb-6" aria-label="Back">
+            <button className="glass-fx p-3 rounded-full hover:bg-white/30 transition-all mb-6" aria-label="Back">
               <ArrowLeft className="h-6 w-6 text-white" />
             </button>
           </Link>

@@ -269,7 +269,7 @@ function ProfileContent() {
 
                     {/* Ticket icon overlay */}
                     <div className="absolute bottom-3 left-3">
-                      <div className="glass-effect p-2 rounded-full">
+                      <div className="glass-fx p-2 rounded-full">
                         <Ticket className="h-5 w-5 text-white" />
                       </div>
                     </div>

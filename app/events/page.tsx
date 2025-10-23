@@ -256,7 +256,7 @@ export default function EventsPage() {
               <div className="mb-2 sm:mb-3 md:mb-4">
                 <p className="text-sm sm:text-base md:text-lg font-subheading font-semibold">{currentFeaturedEvent.featuring.join(", ")}</p>
               </div>
-              <div className="glass-effect inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-4 md:gap-6 text-xs sm:text-sm font-subheading font-semibold w-auto px-3 py-2">
+              <div className="glass-fx inline-flex flex-col sm:flex-row items-center gap-2 sm:gap-4 md:gap-6 text-xs sm:text-sm font-subheading font-semibold w-auto px-3 py-2">
                 <div className="flex items-center gap-2">
                   <MapPin className="h-3 w-3 sm:h-4 sm:w-4" />
                   <span>{currentFeaturedEvent.location}</span>
@@ -273,14 +273,14 @@ export default function EventsPage() {
         {/* Navigation Buttons */}
         <button
           onClick={handlePrevBanner}
-          className="glass-effect absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full hover:bg-white/30 transition-all"
+          className="glass-fx absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full hover:bg-white/30 transition-all"
           aria-label="Previous banner"
         >
           <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
         </button>
         <button
           onClick={handleNextBanner}
-          className="glass-effect absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full hover:bg-white/30 transition-all"
+          className="glass-fx absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 p-2 sm:p-3 rounded-full hover:bg-white/30 transition-all"
           aria-label="Next banner"
         >
           <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 text-white" />
@@ -308,7 +308,7 @@ export default function EventsPage() {
 
         {/* Search Bar Overlay */}
         <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-full max-w-xs sm:max-w-md md:max-w-2xl px-4 sm:px-8">
-          <div className="clear-glass-effect bg-black/80 p-1.5 sm:p-2">
+          <div className="clear-glass-fx bg-black/80 p-1.5 sm:p-2">
             <div className="relative">
               <Search className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-white/70" />
               <Input
@@ -386,7 +386,7 @@ export default function EventsPage() {
 
                   {/* Category badge positioned on image */}
                   <div className="absolute top-2 sm:top-3 right-2 sm:right-3">
-                    <Badge className="glass-effect text-white border-white/30 font-subheading font-semibold text-xs px-2 sm:px-3 py-0.5 sm:py-1">
+                    <Badge className="glass-fx text-white border-white/30 font-subheading font-semibold text-xs px-2 sm:px-3 py-0.5 sm:py-1">
                       {event.category}
                     </Badge>
                   </div>

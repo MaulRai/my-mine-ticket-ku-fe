@@ -51,7 +51,7 @@ export default function ExploreTicketsPage() {
           {/* Search Bar */}
           <div className="max-w-2xl mx-auto">
             <form onSubmit={handleSearch} className="relative">
-              <div className="glass-effect bg-black/40 p-2 rounded-2xl">
+              <div className="glass-fx bg-black/40 p-2 rounded-2xl">
                 <div className="flex gap-2">
                   <div className="relative flex-1">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
@@ -94,7 +94,7 @@ export default function ExploreTicketsPage() {
 
           {/* Feature Cards */}
           <div className="grid md:grid-cols-3 gap-6 mt-16">
-            <div className="clear-glass-effect bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
+            <div className="clear-glass-fx bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
               <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mx-auto">
                 <span className="text-2xl">🔗</span>
               </div>
@@ -103,7 +103,7 @@ export default function ExploreTicketsPage() {
                 Every ticket is cryptographically secured and verifiable on the blockchain
               </p>
             </div>
-            <div className="clear-glass-effect bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
+            <div className="clear-glass-fx bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
               <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mx-auto">
                 <span className="text-2xl">📊</span>
               </div>
@@ -112,7 +112,7 @@ export default function ExploreTicketsPage() {
                 Monitor ticket lifecycle events and ownership transfers in real-time
               </p>
             </div>
-            <div className="clear-glass-effect bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
+            <div className="clear-glass-fx bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
               <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mx-auto">
                 <span className="text-2xl">✅</span>
               </div>
