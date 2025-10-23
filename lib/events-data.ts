@@ -52,19 +52,6 @@ const formatBandName = (name: string) => {
     .join(" ")
 }
 
-// Helper function to get random banner
-const getRandomBanner = () => {
-  const bannerIndex = Math.floor(Math.random() * 5) + 1 // 1-5
-  return `/images/example/banner-${bannerIndex}.png`
-}
-
-// Helper function to get random bands
-const getRandomBands = () => {
-  const count = Math.floor(Math.random() * 5) + 4 // 4-8 bands
-  const shuffled = [...bandNames].sort(() => 0.5 - Math.random())
-  return shuffled.slice(0, count).map(formatBandName)
-}
-
 // Indonesian concert locations
 const locations = [
   "Gelora Bung Karno, Jakarta",
@@ -79,51 +66,46 @@ const locations = [
   "Ancol Beach City, Jakarta",
 ]
 
-// Helper function to generate dates from Oct 25 to late Dec (10 events)
-const generateDates = () => {
-  const startDate = new Date(2025, 9, 25) // Oct 25, 2025
-  const endDate = new Date(2025, 11, 28) // Dec 28, 2025
-  const totalDays = Math.floor((endDate.getTime() - startDate.getTime()) / (1000 * 60 * 60 * 24))
-  const interval = Math.floor(totalDays / 9) // 9 intervals for 10 events
+// Static dates from Oct 25 to late Dec (10 events)
+const dates = [
+  "October 25, 2025",
+  "November 1, 2025",
+  "November 8, 2025",
+  "November 15, 2025",
+  "November 22, 2025",
+  "November 29, 2025",
+  "December 6, 2025",
+  "December 13, 2025",
+  "December 20, 2025",
+  "December 28, 2025",
+]
 
-  const dates: string[] = []
-  for (let i = 0; i < 10; i++) {
-    const eventDate = new Date(startDate)
-    eventDate.setDate(startDate.getDate() + i * interval)
-    
-    const monthNames = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December",
-    ]
-    
-    const formatted = `${monthNames[eventDate.getMonth()]} ${eventDate.getDate()}, ${eventDate.getFullYear()}`
-    dates.push(formatted)
-  }
-  
-  return dates
-}
+// Static banner assignments (1-5)
+const banners = [1, 3, 2, 5, 4, 1, 3, 5, 2, 4]
 
-const dates = generateDates()
+// Static featuring bands for each event (4-8 bands per event)
+const featuringBands = [
+  ["Barasuara", "Hindia", "Reality Club", "Pamungkas", "Kunto Aji"],
+  ["Grrrl Gang", "Feast", "Sisitipsi", "The Adams", "White Shoes", "Morfem"],
+  ["Efek Rumah Kaca", "Goodnight Electric", "The Jansen", "Noah Logo"],
+  ["Nidji", "Kangenband", "The Jeblogs", "Sheila On", "Reality Club", "Hindia"],
+  ["Pamungkas", "Barasuara", "Kunto Aji", "Morfem", "Feast", "Grrrl Gang", "White Shoes"],
+  ["Sisitipsi", "The Adams", "Goodnight Electric", "Efek Rumah Kaca"],
+  ["Reality Club", "Hindia", "The Jansen", "Noah Logo", "Nidji"],
+  ["Kangenband", "Sheila On", "The Jeblogs", "Barasuara", "Pamungkas", "Kunto Aji"],
+  ["Morfem", "Feast", "Grrrl Gang", "White Shoes", "Sisitipsi", "The Adams"],
+  ["Goodnight Electric", "Efek Rumah Kaca", "The Jansen", "Reality Club", "Hindia", "Noah Logo"],
+]
 
 // All events data
 export const allEvents = eventNames.map((eventName, index) => ({
   id: index + 1,
   name: formatEventName(eventName),
   logo: `${eventLogoDir}/${eventName}.png`,
-  featuring: getRandomBands(),
+  featuring: featuringBands[index],
   location: locations[index],
   date: dates[index],
-  banner: getRandomBanner(),
+  banner: `/images/example/banner-${banners[index]}.png`,
   category: "Music",
 }))
 
