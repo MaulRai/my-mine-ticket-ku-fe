@@ -20,6 +20,7 @@ import {
   Heart,
   Share2,
 } from "lucide-react"
+import { allEvents } from "@/lib/events-data"
 
 interface EventDataType {
   id: number
@@ -43,53 +44,96 @@ interface EventDataType {
   soldOut: boolean
 }
 
-// Mock data - in a real app, this would come from an API or database
-const eventData: Record<string, EventDataType> = {
-  "1": {
-    id: 1,
-    name: "Neon Waves Festival",
-    logo: "/images/example/cover-1.png",
-    banner: "/images/example/banner-1.png",
-    category: "Music",
-    featuring: ["Grrrls Gang", "Reality Club", "Hindia"],
-    location: "Jakarta Convention Center",
-    address: "Jl. Gatot Subroto, Jakarta Pusat, DKI Jakarta",
-    date: "June 15, 2025",
-    time: "18:00 - 23:00 WIB",
-    capacity: "5,000 attendees",
-    regularTickets: 4000,
-    regularTicketsSold: 3880,
-    vipTickets: 1000,
-    vipTicketsSold: 970,
-    description:
-      "Experience the ultimate music festival featuring Indonesia's hottest indie and alternative bands. Neon Waves Festival brings together the best of contemporary Indonesian music in an unforgettable night of performances, lights, and energy.",
-    ticketPrice: "Starting from Rp 350,000",
-    organizer: "Wave Entertainment",
-    soldOut: false,
-  },
-  "2": {
-    id: 2,
-    name: "Islands of Sound 2025",
-    logo: "/images/example/cover-2.png",
-    banner: "/images/example/banner-2.png",
-    category: "Music",
-    featuring: ["The Adams", "Kunto Aji", "Pamungkas"],
-    location: "Bali Art Center",
-    address: "Jl. Nusa Indah, Denpasar, Bali",
-    date: "July 20, 2025",
-    time: "17:00 - 22:00 WITA",
-    capacity: "3,500 attendees",
-    regularTickets: 2800,
-    regularTicketsSold: 1680,
-    vipTickets: 700,
-    vipTicketsSold: 420,
-    description:
-      "A tropical music experience in the heart of Bali. Islands of Sound brings together soulful Indonesian artists for an evening of acoustic and indie performances in a stunning cultural venue.",
-    ticketPrice: "Starting from Rp 450,000",
-    organizer: "Island Vibes Productions",
-    soldOut: false,
-  },
+// Generate enhanced event data from allEvents
+const generateEventDetails = (): Record<string, EventDataType> => {
+  const addresses = [
+    "Jl. Pintu Satu Senayan, Jakarta Pusat, DKI Jakarta",
+    "Jl. Pluit Selatan Raya, Jakarta Utara, DKI Jakarta",
+    "BSD Green Office Park, Tangerang, Banten",
+    "Jl. Pintu Satu Senayan, Jakarta Pusat, DKI Jakarta",
+    "Kawasan ITDC, Nusa Dua, Bali",
+    "Jl. Gatot Subroto No.289, Bandung, Jawa Barat",
+    "Jl. Basuki Rahmat No.8-12, Surabaya, Jawa Timur",
+    "Jl. Casablanca Kav.88, Jakarta Selatan, DKI Jakarta",
+    "Jl. AM Sangaji, Yogyakarta, DIY",
+    "Jl. Lodan Timur No.7, Jakarta Utara, DKI Jakarta",
+  ]
+
+  const times = [
+    "18:00 - 23:00 WIB",
+    "19:00 - 00:00 WIB",
+    "17:00 - 22:00 WIB",
+    "20:00 - 01:00 WIB",
+    "16:00 - 22:00 WITA",
+    "18:30 - 23:30 WIB",
+    "19:00 - 00:00 WIB",
+    "17:30 - 22:30 WIB",
+    "18:00 - 23:00 WIB",
+    "19:30 - 00:30 WIB",
+  ]
+
+  const capacities = [
+    "5,000 attendees",
+    "4,500 attendees",
+    "3,500 attendees",
+    "6,000 attendees",
+    "4,000 attendees",
+    "3,000 attendees",
+    "5,500 attendees",
+    "2,500 attendees",
+    "4,200 attendees",
+    "4,800 attendees",
+  ]
+
+  const organizers = [
+    "Wave Entertainment",
+    "Live Nation Indonesia",
+    "Ismaya Live",
+    "Java Musikindo",
+    "Island Vibes Productions",
+    "Rajawali Indonesia",
+    "Concert Pro Indonesia",
+    "Urban Motion",
+    "Jogja Live",
+    "Coastline Events",
+  ]
+
+  const ticketConfigs = [
+    { regular: 4000, regularSold: 3200, vip: 1000, vipSold: 850 },
+    { regular: 3500, regularSold: 2100, vip: 1000, vipSold: 600 },
+    { regular: 2800, regularSold: 1400, vip: 700, vipSold: 350 },
+    { regular: 4800, regularSold: 3840, vip: 1200, vipSold: 1080 },
+    { regular: 3200, regularSold: 2240, vip: 800, vipSold: 560 },
+    { regular: 2400, regularSold: 1200, vip: 600, vipSold: 300 },
+    { regular: 4400, regularSold: 2640, vip: 1100, vipSold: 660 },
+    { regular: 2000, regularSold: 1000, vip: 500, vipSold: 250 },
+    { regular: 3360, regularSold: 1680, vip: 840, vipSold: 420 },
+    { regular: 3840, regularSold: 1920, vip: 960, vipSold: 480 },
+  ]
+
+  const eventData: Record<string, EventDataType> = {}
+
+  allEvents.forEach((event, index) => {
+    eventData[event.id.toString()] = {
+      ...event,
+      address: addresses[index],
+      time: times[index],
+      capacity: capacities[index],
+      regularTickets: ticketConfigs[index].regular,
+      regularTicketsSold: ticketConfigs[index].regularSold,
+      vipTickets: ticketConfigs[index].vip,
+      vipTicketsSold: ticketConfigs[index].vipSold,
+      description: `Experience the ultimate music festival featuring ${event.featuring.slice(0, 3).join(", ")} and more! ${event.name} brings together the best of Indonesian music in an unforgettable night of performances, lights, and energy. Join thousands of music lovers for this spectacular event.`,
+      ticketPrice: "Starting from Rp 350,000",
+      organizer: organizers[index],
+      soldOut: false,
+    }
+  })
+
+  return eventData
 }
+
+const eventData = generateEventDetails()
 
 const resaleTickets = [
   { id: 1, seller: "John D.", type: "Regular", price: 385000, originalPrice: 350000 },
