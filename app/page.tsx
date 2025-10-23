@@ -108,15 +108,15 @@ export default function Home() {
 
             {/* Vision Content */}
             <div className="space-y-8 max-w-4xl mx-auto">
-              <div className="glass-fx bg-black/40 p-8 rounded-2xl border border-white/10">
+              <div className="glass-fx bg-black/20 p-8 rounded-2xl border border-white/10">
                 <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
-                  Semua dimulai dari <span className="text-blue-400 font-semibold">tokenisasi tiket acara</span> —
+                  Semua dimulai dari <span className="text-[#4a0dc3] font-semibold">tokenisasi tiket acara</span> —
                   membawa konser dan pameran ke blockchain untuk membantu penyelenggara, artis, dan penggemar
                   memverifikasi keaslian, menghilangkan penipuan, serta mengotomatiskan pembagian hasil.
                 </p>
               </div>
 
-              <div className="glass-fx bg-black/40 p-8 rounded-2xl border border-white/10">
+              <div className="glass-fx bg-black/20 p-8 rounded-2xl border border-white/10">
                 <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
                   <span className="text-white font-semibold">MyMineTicketKu</span> menghadirkan sistem tiket yang
                   efisien melalui NFT, smart contract, dan pembagian pendapatan yang transparan, memberdayakan seluruh
@@ -124,7 +124,7 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="glass-fx bg-black/40 p-8 rounded-2xl border border-white/10">
+              <div className="glass-fx bg-black/20 p-8 rounded-2xl border border-white/10">
                 <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
                   Baik Anda seorang artis, penyelenggara, sponsor, maupun penggemar,{" "}
                   <span className="text-white font-semibold">MyMineTicketKu</span> menjadikan setiap tiket sebagai bukti
@@ -150,9 +150,9 @@ export default function Home() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Feature 1 */}
-              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
-                <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
-                  <Shield className="h-6 w-6 text-blue-400" />
+              <div className="glass-fx bg-gray-900/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
+                <div className="w-12 h-12 bg-blue-200/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
+                  <Shield className="h-6 w-6 text-[#4a0dc3]" />
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Terverifikasi Blockchain</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
@@ -162,9 +162,9 @@ export default function Home() {
               </div>
 
               {/* Feature 2 */}
-              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
-                <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
-                  <TrendingUp className="h-6 w-6 text-blue-400" />
+              <div className="glass-fx bg-gray-900/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
+                <div className="w-12 h-12 bg-blue-200/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
+                  <TrendingUp className="h-6 w-6 text-[#4a0dc3]" />
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Pembagian Hasil Otomatis</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
@@ -174,9 +174,9 @@ export default function Home() {
               </div>
 
               {/* Feature 3 */}
-              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
-                <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
-                  <Users className="h-6 w-6 text-blue-400" />
+              <div className="glass-fx bg-gray-900/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
+                <div className="w-12 h-12 bg-blue-200/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
+                  <Users className="h-6 w-6 text-[#4a0dc3]" />
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Ekosistem Terhubung</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
@@ -185,9 +185,9 @@ export default function Home() {
               </div>
 
               {/* Feature 4 */}
-              <div className="glass-fx bg-black/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
-                <div className="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
-                  <Sparkles className="h-6 w-6 text-blue-400" />
+              <div className="glass-fx bg-gray-900/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
+                <div className="w-12 h-12 bg-blue-200/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
+                  <Sparkles className="h-6 w-6 text-[#4a0dc3]" />
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">NFT & POAP Badge</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
