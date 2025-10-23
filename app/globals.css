@@ -127,37 +127,52 @@
 }
 
 @layer utilities {
-  .glass-fx {
-    @apply relative rounded-xl border border-white/25 bg-white/10 backdrop-blur-md shadow-xl;
+  .font-heading {
+    font-family: var(--font-heading), sans-serif;
   }
 
-  .glass-fx::before {
-    content: "";
-    @apply absolute inset-0 rounded-xl pointer-events-none;
-    background: radial-gradient(circle at top left,
-        rgba(255, 255, 255, 0.25),
-        transparent 40%);
+  .font-subheading {
+    font-family: var(--font-subheading), sans-serif;
   }
 
-  .clear-glass-fx {
-    @apply relative rounded-xl border border-white/20 bg-white/5 backdrop-blur-lg shadow-lg;
+  .font-body {
+    font-family: var(--font-body), sans-serif;
   }
 
-  .clear-glass-fx::before {
-    content: "";
-    @apply absolute inset-0 rounded-xl pointer-events-none;
+  @layer utilities {
+    .glass-fx {
+      @apply relative rounded-xl border border-white/25 bg-white/10 backdrop-blur-md shadow-xl;
+    }
+
+    .glass-fx::before {
+      content: "";
+      @apply absolute inset-0 rounded-xl pointer-events-none;
+      background: radial-gradient(circle at top left,
+          rgba(255, 255, 255, 0.25),
+          transparent 40%);
+    }
+
+    .clear-glass-fx {
+      @apply relative rounded-xl border border-white/20 bg-white/5 backdrop-blur-lg shadow-lg;
+    }
+
+    .clear-glass-fx::before {
+      content: "";
+      @apply absolute inset-0 rounded-xl pointer-events-none;
+    }
+
+    /* Tambahan variasi jika mau lebih kuat efeknya */
+    .strong-glass-fx {
+      @apply relative rounded-2xl border border-white/30 bg-white/20 backdrop-blur-xl shadow-2xl;
+    }
+
+    .strong-glass-fx::before {
+      content: "";
+      @apply absolute inset-0 rounded-2xl pointer-events-none;
+      background: radial-gradient(circle at top right,
+          rgba(255, 255, 255, 0.4),
+          transparent 45%);
+    }
   }
 
-  /* Tambahan variasi jika mau lebih kuat efeknya */
-  .strong-glass-fx {
-    @apply relative rounded-2xl border border-white/30 bg-white/20 backdrop-blur-xl shadow-2xl;
-  }
-
-  .strong-glass-fx::before {
-    content: "";
-    @apply absolute inset-0 rounded-2xl pointer-events-none;
-    background: radial-gradient(circle at top right,
-        rgba(255, 255, 255, 0.4),
-        transparent 45%);
-  }
 }
