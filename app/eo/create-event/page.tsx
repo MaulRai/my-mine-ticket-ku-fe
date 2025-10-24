@@ -338,9 +338,8 @@ export default function CreateEventPage() {
         location: formData.location,
         date: eventDateTime.toISOString(),
         posterUrl: formData.posterUrl,
-        creatorAddress: walletAddress,
         revenueBeneficiaries: beneficiariesWithBasisPoints,
-        taxWalletAddress: formData.taxWalletAddress,
+        taxWalletAddress: formData.taxWalletAddress || undefined,
         attachments: formData.attachments
       })
 

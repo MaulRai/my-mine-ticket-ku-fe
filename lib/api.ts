@@ -196,6 +196,21 @@ class ApiClient {
         ...(options?.headers as Record<string, string>),
       };
 
+      console.log('API Request:', {
+        url,
+        method: options?.method || 'GET',
+        hasToken: !!this.token,
+        tokenPreview: this.token ? `${this.token.substring(0, 20)}...` : 'none',
+        headers: {
+          ...headers,
+          Authorization: headers.Authorization ? `Bearer ${headers.Authorization.substring(7, 27)}...` : 'none'
+        }
+      });
+
+      if (options?.body) {
+        console.log('Request body:', JSON.parse(options.body as string));
+      }
+
       const response = await fetch(url, {
         ...options,
         headers,
@@ -203,6 +218,12 @@ class ApiClient {
       });
 
       const data = await response.json();
+
+      console.log('API Response:', {
+        status: response.status,
+        ok: response.ok,
+        data
+      });
 
       if (!response.ok) {
         throw new Error(data.message || `HTTP error! status: ${response.status}`);
@@ -360,7 +381,6 @@ class ApiClient {
     location: string;
     date: string;
     posterUrl?: string;
-    creatorAddress: string;
     revenueBeneficiaries?: Array<{
       address: string;
       name?: string;

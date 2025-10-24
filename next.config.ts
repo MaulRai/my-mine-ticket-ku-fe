@@ -32,7 +32,31 @@ const nextConfig: NextConfig = {
   },
 
   images: {
-    domains: ["localhost", "ipfs.io", "nftstorage.link"],
+    domains: [
+      "localhost", 
+      "ipfs.io", 
+      "nftstorage.link",
+      "bronze-cheerful-barracuda-21.mypinata.cloud",
+      "*.mypinata.cloud" 
+    ],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**.mypinata.cloud',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ipfs.io',
+      },
+      {
+        protocol: 'https',
+        hostname: 'nftstorage.link',
+      },
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+      },
+    ],
   },
 };
 
