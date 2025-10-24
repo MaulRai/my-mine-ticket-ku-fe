@@ -139,15 +139,6 @@ export function Navbar() {
                   </Link>
                 )}
                 
-                <Link href="/explore-tickets">
-                  <Button
-                    variant="ghost"
-                    className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
-                  >
-                    Explore Tickets
-                  </Button>
-                </Link>
-                
                 <Link href="/profile">
                   <Button
                     variant="ghost"
@@ -158,6 +149,15 @@ export function Navbar() {
                 </Link>
               </>
             )}
+            
+            <Link href="/explore-tickets">
+              <Button
+                variant="ghost"
+                className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
+              >
+                Jelajahi Tiket
+              </Button>
+            </Link>
 
             {isLoggedIn ? (
               <>
@@ -269,15 +269,6 @@ export function Navbar() {
                   </Link>
                 )}
                 
-                <Link href="/explore-tickets" onClick={() => setIsMenuOpen(false)}>
-                  <Button
-                    variant="ghost"
-                    className="w-full justify-start font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white"
-                  >
-                    Explore Tickets
-                  </Button>
-                </Link>
-                
                 <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
                   <Button
                     variant="ghost"
@@ -288,6 +279,15 @@ export function Navbar() {
                 </Link>
               </>
             )}
+            
+            <Link href="/explore-tickets" onClick={() => setIsMenuOpen(false)}>
+              <Button
+                variant="ghost"
+                className="w-full justify-start font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+              >
+                Explore Tickets
+              </Button>
+            </Link>
             
             {isLoggedIn ? (
               <>
