@@ -136,7 +136,7 @@ export default function Home() {
               <div className="glass-fx bg-black/20 p-8 rounded-2xl border border-white/10">
                 <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
                   Semua dimulai dari <span className="text-[#4a0dc3] font-semibold">tokenisasi tiket acara</span> —
-                  membawa konser dan pameran ke blockchain untuk membantu <span className="italic">event organizer</span>, artis,
+                  membawa konser dan pameran ke <span className="italic">blockchain</span> untuk membantu <span className="italic">event organizer</span>, artis,
                   <span className="italic">partner</span>, dan penggemar memverifikasi keaslian, menghilangkan penipuan, serta
                   mengotomatiskan <span className="italic">revenue sharing</span>.
                 </p>
@@ -160,14 +160,6 @@ export default function Home() {
 
                 </p>
               </div>
-            </div>
-
-            {/* [INSERT VISUALIZATION B HERE: Interactive diagram showing blockchain flow or ecosystem] */}
-            <div className="mt-16 p-8 bg-gradient-to-br from-blue-600/10 to-blue-700/5 rounded-2xl border border-blue-500/20">
-              <p className="text-center text-gray-400 font-body italic">
-                [Insert visualization/image: Interactive diagram menampilkan alur blockchain dari pembelian tiket hingga
-                pembagian hasil otomatis]
-              </p>
             </div>
           </div>
         </section>

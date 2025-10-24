@@ -135,7 +135,7 @@ export function Navbar() {
                       variant="ghost"
                       className="font-body text-sm transition-colors md:text-base text-white/90 hover:bg-white/10 hover:text-white"
                     >
-                      My Tickets
+                      Tiketku
                     </Button>
                   </Link>
                 )}
@@ -145,7 +145,7 @@ export function Navbar() {
                     variant="ghost"
                     className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
                   >
-                    Profile
+                    Profil
                   </Button>
                 </Link>
               </>
@@ -201,7 +201,7 @@ export function Navbar() {
                       className="border-white/20 text-white hover:bg-white/10"
                     >
                       <Wallet className="h-4 w-4 mr-2" />
-                      Connect Wallet
+                      Hubungkan Wallet
                     </Button>
                   )}
                   
