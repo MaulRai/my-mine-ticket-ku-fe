@@ -139,6 +139,12 @@
     font-family: var(--font-body), sans-serif;
   }
 
+  /* Add spacing after italic text */
+  .italic {
+    margin-right: 0.15em;
+    margin-left: 0.15em;
+  }
+
   @layer utilities {
     .glass-fx {
       @apply relative rounded-xl border border-white/25 bg-white/10 backdrop-blur-md shadow-xl;

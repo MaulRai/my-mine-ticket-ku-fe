@@ -210,7 +210,6 @@ export default function Home() {
                   <span className="text-white font-semibold">MyMineTicketKu</span> menjadikan setiap ticket sebagai bukti
                   <span className="italic">authenticity</span>, <span className="italic">ownership</span>, dan keberhasilan bersama di dunia
                   <span className="italic">entertainment-Web3</span>.
-
                 </p>
               </div>
             </div>
