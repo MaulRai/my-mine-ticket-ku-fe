@@ -251,7 +251,7 @@ export function Navbar() {
                       onClick={handleConnectWallet}
                       variant="outline"
                       size="sm"
-                      className="border-white/20 text-white hover:bg-white/10"
+                      className="relative overflow-hidden bg-black border-white/20 text-white hover:bg-white/10 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-[#7411bc] before:to-transparent before:animate-[shine_3s_ease-in-out_infinite]"
                     >
                       <Wallet className="h-4 w-4 mr-2" />
                       Hubungkan Wallet

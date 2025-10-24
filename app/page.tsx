@@ -116,7 +116,7 @@ export default function Home() {
           {/* Overlay Background Image */}
           <div className="absolute top-0 left-0 w-3/4 h-full pointer-events-none opacity-50 z-0">
             <Image
-              src="/images/overlay-2.png"
+              src="/images/overlay-6.png"
               alt="Overlay"
               fill
               className="object-contain object-left-center"
