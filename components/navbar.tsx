@@ -26,6 +26,8 @@ export function Navbar() {
       const token = apiClient.getToken()
       if (!token) {
         setIsLoggedIn(false)
+        setUserRole(null)
+        setWalletAddress(null)
         return
       }
 
@@ -39,11 +41,20 @@ export function Navbar() {
     } catch (error) {
       console.error("Error checking auth:", error)
       setIsLoggedIn(false)
+      setUserRole(null)
+      setWalletAddress(null)
+      apiClient.clearToken()
     }
   }
 
   const handleConnectWallet = async () => {
     try {
+      if (!isLoggedIn) {
+        alert('Please login first before connecting wallet');
+        router.push('/login');
+        return;
+      }
+
       const address = await blockchainService.connectWallet()
       
       const nonceResponse = await apiClient.getWalletNonce(address)
@@ -81,6 +92,11 @@ export function Navbar() {
       router.push("/login")
     } catch (error) {
       console.error("Error during logout:", error)
+      apiClient.clearToken()
+      setWalletAddress(null)
+      setUserRole(null)
+      setIsLoggedIn(false)
+      router.push("/login")
     }
   }
 

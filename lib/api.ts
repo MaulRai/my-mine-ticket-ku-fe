@@ -188,51 +188,44 @@ class ApiClient {
     options?: RequestInit
   ): Promise<T> {
     try {
-        const url = `${this.baseUrl}${endpoint}`;
-        
-        const headers: Record<string, string> = {
-            'Content-Type': 'application/json',
-            ...(this.token ? { 'Authorization': `Bearer ${this.token}` } : {}),
-            ...(options?.headers as Record<string, string>),
-        };
+      const url = `${this.baseUrl}${endpoint}`;
+      
+      const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        ...(this.token ? { 'Authorization': `Bearer ${this.token}` } : {}),
+        ...(options?.headers as Record<string, string>),
+      };
 
-        console.log('Making request to:', url, {
-            method: options?.method,
-            headers,
-            body: options?.body
-        });
+      const response = await fetch(url, {
+        ...options,
+        headers,
+        credentials: 'include',
+      });
 
-        const response = await fetch(url, {
-            ...options,
-            headers,
-            credentials: 'include',
-        });
+      const data = await response.json();
 
-        const data = await response.json();
-        console.log('Response received:', data);
+      if (!response.ok) {
+        throw new Error(data.message || `HTTP error! status: ${response.status}`);
+      }
 
-        if (!response.ok) {
-            throw new Error(data.message || `HTTP error! status: ${response.status}`);
-        }
-
-        return (data.data !== undefined ? data.data : data) as T;
+      return (data.data !== undefined ? data.data : data) as T;
     } catch (error) {
-        console.error('API Request failed:', error);
-        throw error;
+      console.error('API Request failed:', error);
+      throw error;
     }
-    }
+  }
 
-    async register(
-        username: string, 
-        email: string, 
-        password: string, 
-        role: string = 'USER'
-        ): Promise<AuthResponse> {
-        return this.request<AuthResponse>('/auth/register', {
-            method: 'POST',
-            body: JSON.stringify({ username, email, password, role })
-        });
-    }
+  async register(
+    username: string, 
+    email: string, 
+    password: string, 
+    role: string = 'USER'
+  ): Promise<AuthResponse> {
+    return this.request<AuthResponse>('/auth/register', {
+      method: 'POST',
+      body: JSON.stringify({ username, email, password, role })
+    });
+  }
 
   async login(email: string, password: string): Promise<AuthResponse> {
     const response = await this.request<AuthResponse>('/auth/login', {

@@ -34,14 +34,13 @@ export default function AdminDashboardPage() {
 
   const checkAdminAccess = async () => {
     try {
-      // Verify token and check if user is admin
       const { user } = await apiClient.verifyToken()
       
       if (user.role !== 'ADMIN') {
         router.push('/events')
         return
       }
-
+      
       await Promise.all([
         fetchStats(),
         fetchProposals(),
