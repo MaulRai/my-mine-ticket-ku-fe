@@ -332,7 +332,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                         <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">Tiket VIP</h3>
                         <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30 font-subheading text-xs">Premium</Badge>
                       </div>
-                      <p className="text-xl sm:text-2xl font-heading text-white mb-1">Rp 750.000</p>
+                      <p className="text-xl sm:text-2xl font-heading text-white mb-1">0.011 ETH</p>
                       <p className="text-gray-400 font-body text-xs mb-2">Akses area premium dengan pengalaman eksklusif</p>
                       <div className="space-y-1 mb-3">
                         <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
@@ -468,7 +468,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                             <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">Tiket VIP</h3>
                             <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30 font-subheading text-xs">Premium</Badge>
                           </div>
-                          <p className="text-xl sm:text-2xl font-heading text-white mb-1">Rp 750.000</p>
+                          <p className="text-xl sm:text-2xl font-heading text-white mb-1">0.011 ETH</p>
                           <p className="text-gray-400 font-body text-xs mb-2">Akses area premium dengan pengalaman eksklusif</p>
                           <div className="space-y-1 mb-3">
                             <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">

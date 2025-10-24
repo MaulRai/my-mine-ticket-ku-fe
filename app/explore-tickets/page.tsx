@@ -19,10 +19,7 @@ export default function ExploreTicketsPage() {
   }
 
   const handleRandomTicket = () => {
-    // Generate a random ticket ID for demonstration
-    // In production, this would fetch a real recently issued ticket ID from your backend
-    const randomId = Math.floor(Math.random() * 10000).toString()
-    router.push(`/tickets/${randomId}`)
+    router.push(`/tickets/1`)
   }
 
   return (
