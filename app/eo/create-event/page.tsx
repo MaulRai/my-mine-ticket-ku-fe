@@ -7,9 +7,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
-import { Plus, Trash2, Loader2, ArrowLeft, Upload, Calendar as CalendarIcon, Clock, X, CheckCircle, AlertCircle, AlertTriangle } from "lucide-react"
+import { Plus, Trash2, Loader2, ArrowLeft, Upload, Calendar as CalendarIcon, Clock, X, CheckCircle, AlertCircle, AlertTriangle, FileText } from "lucide-react"
 import { apiClient } from "@/lib/api"
 import { blockchainService } from "@/lib/blockchain"
+import Image from "next/image"
 
 interface RevenueBeneficiary {
   address: string
@@ -48,7 +49,7 @@ const uploadToPinata = async (file: File): Promise<string> => {
   const metadata = JSON.stringify({
     name: file.name,
     keyvalues: {
-      type: 'event-poster',
+      type: file.type.startsWith('image/') ? 'event-poster' : 'proposal-attachment',
       uploadedAt: new Date().toISOString()
     }
   })
@@ -79,9 +80,11 @@ export default function CreateEventPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [uploadingPoster, setUploadingPoster] = useState(false)
+  const [uploadingAttachments, setUploadingAttachments] = useState(false)
   const [walletAddress, setWalletAddress] = useState<string>("")
   const [posterFile, setPosterFile] = useState<File | null>(null)
   const [posterPreview, setPosterPreview] = useState<string>("")
+  const [attachmentFiles, setAttachmentFiles] = useState<File[]>([])
   const [alerts, setAlerts] = useState<Alert[]>([])
   
   const [formData, setFormData] = useState({
@@ -91,7 +94,8 @@ export default function CreateEventPage() {
     eventDate: "",
     eventTime: "",
     posterUrl: "",
-    taxWalletAddress: ""
+    taxWalletAddress: "",
+    attachments: [] as Array<{fileName: string, fileUrl: string, fileType: string, fileSize: number}>
   })
   
   const [beneficiaries, setBeneficiaries] = useState<RevenueBeneficiary[]>([
@@ -170,7 +174,7 @@ export default function CreateEventPage() {
     if (!file) return
 
     if (!file.type.startsWith('image/')) {
-      showAlert('error', 'Invalid File', 'Please upload an image file')
+      showAlert('error', 'Invalid File', 'Please upload an image file (PNG or JPG)')
       return
     }
 
@@ -191,14 +195,78 @@ export default function CreateEventPage() {
     try {
       const ipfsUrl = await uploadToPinata(file)
       setFormData(prev => ({ ...prev, posterUrl: ipfsUrl }))
-      showAlert('success', 'Upload Successful', 'Image uploaded successfully')
+      showAlert('success', 'Upload Successful', 'Poster uploaded to IPFS successfully')
     } catch (error) {
-      showAlert('error', 'Upload Failed', 'Failed to upload image. Please try again.')
+      showAlert('error', 'Upload Failed', 'Failed to upload poster. Please try again.')
       setPosterFile(null)
       setPosterPreview('')
     } finally {
       setUploadingPoster(false)
     }
+  }
+
+  const handleAttachmentsChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = Array.from(e.target.files || [])
+    if (files.length === 0) return
+
+    const validTypes = [
+      'application/pdf',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+      'application/vnd.ms-excel',
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      'image/png',
+      'image/jpeg',
+      'image/jpg'
+    ]
+
+    const invalidFiles = files.filter(file => !validTypes.includes(file.type))
+    if (invalidFiles.length > 0) {
+      showAlert('error', 'Invalid File Type', 'Only PDF, Word, Excel, and images are allowed')
+      return
+    }
+
+    const oversizedFiles = files.filter(file => file.size > 10 * 1024 * 1024)
+    if (oversizedFiles.length > 0) {
+      showAlert('error', 'File Too Large', 'Each file must be less than 10MB')
+      return
+    }
+
+    setAttachmentFiles(prev => [...prev, ...files])
+
+    setUploadingAttachments(true)
+    try {
+      const uploadedAttachments = await Promise.all(
+        files.map(async (file) => {
+          const ipfsUrl = await uploadToPinata(file)
+          return {
+            fileName: file.name,
+            fileUrl: ipfsUrl,
+            fileType: file.type,
+            fileSize: file.size
+          }
+        })
+      )
+
+      setFormData(prev => ({
+        ...prev,
+        attachments: [...prev.attachments, ...uploadedAttachments]
+      }))
+
+      showAlert('success', 'Upload Successful', `${files.length} file(s) uploaded to IPFS`)
+    } catch (error) {
+      showAlert('error', 'Upload Failed', 'Failed to upload attachments. Please try again.')
+    } finally {
+      setUploadingAttachments(false)
+    }
+  }
+
+  const removeAttachment = (index: number) => {
+    setAttachmentFiles(prev => prev.filter((_, i) => i !== index))
+    setFormData(prev => ({
+      ...prev,
+      attachments: prev.attachments.filter((_, i) => i !== index)
+    }))
   }
 
   const handleBeneficiaryChange = (index: number, field: keyof RevenueBeneficiary, value: string | number) => {
@@ -237,7 +305,7 @@ export default function CreateEventPage() {
       }
 
       if (!formData.posterUrl) {
-        showAlert('error', 'Missing Image', 'Please upload an event poster')
+        showAlert('error', 'Missing Poster', 'Please upload an event poster')
         return
       }
 
@@ -270,12 +338,12 @@ export default function CreateEventPage() {
         location: formData.location,
         date: eventDateTime.toISOString(),
         posterUrl: formData.posterUrl,
-        creatorAddress: walletAddress,
         revenueBeneficiaries: beneficiariesWithBasisPoints,
-        taxWalletAddress: formData.taxWalletAddress
+        taxWalletAddress: formData.taxWalletAddress || undefined,
+        attachments: formData.attachments
       })
 
-      showAlert('success', 'Event Created', 'Your event has been submitted for approval')
+      showAlert('success', 'Event Created', 'Your event has been submitted for admin approval')
       
       setTimeout(() => {
         router.push('/eo/dashboard')
@@ -289,6 +357,20 @@ export default function CreateEventPage() {
   }
 
   const totalPercentage = beneficiaries.reduce((sum, b) => sum + Number(b.percentage), 0)
+
+  const getFileIcon = (fileType: string) => {
+    if (fileType.includes('pdf')) return '📄'
+    if (fileType.includes('word')) return '📝'
+    if (fileType.includes('sheet') || fileType.includes('excel')) return '📊'
+    if (fileType.includes('image')) return '🖼️'
+    return '📎'
+  }
+
+  const formatFileSize = (bytes: number) => {
+    if (bytes < 1024) return bytes + ' B'
+    if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(2) + ' KB'
+    return (bytes / (1024 * 1024)).toFixed(2) + ' MB'
+  }
 
   return (
     <div className="min-h-screen bg-background pt-32 pb-12">
@@ -464,7 +546,7 @@ export default function CreateEventPage() {
                         <input
                           id="posterFile"
                           type="file"
-                          accept="image/*"
+                          accept="image/png,image/jpeg,image/jpg"
                           onChange={handlePosterChange}
                           className="hidden"
                           disabled={uploadingPoster}
@@ -474,10 +556,11 @@ export default function CreateEventPage() {
                     
                     {posterPreview && (
                       <div className="relative w-full h-48 rounded-lg overflow-hidden border border-white/10">
-                        <img
+                        <Image
                           src={posterPreview}
                           alt="Poster preview"
-                          className="w-full h-full object-cover"
+                          fill
+                          className="object-cover"
                         />
                       </div>
                     )}
@@ -486,6 +569,66 @@ export default function CreateEventPage() {
                       <p className="text-xs text-green-400">
                         ✓ Uploaded to IPFS: {formData.posterUrl.substring(0, 50)}...
                       </p>
+                    )}
+                  </div>
+                </div>
+
+                <div>
+                  <Label htmlFor="attachmentFiles" className="text-white font-subheading mb-2 block">
+                    Proposal Attachments
+                  </Label>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-3">
+                      <label htmlFor="attachmentFiles" className="flex-1 cursor-pointer">
+                        <div className="flex items-center gap-3 p-4 rounded-lg bg-white/5 border-2 border-dashed border-white/20 hover:border-white/40 transition-colors">
+                          <FileText className="h-5 w-5 text-gray-400" />
+                          <div className="flex-1">
+                            <p className="text-sm text-white font-medium">
+                              Click to upload attachments
+                            </p>
+                            <p className="text-xs text-gray-500 mt-1">
+                              PDF, Word, Excel, Images up to 10MB each
+                            </p>
+                          </div>
+                          {uploadingAttachments && (
+                            <Loader2 className="h-5 w-5 text-blue-400 animate-spin" />
+                          )}
+                        </div>
+                        <input
+                          id="attachmentFiles"
+                          type="file"
+                          multiple
+                          accept=".pdf,.doc,.docx,.xls,.xlsx,image/png,image/jpeg,image/jpg"
+                          onChange={handleAttachmentsChange}
+                          className="hidden"
+                          disabled={uploadingAttachments}
+                        />
+                      </label>
+                    </div>
+
+                    {formData.attachments.length > 0 && (
+                      <div className="space-y-2">
+                        {formData.attachments.map((attachment, index) => (
+                          <div key={index} className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10">
+                            <div className="flex items-center gap-3 flex-1 min-w-0">
+                              <span className="text-2xl">{getFileIcon(attachment.fileType)}</span>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-sm text-white font-medium truncate">{attachment.fileName}</p>
+                                <p className="text-xs text-gray-400">{formatFileSize(attachment.fileSize)}</p>
+                              </div>
+                            </div>
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => removeAttachment(index)}
+                              className="text-red-400 hover:bg-red-500/20"
+                            >
+                              <Trash2 className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        ))}
+                      </div>
                     )}
                   </div>
                 </div>

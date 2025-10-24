@@ -82,15 +82,14 @@ export default function AdminDashboardPage() {
     }
   }
 
-  const handleApproveProposal = async (proposalId: string, taxWallet: string) => {
+  const handleApproveProposal = async (proposalId: string) => {
     try {
       setProcessingProposal(proposalId)
+      
       await apiClient.approveProposal(proposalId, { 
-        taxWalletAddress: taxWallet,
         adminComment: 'Approved by admin'
       })
       
-      // Refresh proposals
       await fetchProposals()
       await fetchStats()
     } catch (err: any) {
@@ -251,7 +250,16 @@ export default function AdminDashboardPage() {
                         <div className="space-y-2 text-sm">
                           <div className="flex items-center gap-2">
                             <span className="text-gray-400 font-body">Creator:</span>
-                            <span className="text-white font-mono">{proposal.creator?.walletAddress || 'Unknown'}</span>
+                          <div>
+                            <span className="text-white font-subheading">
+                              {proposal.event?.creator?.email || 'Unknown'}
+                            </span>
+                            {/* {proposal.event?.creator?.walletAddress && (
+                              <span className="text-gray-500 font-mono text-xs block">
+                                ({proposal.event.creator.walletAddress.substring(0, 10)}...)
+                              </span>
+                            )} */}
+                          </div>
                           </div>
                           <div className="flex items-center gap-2">
                             <span className="text-gray-400 font-body">Submitted:</span>
@@ -262,6 +270,7 @@ export default function AdminDashboardPage() {
                             <span className="text-white font-mono text-xs">{proposal.taxWalletAddress}</span>
                           </div>
                         </div>
+                        
 
                         {proposal.revenueBeneficiaries && proposal.revenueBeneficiaries.length > 0 && (
                           <div className="mt-4 p-3 bg-white/5 rounded-lg border border-white/10">
@@ -280,17 +289,17 @@ export default function AdminDashboardPage() {
 
                       <div className="flex flex-col gap-2">
                         <Button
-                          onClick={() => handleApproveProposal(proposal.id, proposal.taxWalletAddress)}
-                          disabled={processingProposal === proposal.id}
-                          className="bg-green-600 hover:bg-green-700 text-white font-subheading font-semibold"
-                        >
-                          {processingProposal === proposal.id ? (
-                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                          ) : (
-                            <CheckCircle className="h-4 w-4 mr-2" />
-                          )}
-                          Approve
-                        </Button>
+                        onClick={() => handleApproveProposal(proposal.id)}
+                        disabled={processingProposal === proposal.id}
+                        className="bg-green-600 hover:bg-green-700 text-white font-subheading font-semibold"
+                      >
+                        {processingProposal === proposal.id ? (
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                        ) : (
+                          <CheckCircle className="h-4 w-4 mr-2" />
+                        )}
+                        Approve
+                      </Button>
                         <Button
                           onClick={() => {
                             const reason = prompt('Enter rejection reason:')
@@ -328,7 +337,7 @@ export default function AdminDashboardPage() {
                         <div className="flex items-center justify-between">
                           <div>
                             <p className="text-white font-subheading font-semibold mb-1">
-                              {eo.name || 'Unnamed EO'}
+                              {eo.name || eo.email || 'Unnamed EO'}
                             </p>
                             <p className="text-gray-400 font-mono text-sm mb-2">{eo.walletAddress}</p>
                             <div className="flex items-center gap-4 text-xs text-gray-400">
@@ -336,6 +345,7 @@ export default function AdminDashboardPage() {
                               <span>Events: {eo._count?.events || 0}</span>
                             </div>
                           </div>
+                          
                           <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30">
                             Event Organizer
                           </Badge>
