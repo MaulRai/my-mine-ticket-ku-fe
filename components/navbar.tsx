@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Menu, X, LogOut, Shield, Briefcase, Wallet } from "lucide-react"
 import { useState, useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter, usePathname } from "next/navigation"
 import { blockchainService } from "@/lib/blockchain"
 import { apiClient } from "@/lib/api"
 
@@ -16,6 +16,7 @@ export function Navbar() {
   const [userRole, setUserRole] = useState<'USER' | 'EO' | 'ADMIN' | null>(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const router = useRouter()
+  const pathname = usePathname()
 
   useEffect(() => {
     checkAuth()
@@ -132,7 +133,7 @@ export function Navbar() {
                   <Link href="/profile?tab=my-tickets">
                     <Button
                       variant="ghost"
-                      className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
+                      className="font-body text-sm transition-colors md:text-base text-white/90 hover:bg-white/10 hover:text-white"
                     >
                       My Tickets
                     </Button>
@@ -153,7 +154,11 @@ export function Navbar() {
             <Link href="/explore-tickets">
               <Button
                 variant="ghost"
-                className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
+                className={`font-body text-sm transition-colors md:text-base ${
+                  pathname === "/explore-tickets"
+                    ? "bg-white/20 text-white font-semibold"
+                    : "text-white/90 hover:bg-white/10 hover:text-white"
+                }`}
               >
                 Jelajahi Tiket
               </Button>
@@ -262,7 +267,7 @@ export function Navbar() {
                   <Link href="/profile?tab=my-tickets" onClick={() => setIsMenuOpen(false)}>
                     <Button
                       variant="ghost"
-                      className="w-full justify-start font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+                      className="w-full justify-start font-body text-sm transition-colors text-white/90 hover:bg-white/10 hover:text-white"
                     >
                       My Tickets
                     </Button>
@@ -283,7 +288,11 @@ export function Navbar() {
             <Link href="/explore-tickets" onClick={() => setIsMenuOpen(false)}>
               <Button
                 variant="ghost"
-                className="w-full justify-start font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+                className={`w-full justify-start font-body text-sm transition-colors ${
+                  pathname === "/explore-tickets"
+                    ? "bg-white/20 text-white font-semibold"
+                    : "text-white/90 hover:bg-white/10 hover:text-white"
+                }`}
               >
                 Explore Tickets
               </Button>
