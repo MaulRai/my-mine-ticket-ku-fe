@@ -176,6 +176,7 @@ class ApiClient {
     this.token = null;
     if (typeof window !== 'undefined') {
       localStorage.removeItem('auth_token');
+      localStorage.removeItem('dummy_user');
     }
   }
 
@@ -280,15 +281,26 @@ class ApiClient {
 
   async logout(): Promise<void> {
     try {
-      await this.request('/auth/logout', {
-        method: 'POST',
-      });
+      const token = this.getToken()
+      if (!token?.startsWith('dummy-token-for-testing-')) {
+        await this.request('/auth/logout', {
+          method: 'POST',
+        });
+      }
     } finally {
       this.clearToken();
+      localStorage.removeItem('dummy_user');
     }
   }
 
   async verifyToken(): Promise<{ user: User }> {
+    const token = this.getToken()
+    if (token?.startsWith('dummy-token-for-testing-')) {
+      const dummyUser = localStorage.getItem('dummy_user')
+      if (dummyUser) {
+        return { user: JSON.parse(dummyUser) }
+      }
+    }
     return this.request('/auth/verify');
   }
 

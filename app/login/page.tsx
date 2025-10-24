@@ -19,12 +19,36 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
+  const handleDummyLogin = () => {
+    setEmail("dummy@user.com")
+    setPassword("dummy123")
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
     setError(null)
 
     try {
+      if (email === 'dummy@user.com' && password === 'dummy123') {
+        const dummyToken = 'dummy-token-for-testing-' + Date.now()
+        const dummyUser = {
+          id: 'dummy-user-id',
+          email: 'dummy@user.com',
+          username: 'Dummy User',
+          role: 'USER' as const,
+          walletAddress: undefined,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }
+        
+        apiClient.setToken(dummyToken)
+        localStorage.setItem('dummy_user', JSON.stringify(dummyUser))
+        
+        router.push('/profile')
+        return
+      }
+
       const response = await apiClient.login(email, password)
       
       if (response.token) {
@@ -147,6 +171,16 @@ export default function LoginPage() {
                 ) : (
                   'Masuk'
                 )}
+              </Button>
+
+              <Button
+                type="button"
+                onClick={handleDummyLogin}
+                disabled={isLoading}
+                variant="outline"
+                className="font-body w-full border-purple-500/30 bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 hover:text-purple-200 hover:border-purple-500/50 transition-all duration-300"
+              >
+                Login dengan Akun Dummy
               </Button>
             </form>
 
