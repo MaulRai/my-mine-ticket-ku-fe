@@ -161,12 +161,12 @@ export default function Home() {
         {/* Vision Statement Section */}
         <section className="py-20 px-4 relative">
           {/* Overlay Background Image */}
-          <div className="absolute top-0 left-0  w-full h-full sm:w-3/4 sm:h-3/4 pointer-events-none opacity-50 z-0">
+          <div className="absolute top-0 left-0 w-full h-full sm:w-3/4 sm:h-3/4 pointer-events-none opacity-50 z-0">
             <Image
               src="/images/overlay-6.png"
               alt="Overlay"
               fill
-              className="object-contain object-left-center"
+              className="object-contain object-left"
             />
           </div>
 

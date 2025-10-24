@@ -561,7 +561,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
             }}
           >
             <div
-              className="relative overflow-hidden bg-linear-to-br from-gray-900 via-gray-950 to-black border border-white/20 shadow-2xl transition-transform duration-100 ease-out"
+              className="relative overflow-hidden bg-linear-to-br from-[#230c3f] via-[#0f051d] to-[#2e0535] border border-purple-700/20 shadow-2xl shadow-purple-900/30 transition-transform duration-100 ease-out"
               style={{
                 transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
                 clipPath: "polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px)",
@@ -642,8 +642,8 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
               </div>
 
               {/* Corner decorations */}
-              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-white/30" />
-              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-white/30" />
+              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-purple-500/40" />
+              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-purple-500/40" />
             </div>
           </div>
         </div>
