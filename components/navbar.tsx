@@ -133,7 +133,7 @@ export function Navbar() {
             </div>
           </Link>
 
-          <div className="hidden md:flex items-center gap-2 md:gap-4">
+          <div className="hidden lg:flex items-center gap-2 md:gap-4">
             <Link href="/events">
               <Button
                 variant="ghost"
@@ -179,17 +179,6 @@ export function Navbar() {
                           EO Dashboard
                         </>
                       )}
-                    </Button>
-                  </Link>
-                )}
-                
-                {userRole === 'USER' && (
-                  <Link href="/profile?tab=my-tickets">
-                    <Button
-                      variant="ghost"
-                      className="font-body text-sm transition-colors md:text-base text-white/90 hover:bg-white/10 hover:text-white"
-                    >
-                      Tiketku
                     </Button>
                   </Link>
                 )}
@@ -282,7 +271,7 @@ export function Navbar() {
 
           <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden glass-fx p-2 rounded-lg hover:bg-white/10 transition-colors"
+            className="lg:hidden glass-fx p-2 rounded-lg hover:bg-white/10 transition-colors"
             aria-label="Toggle menu"
           >
             {isMenuOpen ? (
@@ -294,7 +283,7 @@ export function Navbar() {
         </div>
 
         {isMenuOpen && (
-          <div className="md:hidden mt-2 glass-fx px-4 py-3 space-y-2">
+          <div className="lg:hidden mt-2 glass-fx px-4 py-3 space-y-2">
             <Link href="/events" onClick={() => setIsMenuOpen(false)}>
               <Button
                 variant="ghost"
@@ -340,17 +329,6 @@ export function Navbar() {
                           EO Dashboard
                         </>
                       )}
-                    </Button>
-                  </Link>
-                )}
-                
-                {userRole === 'USER' && (
-                  <Link href="/profile?tab=my-tickets" onClick={() => setIsMenuOpen(false)}>
-                    <Button
-                      variant="ghost"
-                      className="w-full justify-start font-body text-sm transition-colors text-white/90 hover:bg-white/10 hover:text-white"
-                    >
-                      Tiketku
                     </Button>
                   </Link>
                 )}
