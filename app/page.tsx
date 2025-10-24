@@ -100,7 +100,7 @@ export default function Home() {
               {/* Right - App Icon */}
               <div className="flex justify-center md:justify-end items-center flex-shrink-0">
                 <Image
-                  src="/images/app-icon.png"
+                  src="/images/app-icon-new.png"
                   alt="MyMineTicketKu Logo"
                   width={300}
                   height={300}
@@ -136,7 +136,7 @@ export default function Home() {
               <div className="glass-fx bg-black/20 p-8 rounded-2xl border border-white/10">
                 <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
                   Semua dimulai dari <span className="text-[#4a0dc3] font-semibold">tokenisasi tiket acara</span> —
-                  membawa konser dan pameran ke blockchain untuk membantu <span className="italic">event organizer</span>, artis,
+                  membawa konser dan pameran ke <span className="italic">blockchain</span> untuk membantu <span className="italic">event organizer</span>, artis,
                   <span className="italic">partner</span>, dan penggemar memverifikasi keaslian, menghilangkan penipuan, serta
                   mengotomatiskan <span className="italic">revenue sharing</span>.
                 </p>
@@ -160,14 +160,6 @@ export default function Home() {
 
                 </p>
               </div>
-            </div>
-
-            {/* [INSERT VISUALIZATION B HERE: Interactive diagram showing blockchain flow or ecosystem] */}
-            <div className="mt-16 p-8 bg-gradient-to-br from-blue-600/10 to-blue-700/5 rounded-2xl border border-blue-500/20">
-              <p className="text-center text-gray-400 font-body italic">
-                [Insert visualization/image: Interactive diagram menampilkan alur blockchain dari pembelian tiket hingga
-                pembagian hasil otomatis]
-              </p>
             </div>
           </div>
         </section>
@@ -217,10 +209,11 @@ export default function Home() {
                 <div className="w-12 h-12 bg-blue-200/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
                   <Users className="h-6 w-6 text-[#4a0dc3]" />
                 </div>
-                <h4 className="font-subheading text-xl font-semibold text-white mb-2">Ekosistem Terhubung</h4>
+                <h4 className="font-subheading text-xl font-semibold text-white mb-2">Transparansi Kepatuhan Finansial</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
-                  Satu platform, ribuan kemungkinan. Menghubungkan <span className="italic">event organizer</span>, 
-                  artis, sponsor, dan penggemar dalam harmoni ekosistem yang saling menghidupkan.
+                  Laporan keuangan dan status pajak <span className="italic">event</span> tersaji secara <span className="italic">real-time</span>. Memudahkan 
+                  <span className="italic">Event Organizer</span> dengan integrasi sederhana untuk laporan royalti otomatis ke LMKN dan menyediakan data yang 
+                  kompatibel untuk audit oleh regulator dan sponsor
                 </p>
               </div>
 
@@ -231,7 +224,7 @@ export default function Home() {
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">NFT & POAP Badge</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
-                  Kenangan yang bernyawa. Tiket NFT sebagai bukti digital <span className="italic">ownership</span> 
+                  Kenangan yang bernyawa. Tiket NFT sebagai bukti digital <span className="italic">ownership</span>
                   dan POAP badge eksklusif untuk setiap momen spesial yang Anda hadiri
                 </p>
               </div>

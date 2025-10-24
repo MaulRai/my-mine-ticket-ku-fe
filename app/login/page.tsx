@@ -54,15 +54,26 @@ export default function LoginPage() {
         <div className="absolute bottom-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/5 blur-3xl" />
       </div>
 
+      {/* Bottom right overlay */}
+      <div className="absolute bottom-0 right-0 w-3/4 h-3/4 pointer-events-none">
+        <Image 
+          src="/images/overlay-5.png" 
+          alt="" 
+          fill 
+          className="object-contain object-bottom-right opacity-60"
+        />
+      </div>
+
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
+          <div className="mb-8 flex justify-center">
+            <Image src="/images/app-logo.png" alt="App Logo" width={400} height={80} className="h-auto w-100" />
+          </div>
+          
           <div className="glass-fx p-8">
             <div className="mb-8 text-center">
-              <div className="mb-6 flex justify-center">
-                <Image src="/images/app-logo.png" alt="App Logo" width={400} height={80} className="h-auto w-100" />
-              </div>
-              <h1 className="font-heading mb-2 text-4xl text-white">Welcome Back</h1>
-              <p className="font-body text-white/60">Sign in to access your tickets</p>
+              <h1 className="font-heading mb-2 text-2xl text-white">Selamat Datang Kembali!</h1>
+              <p className="font-body text-white/60">Masuk untuk mengakses tiket Anda</p>
             </div>
 
             {error && (
@@ -74,12 +85,12 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="email" className="font-body text-sm font-medium text-white/90">
-                  Email Address
+                  Alamat Email
                 </Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="awak@misalan.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -90,7 +101,7 @@ export default function LoginPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="password" className="font-body text-sm font-medium text-white/90">
-                  Password
+                  Kata Sandi
                 </Label>
                 <Input
                   id="password"
@@ -114,11 +125,11 @@ export default function LoginPage() {
                     className="border-white/20 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
                   />
                   <Label htmlFor="remember" className="font-body text-sm text-white/70 cursor-pointer">
-                    Remember me
+                    Ingat saya
                   </Label>
                 </div>
                 <Link href="#" className="font-body text-sm text-purple-400 hover:text-purple-300 transition-colors">
-                  Forgot password?
+                  Lupa kata sandi?
                 </Link>
               </div>
 
@@ -130,20 +141,31 @@ export default function LoginPage() {
                 {isLoading ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Signing in...
+                    Masuk...
                   </>
                 ) : (
-                  'Sign In'
+                  'Masuk'
                 )}
               </Button>
             </form>
 
             <p className="font-body mt-6 text-center text-sm text-white/60">
-              Don&apos;t have an account?{" "}
+              Belum punya akun?{" "}
               <Link href="/register" className="text-purple-400 hover:text-purple-300 transition-colors">
-                Sign up
+                Daftar
               </Link>
             </p>
+          </div>
+
+          <div className="mt-4">
+            <Link href="/">
+              <Button
+                variant="outline"
+                className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-purple-500 font-body text-sm"
+              >
+                ← Kembali ke Landing Page
+              </Button>
+            </Link>
           </div>
         </div>
       </div>

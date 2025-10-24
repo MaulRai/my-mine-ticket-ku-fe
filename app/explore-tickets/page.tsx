@@ -42,9 +42,9 @@ export default function ExploreTicketsPage() {
           <div className="space-y-6">
             <h1 className="font-heading text-5xl md:text-7xl text-white tracking-tight">Jelajahi Tiket</h1>
             <p className="font-body text-xl md:text-2xl text-gray-300 leading-relaxed max-w-3xl mx-auto">
-              Jadilah saksi <span className="font-bold text-white">#RevolusiTiketing</span> secara langsung. Tiketing NFT
-              menghadirkan manfaat blockchain untuk audiens global. Jelajahi Ekosistem Tiketing Terbuka yang lengkap: dari
-              statistik real-time hingga siklus hidup lengkap dan verifikasi keaslian tiket individual.
+              Jadilah saksi <span className="font-bold text-white">#RevolusiTiketing</span> secara langsung. <span className="italic">ticketing</span> NFT
+              menghadirkan manfaat <span className="italic">blockchain</span> untuk audiens global. Jelajahi Ekosistem <span className="italic">ticketing</span> Terbuka yang lengkap: dari
+              statistik <span className="italic">real-time</span> hingga siklus hidup lengkap dan verifikasi keaslian tiket individual.
             </p>
           </div>
 
@@ -78,7 +78,7 @@ export default function ExploreTicketsPage() {
           {/* Random Button Section */}
           <div className="space-y-4">
             <p className="font-body text-lg text-gray-400">
-              Tidak punya identifier tiket? Temukan tiket NFT yang baru diterbitkan dan jelajahi perjalanan lengkapnya
+              Tidak punya <span className="italic">identifier</span> tiket? Temukan tiket NFT yang baru diterbitkan dan jelajahi perjalanan lengkapnya
               dari pembuatan hingga status saat ini.
             </p>
             <Button
@@ -95,12 +95,12 @@ export default function ExploreTicketsPage() {
           {/* Feature Cards */}
           <div className="grid md:grid-cols-3 gap-6 mt-16">
             <div className="clear-glass-fx bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
-              <div className="w-16 h-16 rounded-lg flex items-center justify-center mx-auto">
+              <div className="w-24 h-24 rounded-lg flex items-center justify-center mx-auto">
                 <Image
                   src="/images/explore-tickets/illustration-1.png"
                   alt="Blockchain Verification"
-                  width={64}
-                  height={64}
+                  width={80}
+                  height={80}
                   className="object-contain"
                 />
               </div>
@@ -110,12 +110,12 @@ export default function ExploreTicketsPage() {
               </p>
             </div>
             <div className="clear-glass-fx bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
-              <div className="w-16 h-16 rounded-lg flex items-center justify-center mx-auto">
+              <div className="w-24 h-24 rounded-lg flex items-center justify-center mx-auto">
                 <Image
                   src="/images/explore-tickets/illustration-3.png"
                   alt="Real-Time Tracking"
-                  width={64}
-                  height={64}
+                  width={80}
+                  height={80}
                   className="object-contain"
                 />
               </div>
@@ -125,12 +125,12 @@ export default function ExploreTicketsPage() {
               </p>
             </div>
             <div className="clear-glass-fx bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
-              <div className="w-16 h-16 rounded-lg flex items-center justify-center mx-auto">
+              <div className="w-24 h-24 rounded-lg flex items-center justify-center mx-auto">
                 <Image
                   src="/images/explore-tickets/illustration-2.png"
                   alt="Guaranteed Authenticity"
-                  width={64}
-                  height={64}
+                  width={80}
+                  height={80}
                   className="object-contain"
                 />
               </div>
