@@ -124,7 +124,7 @@ const generateEventDetails = (): Record<string, EventDataType> => {
       vipTickets: ticketConfigs[index].vip,
       vipTicketsSold: ticketConfigs[index].vipSold,
       description: `Rasakan pengalaman festival musik terbaik yang menampilkan ${event.featuring.slice(0, 3).join(", ")} dan banyak lagi! ${event.name} menghadirkan musik Indonesia terbaik dalam malam pertunjukan, cahaya, dan energi yang tak terlupakan. Bergabunglah dengan ribuan pencinta musik untuk acara spektakuler ini.`,
-      ticketPrice: "Mulai dari Rp 350.000",
+      ticketPrice: "Mulai dari 0.0055 ETH",
       organizer: organizers[index],
       soldOut: false,
     }
@@ -299,7 +299,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">Tiket Reguler</h3>
                       </div>
-                      <p className="text-xl sm:text-2xl font-heading text-white mb-1">Rp 350.000</p>
+                      <p className="text-xl sm:text-2xl font-heading text-white mb-1">0.0055 ETH</p>
                       <p className="text-gray-400 font-body text-xs mb-2">Masuk umum</p>
                       <div className="space-y-1 mb-3">
                         <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
@@ -434,7 +434,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                           <div className="flex justify-between items-start mb-2">
                             <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">Tiket Reguler</h3>
                           </div>
-                          <p className="text-xl sm:text-2xl font-heading text-white mb-1">Rp 350.000</p>
+                          <p className="text-xl sm:text-2xl font-heading text-white mb-1">0.0055 ETH</p>
                           <p className="text-gray-400 font-body text-xs mb-2">Masuk umum</p>
                           <div className="space-y-1 mb-3">
                             <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
