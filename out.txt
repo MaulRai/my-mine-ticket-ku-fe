@@ -1,0 +1,786 @@
+::::::::::::::
+lib/api.ts
+::::::::::::::
+// lib/api.ts
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
+
+// interface Headers {
+//   'Content-Type': string;
+//   Authorization?: string;
+//   [key: string]: string | undefined;
+// }
+
+export enum Role {
+  ADMIN = 'ADMIN',
+  EO = 'EO',
+  USER = 'USER'
+}
+
+export enum EventStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  ACTIVE = 'ACTIVE',
+  ENDED = 'ENDED',
+  CANCELLED = 'CANCELLED'
+}
+
+export enum ProposalStatus {
+  PENDING = 'PENDING',
+  APPROVED = 'APPROVED',
+  REJECTED = 'REJECTED'
+}
+
+export enum TransactionType {
+  PURCHASE = 'PURCHASE',
+  RESALE_BUY = 'RESALE_BUY',
+  USE = 'USE'
+}
+
+export interface User {
+  id: string;
+  walletAddress: string;
+  role: Role;
+  name?: string;
+  email?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface AuthResponse {
+  token: string;
+  user: {
+    id: string;
+    walletAddress: string;
+    role: 'ADMIN' | 'EO' | 'USER';
+    name?: string;
+    email?: string;
+  };
+}
+
+export interface NonceResponse {
+  message: string;
+  nonce: number;
+  timestamp: number;
+}
+
+export interface Event {
+  id: string;
+  eventId: number;
+  name: string;
+  description: string;
+  location: string;
+  date: string;
+  posterUrl?: string;
+  status: EventStatus;
+  creatorId: string;
+  creator?: User;
+  createdAt: string;
+  updatedAt: string;
+  ticketTypes?: TicketType[];
+  proposals?: Proposal[];
+  tickets?: Ticket[];
+}
+
+export interface TicketType {
+  id: string;
+  typeId: number;
+  eventId: string;
+  event?: Event;
+  name: string;
+  description?: string;
+  price: string;
+  stock: number;
+  sold: number;
+  saleStartDate: string;
+  saleEndDate: string;
+  benefits?: any;
+  active: boolean;
+  createdAt: string;
+  updatedAt: string;
+  tickets?: Ticket[];
+}
+
+export interface Proposal {
+  id: string;
+  eventId: string;
+  event?: Event;
+  creatorId: string;
+  creator?: User;
+  revenueBeneficiaries: Array<{
+    address: string;
+    name?: string;
+    percentage: number;
+  }>;
+  taxWalletAddress: string;
+  status: ProposalStatus;
+  adminComment?: string;
+  submittedAt: string;
+  reviewedAt?: string;
+}
+
+export interface Ticket {
+  id: string;
+  ticketId: number;
+  eventId: string;
+  event?: Event;
+  typeId: string;
+  ticketType?: TicketType;
+  ownerId: string;
+  owner?: User;
+  txHash: string;
+  blockNumber: number;
+  originalPrice: string;
+  isUsed: boolean;
+  isForResale: boolean;
+  resalePrice?: string;
+  resaleDeadline?: string;
+  resaleCount: number;
+  qrCode: string;
+  tokenURI?: string;
+  mintedAt: string;
+  usedAt?: string;
+  createdAt: string;
+  updatedAt: string;
+  transactions?: Transaction[];
+}
+
+export interface Transaction {
+  id: string;
+  txHash: string;
+  userId: string;
+  user?: User;
+  type: TransactionType;
+  from: string;
+  to?: string;
+  amount: string;
+  eventId?: string;
+  event?: Event;
+  ticketId?: string;
+  ticket?: Ticket;
+  blockNumber: number;
+  timestamp: string;
+  createdAt: string;
+}
+
+export interface AdminStats {
+  totalEvents: number;
+  activeEvents: number;
+  totalTicketsSold: number;
+  totalRevenue: string;
+  recentTransactions: Transaction[];
+}
+
+class ApiClient {
+  private baseUrl: string;
+  private token: string | null = null;
+
+  constructor(baseUrl: string) {
+    this.baseUrl = baseUrl;
+    if (typeof window !== 'undefined') {
+      this.token = localStorage.getItem('auth_token');
+    }
+  }
+
+  setToken(token: string) {
+    this.token = token;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('auth_token', token);
+    }
+  }
+
+  clearToken() {
+    this.token = null;
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('auth_token');
+    }
+  }
+
+  getToken(): string | null {
+    return this.token;
+  }
+
+  private async request<T>(
+    endpoint: string,
+    options?: RequestInit
+    ): Promise<T> {
+    const url = `${this.baseUrl}${endpoint}`;
+    
+    const headers: Record<string, string> = {
+        'Content-Type': 'application/json',
+        ...(options?.headers as Record<string, string>),
+    };
+
+    if (this.token) {
+        headers['Authorization'] = `Bearer ${this.token}`;
+    }
+
+    const response = await fetch(url, {
+        ...options,
+        headers,
+    });
+
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({ 
+        message: 'Request failed',
+        success: false 
+        }));
+        throw new Error(error.message || `HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return (data.data !== undefined ? data.data : data) as T;
+  }
+
+  // ==================== AUTH ====================
+  async getNonce(address: string): Promise<NonceResponse> {
+    return this.request<NonceResponse>(`/auth/nonce/${address}`);
+  }
+
+  async login(address: string, signature: string, message: string): Promise<AuthResponse> {
+    const response = await this.request<AuthResponse>('/auth/login', {
+      method: 'POST',
+      body: JSON.stringify({ address, signature, message }),
+    });
+    
+    if (response.token) {
+      this.setToken(response.token);
+    }
+    
+    return response;
+  }
+
+  async logout(): Promise<void> {
+    try {
+      await this.request('/auth/logout', {
+        method: 'POST',
+      });
+    } finally {
+      this.clearToken();
+    }
+  }
+
+  async verifyToken(): Promise<{ user: AuthResponse['user'] }> {
+    return this.request('/auth/verify');
+  }
+
+  async checkAdmin(address: string): Promise<{ isAdmin: boolean }> {
+    return this.request(`/auth/admin-check/${address}`);
+  }
+
+  // ==================== EVENTS ====================
+  async getEvents(filters?: {
+    status?: string;
+    location?: string;
+    search?: string;
+    sortBy?: string;
+    order?: string;
+  }): Promise<Event[]> {
+    const params = new URLSearchParams(filters as any);
+    return this.request<Event[]>(`/events?${params}`);
+  }
+
+  async getEventById(eventId: string): Promise<Event> {
+    return this.request<Event>(`/events/${eventId}`);
+  }
+
+  async getEventStatistics(eventId: string) {
+    return this.request(`/events/${eventId}/statistics`);
+  }
+
+  // ==================== TICKETS ====================
+  async getUserTickets(address: string, filters?: {
+    status?: string;
+    eventId?: string;
+  }): Promise<Ticket[]> {
+    const params = new URLSearchParams(filters as any);
+    return this.request<Ticket[]>(`/tickets/user/${address}?${params}`);
+  }
+
+  async getTicketById(ticketId: number): Promise<Ticket> {
+    return this.request<Ticket>(`/tickets/${ticketId}`);
+  }
+
+  async getUserTransactionHistory(address: string, filters?: {
+    type?: string;
+    eventId?: string;
+  }): Promise<Transaction[]> {
+    const params = new URLSearchParams(filters as any);
+    return this.request<Transaction[]>(`/users/${address}/transactions?${params}`);
+  }
+
+  // ==================== ADMIN ====================
+  async getPendingProposals(): Promise<Proposal[]> {
+    return this.request<Proposal[]>('/admin/proposals/pending');
+  }
+
+  async approveProposal(proposalId: string, data: {
+    taxWalletAddress?: string;
+    adminComment?: string;
+  }): Promise<any> {
+    return this.request(`/admin/proposals/${proposalId}/approve`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async rejectProposal(proposalId: string, adminComment: string): Promise<any> {
+    return this.request(`/admin/proposals/${proposalId}/reject`, {
+      method: 'POST',
+      body: JSON.stringify({ adminComment }),
+    });
+  }
+
+  async getAdminStats(): Promise<AdminStats> {
+    return this.request<AdminStats>('/admin/stats');
+  }
+
+  async getEventOrganizers(): Promise<any[]> {
+    return this.request<any[]>('/admin/eos');
+  }
+
+  async addAdmin(address: string): Promise<any> {
+    return this.request('/admin/add', {
+      method: 'POST',
+      body: JSON.stringify({ address }),
+    });
+  }
+
+  async verifyAdmin(address: string): Promise<{ isAdmin: boolean }> {
+    return this.request<{ isAdmin: boolean }>(`/admin/verify/${address}`);
+  }
+
+  // ==================== EO (Event Organizer) ====================
+  async createEvent(data: {
+    name: string;
+    description: string;
+    location: string;
+    date: string;
+    posterUrl?: string;
+    creatorAddress: string;
+    revenueBeneficiaries?: Array<{
+      address: string;
+      name?: string;
+      percentage: number;
+    }>;
+    taxWalletAddress?: string;
+  }): Promise<{ event: Event; proposal: Proposal }> {
+    return this.request('/eo/events', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async getEOEvents(address: string): Promise<Event[]> {
+    return this.request<Event[]>(`/eo/events/${address}`);
+  }
+
+  async updateEvent(eventId: string, data: {
+    description?: string;
+    location?: string;
+    posterUrl?: string;
+  }): Promise<Event> {
+    return this.request<Event>(`/eo/events/${eventId}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async addTicketType(eventId: string, data: {
+    name: string;
+    description?: string;
+    price: string;
+    stock: number;
+    saleStartDate: string;
+    saleEndDate: string;
+    benefits?: any;
+  }): Promise<TicketType> {
+    return this.request<TicketType>(`/eo/events/${eventId}/ticket-types`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async updateTicketType(typeId: string, data: {
+    price?: string;
+    stock?: number;
+    saleStartDate?: string;
+    saleEndDate?: string;
+    benefits?: any;
+  }): Promise<TicketType> {
+    return this.request<TicketType>(`/eo/ticket-types/${typeId}`, {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    });
+  }
+
+  async getEventRevenue(eventId: string): Promise<any> {
+    return this.request(`/eo/events/${eventId}/revenue`);
+  }
+
+  async getEventAnalytics(eventId: string): Promise<any> {
+    return this.request(`/eo/events/${eventId}/analytics`);
+  }
+
+  async getDashboardStats(address: string): Promise<any> {
+    return this.request(`/eo/dashboard/${address}`);
+  }
+
+  async verifyTicket(ticketId: number, scannerAddress?: string): Promise<any> {
+    return this.request(`/eo/tickets/${ticketId}/verify`, {
+      method: 'POST',
+      body: JSON.stringify({ scannerAddress }),
+    });
+  }
+
+  async useTicket(ticketId: number, data: {
+    eventCreatorAddress: string;
+    scannerAddress: string;
+  }): Promise<any> {
+    return this.request(`/eo/tickets/${ticketId}/use`, {
+      method: 'POST',
+      body: JSON.stringify(data),
+    });
+  }
+}
+
+export const apiClient = new ApiClient(API_BASE_URL);::::::::::::::
+lib/blockchain.ts
+::::::::::::::
+import { ethers } from 'ethers';
+
+const EVENT_CHAIN_ABI = [
+  "function buyTickets(uint256 eventId, uint256 typeId, uint256 quantity, address[] beneficiaries, uint256[] percentages) external payable returns (uint256[])",
+  "function listTicketForResale(uint256 ticketId, uint256 resalePrice, uint256 resaleDeadline) external",
+  "function buyResaleTicket(uint256 ticketId) external payable",
+  "function getTicketDetails(uint256 ticketId) external view returns (tuple(uint256 ticketId, uint256 eventId, uint256 typeId, address currentOwner, uint256 originalPrice, bool isUsed, uint256 mintedAt, uint256 usedAt, bool isForResale, uint256 resalePrice, uint256 resaleDeadline, uint8 resaleCount))",
+  "function getUserTickets(address user) external view returns (uint256[])",
+  "function canResell(uint256 ticketId) external view returns (bool)",
+  "function getMaxResalePrice(uint256 ticketId) external view returns (uint256)"
+];
+
+const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS || '';
+
+export class BlockchainService {
+  private provider: ethers.BrowserProvider | null = null;
+  private contract: ethers.Contract | null = null;
+  private signer: ethers.Signer | null = null;
+
+  async connectWallet(): Promise<string> {
+    if (typeof window === 'undefined' || !window.ethereum) {
+      throw new Error('MetaMask not installed. Please install MetaMask to continue.');
+    }
+
+    try {
+      this.provider = new ethers.BrowserProvider(window.ethereum);
+      const accounts = await this.provider.send('eth_requestAccounts', []);
+      
+      if (!accounts || accounts.length === 0) {
+        throw new Error('No accounts found. Please unlock MetaMask.');
+      }
+
+      this.signer = await this.provider.getSigner();
+      this.contract = new ethers.Contract(CONTRACT_ADDRESS, EVENT_CHAIN_ABI, this.signer);
+
+      return accounts[0];
+    } catch (error: any) {
+      console.error('Error connecting wallet:', error);
+      throw new Error(error.message || 'Failed to connect wallet');
+    }
+  }
+
+  async signMessage(message: string): Promise<string> {
+    if (!this.signer) {
+      await this.connectWallet();
+    }
+    
+    if (!this.signer) {
+      throw new Error('No signer available');
+    }
+
+    try {
+      const signature = await this.signer.signMessage(message);
+      return signature;
+    } catch (error: any) {
+      console.error('Error signing message:', error);
+      throw new Error(error.message || 'Failed to sign message');
+    }
+  }
+
+  disconnect() {
+    this.provider = null;
+    this.contract = null;
+    this.signer = null;
+  }
+
+  async getContract() {
+    if (!this.contract) {
+      await this.connectWallet();
+    }
+    return this.contract!;
+  }
+
+  async getCurrentAccount(): Promise<string | null> {
+    if (!this.provider) {
+      if (typeof window !== 'undefined' && window.ethereum) {
+        try {
+          this.provider = new ethers.BrowserProvider(window.ethereum);
+          const accounts = await this.provider.send('eth_accounts', []);
+          if (accounts.length > 0) {
+            this.signer = await this.provider.getSigner();
+            this.contract = new ethers.Contract(CONTRACT_ADDRESS, EVENT_CHAIN_ABI, this.signer);
+            return accounts[0];
+          }
+        } catch (error) {
+          console.error('Error reconnecting:', error);
+        }
+      }
+      return null;
+    }
+    
+    try {
+      const signer = await this.provider.getSigner();
+      return signer.address;
+    } catch {
+      return null;
+    }
+  }
+
+  async buyTickets(
+    eventId: number, 
+    typeId: number, 
+    quantity: number, 
+    beneficiaries: string[],
+    percentages: number[],
+    totalPrice: string
+  ) {
+    const contract = await this.getContract();
+    const totalCost = ethers.parseEther(totalPrice);
+    
+    const tx = await contract.buyTickets(
+      eventId, 
+      typeId, 
+      quantity,
+      beneficiaries,
+      percentages,
+      { value: totalCost }
+    );
+    
+    const receipt = await tx.wait();
+    return {
+      txHash: receipt.hash,
+      blockNumber: receipt.blockNumber,
+      ticketIds: receipt.logs
+        .filter((log: any) => log.topics[0] === ethers.id('TicketMinted(uint256,uint256,uint256,address,uint256)'))
+        .map((log: any) => Number(ethers.getBigInt(log.topics[1])))
+    };
+  }
+
+  async listTicketForResale(ticketId: number, resalePrice: string, resaleDeadline: number) {
+    const contract = await this.getContract();
+    const priceInWei = ethers.parseEther(resalePrice);
+    
+    const tx = await contract.listTicketForResale(ticketId, priceInWei, resaleDeadline);
+    const receipt = await tx.wait();
+    
+    return {
+      txHash: receipt.hash,
+      blockNumber: receipt.blockNumber
+    };
+  }
+
+  async buyResaleTicket(ticketId: number, price: string) {
+    const contract = await this.getContract();
+    const priceInWei = ethers.parseEther(price);
+    
+    const tx = await contract.buyResaleTicket(ticketId, {
+      value: priceInWei
+    });
+    
+    const receipt = await tx.wait();
+    return {
+      txHash: receipt.hash,
+      blockNumber: receipt.blockNumber
+    };
+  }
+
+  async getUserTickets(address: string): Promise<number[]> {
+    const contract = await this.getContract();
+    const ticketIds = await contract.getUserTickets(address);
+    return ticketIds.map((id: bigint) => Number(id));
+  }
+
+  async getTicketDetails(ticketId: number) {
+    const contract = await this.getContract();
+    const ticket = await contract.getTicketDetails(ticketId);
+    
+    return {
+      ticketId: Number(ticket.ticketId),
+      eventId: Number(ticket.eventId),
+      typeId: Number(ticket.typeId),
+      currentOwner: ticket.currentOwner,
+      originalPrice: ethers.formatEther(ticket.originalPrice),
+      isUsed: ticket.isUsed,
+      mintedAt: Number(ticket.mintedAt),
+      usedAt: Number(ticket.usedAt),
+      isForResale: ticket.isForResale,
+      resalePrice: ethers.formatEther(ticket.resalePrice),
+      resaleDeadline: Number(ticket.resaleDeadline),
+      resaleCount: Number(ticket.resaleCount)
+    };
+  }
+
+  async canResell(ticketId: number): Promise<boolean> {
+    const contract = await this.getContract();
+    return await contract.canResell(ticketId);
+  }
+
+  async getMaxResalePrice(ticketId: number): Promise<string> {
+    const contract = await this.getContract();
+    const maxPrice = await contract.getMaxResalePrice(ticketId);
+    return ethers.formatEther(maxPrice);
+  }
+}
+
+export const blockchainService = new BlockchainService();
+
+declare global {
+  interface Window {
+    ethereum?: any;
+  }
+}::::::::::::::
+lib/events-data.ts
+::::::::::::::
+// Event data configuration
+const eventLogoDir = "/images/event"
+const bandLogoDir = "/images/bands"
+
+const eventNames = [
+  "burnout",
+  "cravier",
+  "glenovare",
+  "hyde",
+  "jazz_goes_to_campus",
+  "lovestival",
+  "neverland",
+  "pestipalin",
+  "skyavenue",
+  "soundsfest",
+]
+
+const bandNames = [
+  "barasuara",
+  "efek_rumah_kaca",
+  "feast",
+  "goodnight_electric",
+  "grrrl_gang",
+  "hindia",
+  "kangenband",
+  "kunto_aji",
+  "morfem",
+  "nidji",
+  "noah_logo",
+  "pamungkas",
+  "reality_club",
+  "sheila_on",
+  "sisitipsi",
+  "the_adams",
+  "the_jansen",
+  "the_jeblogs",
+  "white_shoes",
+]
+
+// Helper function to capitalize and format names
+const formatEventName = (name: string) => {
+  return name
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+}
+
+const formatBandName = (name: string) => {
+  return name
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ")
+}
+
+// Indonesian concert locations
+const locations = [
+  "Gelora Bung Karno, Jakarta",
+  "Jakarta International Expo, Jakarta",
+  "ICE BSD, Tangerang",
+  "Istora Senayan, Jakarta",
+  "Bali Nusa Dua Convention Center, Bali",
+  "Trans Studio Bandung, Bandung",
+  "Surabaya Convention Hall, Surabaya",
+  "The Kasablanka Hall, Jakarta",
+  "Yogyakarta Convention Center, Yogyakarta",
+  "Ancol Beach City, Jakarta",
+]
+
+// Static dates from Oct 25 to late Dec (10 events)
+const dates = [
+  "25 Oktober 2025",
+  "1 November 2025",
+  "8 November 2025",
+  "15 November 2025",
+  "22 November 2025",
+  "29 November 2025",
+  "6 Desember 2025",
+  "13 Desember 2025",
+  "20 Desember 2025",
+  "28 Desember 2025",
+]
+
+// Static banner assignments (1-5)
+const banners = [1, 3, 2, 5, 4, 1, 3, 5, 2, 4]
+
+// Static featuring bands for each event (4-8 bands per event)
+const featuringBands = [
+  ["Barasuara", "Hindia", "Reality Club", "Pamungkas", "Kunto Aji"],
+  ["Grrrl Gang", "Feast", "Sisitipsi", "The Adams", "White Shoes", "Morfem"],
+  ["Efek Rumah Kaca", "Goodnight Electric", "The Jansen", "Noah Logo"],
+  ["Nidji", "Kangenband", "The Jeblogs", "Sheila On", "Reality Club", "Hindia"],
+  ["Pamungkas", "Barasuara", "Kunto Aji", "Morfem", "Feast", "Grrrl Gang", "White Shoes"],
+  ["Sisitipsi", "The Adams", "Goodnight Electric", "Efek Rumah Kaca"],
+  ["Reality Club", "Hindia", "The Jansen", "Noah Logo", "Nidji"],
+  ["Kangenband", "Sheila On", "The Jeblogs", "Barasuara", "Pamungkas", "Kunto Aji"],
+  ["Morfem", "Feast", "Grrrl Gang", "White Shoes", "Sisitipsi", "The Adams"],
+  ["Goodnight Electric", "Efek Rumah Kaca", "The Jansen", "Reality Club", "Hindia", "Noah Logo"],
+]
+
+// All events data
+export const allEvents = eventNames.map((eventName, index) => ({
+  id: index + 1,
+  name: formatEventName(eventName),
+  logo: `${eventLogoDir}/${eventName}.png`,
+  featuring: featuringBands[index],
+  location: locations[index],
+  date: dates[index],
+  banner: `/images/example/banner-${banners[index]}.png`,
+  category: "Musik",
+}))
+
+// Featured events (first 5 events)
+export const featuredEvents = allEvents.slice(0, 5)
+
+// Export types
+export interface EventData {
+  id: number
+  name: string
+  logo: string
+  featuring: string[]
+  location: string
+  date: string
+  banner: string
+  category: string
+}
+::::::::::::::
+lib/utils.ts
+::::::::::::::
+import { clsx, type ClassValue } from "clsx"
+import { twMerge } from "tailwind-merge"
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs))
+}
