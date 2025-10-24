@@ -68,7 +68,7 @@ export default function Home() {
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a]">
       {/* Overlay Background Image */}
-      <div className="absolute top-0 right-0 w-3/4 h-3/4 pointer-events-none opacity-70 z-0">
+      <div className="absolute top-0 right-0 w-full h-full sm:w-3/4 sm:h-3/4 pointer-events-none opacity-70 z-0">
         <Image
           src="/images/overlay-1.png"
           alt="Overlay"
@@ -89,7 +89,7 @@ export default function Home() {
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex flex-col">
         {/* Hero Section */}
-        <section className="flex-1 flex items-center justify-center px-4 py-20 pt-36">
+        <section className="flex-1 flex items-center justify-center px-4 py-20 pt-12 m:pt-36">
           <div 
             ref={heroRef}
             data-section="hero"
@@ -98,11 +98,22 @@ export default function Home() {
             }`}
           >
             <div className="flex flex-col md:flex-row items-center gap-8">
-              {/* Left Content */}
+              {/* App Icon - Shows on top for mobile, right side for desktop */}
+              <div className="flex justify-center md:justify-end items-center flex-shrink-0 order-first md:order-last">
+                <Image
+                  src="/images/app-icon-new.png"
+                  alt="MyMineTicketKu Logo"
+                  width={300}
+                  height={300}
+                  className="object-contain"
+                />
+              </div>
+
+              {/* Main Content */}
               <div className="flex-1 space-y-4">
                 {/* Main Heading with Animation */}
                 <div>
-                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading text-white leading-tight text-left">
+                  <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-heading text-white leading-tight text-left">
                     Ticketing Web3 untuk
                   </h1>
                   <div className="h-20 sm:h-24 md:h-28 lg:h-32 flex items-center justify-start overflow-visible">
@@ -128,7 +139,7 @@ export default function Home() {
                       size="lg"
                       className="px-8 py-6 text-base sm:text-lg bg-white hover:bg-gray-100 text-black font-subheading font-semibold shadow-lg shadow-white/20 transition-all"
                     >
-                      Jelajahi Acara
+                      Jelajahi Events
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </Button>
                   </Link>
@@ -143,17 +154,6 @@ export default function Home() {
                   </Link>
                 </div>
               </div>
-
-              {/* Right - App Icon */}
-              <div className="flex justify-center md:justify-end items-center flex-shrink-0">
-                <Image
-                  src="/images/app-icon-new.png"
-                  alt="MyMineTicketKu Logo"
-                  width={300}
-                  height={300}
-                  className="object-contain"
-                />
-              </div>
             </div>
           </div>
         </section>
@@ -161,7 +161,7 @@ export default function Home() {
         {/* Vision Statement Section */}
         <section className="py-20 px-4 relative">
           {/* Overlay Background Image */}
-          <div className="absolute top-0 left-0 w-3/4 h-full pointer-events-none opacity-50 z-0">
+          <div className="absolute top-0 left-0  w-full h-full sm:w-3/4 sm:h-3/4 pointer-events-none opacity-50 z-0">
             <Image
               src="/images/overlay-6.png"
               alt="Overlay"
@@ -178,16 +178,16 @@ export default function Home() {
             }`}
           >
             {/* Section Header */}
-            <div className="text-center mb-16 space-y-4">
-              <h3 className="text-3xl sm:text-4xl md:text-5xl font-heading text-white">
+            <div className="text-center mb-8 m:mb-16 space-y-4">
+              <h3 className="text-xl sm:text-3xl md:text-5xl font-heading text-white">
                 Kami melihat masa depan acara dengan cara yang berbeda.
               </h3>
             </div>
 
             {/* Vision Content */}
-            <div className="space-y-8 max-w-4xl mx-auto">
-              <div className="glass-fx bg-black/20 p-8 rounded-2xl border border-white/10">
-                <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
+            <div className="space-y-4 m:space-y-8 max-w-4xl mx-auto">
+              <div className="glass-fx bg-black/20 p-4 m:p-8 rounded-2xl border border-white/10">
+                <p className="text-sm sm:text-lg text-gray-300 font-body leading-relaxed">
                   Semua dimulai dari <span className="text-[#4a0dc3] font-semibold">tokenisasi tiket acara</span> —
                   membawa konser dan pameran ke <span className="italic">blockchain</span> untuk membantu <span className="italic">event organizer</span>, artis,
                   <span className="italic">partner</span>, dan penggemar memverifikasi keaslian, menghilangkan penipuan, serta
@@ -195,8 +195,8 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="glass-fx bg-black/20 p-8 rounded-2xl border border-white/10">
-                <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
+              <div className="glass-fx bg-black/20 p-4 m:p-8 rounded-2xl border border-white/10">
+                <p className="text-sm sm:text-lg text-gray-300 font-body leading-relaxed">
                   <span className="text-white font-semibold">MyMineTicketKu</span> menghadirkan sistem <span className="italic">ticketing</span> yang
                   efisien melalui NFT, <span className="italic">smart contract</span>, dan <span className="italic">transparent revenue sharing</span>,
                   memberdayakan seluruh ekosistem kreatif.
@@ -204,8 +204,8 @@ export default function Home() {
                 </p>
               </div>
 
-              <div className="glass-fx bg-black/20 p-8 rounded-2xl border border-white/10">
-                <p className="text-base sm:text-lg text-gray-300 font-body leading-relaxed">
+              <div className="glass-fx bg-black/20 p-4 m:p-8 rounded-2xl border border-white/10">
+                <p className="text-sm sm:text-lg text-gray-300 font-body leading-relaxed">
                   Baik Anda seorang artis, <span className="italic">event organizer</span>, <span className="italic">partner</span>, maupun penggemar,{" "}
                   <span className="text-white font-semibold">MyMineTicketKu</span> menjadikan setiap ticket sebagai bukti
                   <span className="italic">authenticity</span>, <span className="italic">ownership</span>, dan keberhasilan bersama di dunia
@@ -217,7 +217,7 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 px-4 relative">
+        <section className="py-10 sm:py-20 px-4 relative">
           {/* Overlay Background Image */}
           <div className="absolute top-0 right-0 w-full h-full pointer-events-none opacity-50 z-0">
             <Image
@@ -315,7 +315,7 @@ export default function Home() {
         </section>
 
         {/* CTA Section */}
-        <section className="py-20 px-4">
+        <section className="py-10 sm:py-20 px-4">
           <div 
             ref={ctaRef}
             data-section="cta"
