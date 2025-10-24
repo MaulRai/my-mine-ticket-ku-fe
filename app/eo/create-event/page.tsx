@@ -72,7 +72,7 @@ const uploadToPinata = async (file: File): Promise<string> => {
   }
 
   const data = await response.json()
-  return `https://gateway.pinata.cloud/ipfs/${data.IpfsHash}`
+  return `https://bronze-cheerful-barracuda-21.mypinata.cloud/ipfs/${data.IpfsHash}`
 }
 
 export default function CreateEventPage() {
@@ -191,9 +191,9 @@ export default function CreateEventPage() {
     try {
       const ipfsUrl = await uploadToPinata(file)
       setFormData(prev => ({ ...prev, posterUrl: ipfsUrl }))
-      showAlert('success', 'Upload Successful', 'Image uploaded to IPFS successfully')
+      showAlert('success', 'Upload Successful', 'Image uploaded successfully')
     } catch (error) {
-      showAlert('error', 'Upload Failed', 'Failed to upload image to IPFS. Please try again.')
+      showAlert('error', 'Upload Failed', 'Failed to upload image. Please try again.')
       setPosterFile(null)
       setPosterPreview('')
     } finally {
