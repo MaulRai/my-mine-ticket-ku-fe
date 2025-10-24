@@ -87,11 +87,12 @@ export default function RegisterPage() {
 
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
+          <div className="mb-8 flex justify-center">
+            <Image src="/images/app-logo.png" alt="App Logo" width={400} height={80} className="h-auto w-100" />
+          </div>
+          
           <div className="glass-fx p-8">
             <div className="mb-8 text-center">
-              <div className="mb-6 flex justify-center">
-                <Image src="/images/app-logo.png" alt="App Logo" width={400} height={80} className="h-auto w-100" />
-              </div>
               <h1 className="font-heading mb-2 text-4xl text-white">Create Account</h1>
               <p className="font-body text-white/60">Join us and start collecting tickets</p>
             </div>
