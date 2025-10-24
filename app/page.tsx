@@ -100,7 +100,7 @@ export default function Home() {
               {/* Right - App Icon */}
               <div className="flex justify-center md:justify-end items-center flex-shrink-0">
                 <Image
-                  src="/images/app-icon.png"
+                  src="/images/app-icon-new.png"
                   alt="MyMineTicketKu Logo"
                   width={300}
                   height={300}

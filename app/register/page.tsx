@@ -139,7 +139,7 @@ export default function RegisterPage() {
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="anda@contoh.com"
+                  placeholder="awak@misalan.com"
                   value={formData.email}
                   onChange={handleChange}
                   required
