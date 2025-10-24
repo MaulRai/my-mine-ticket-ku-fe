@@ -16,14 +16,24 @@ export class BlockchainService {
   private provider: ethers.BrowserProvider | null = null;
   private contract: ethers.Contract | null = null;
   private signer: ethers.Signer | null = null;
+  private isConnecting: boolean = false;
 
   async connectWallet(): Promise<string> {
+    if (this.isConnecting) {
+      throw new Error('Connection already in progress');
+    }
+
     if (typeof window === 'undefined' || !window.ethereum) {
       throw new Error('MetaMask not installed. Please install MetaMask to continue.');
     }
 
     try {
+      this.isConnecting = true;
+      
+      this.disconnect();
+      
       this.provider = new ethers.BrowserProvider(window.ethereum);
+      
       const accounts = await this.provider.send('eth_requestAccounts', []);
       
       if (!accounts || accounts.length === 0) {
@@ -35,18 +45,22 @@ export class BlockchainService {
 
       return accounts[0];
     } catch (error: any) {
+      this.disconnect();
       console.error('Error connecting wallet:', error);
+      
+      if (error.code === 4001) {
+        throw new Error('Connection request rejected by user');
+      }
+      
       throw new Error(error.message || 'Failed to connect wallet');
+    } finally {
+      this.isConnecting = false;
     }
   }
 
   async signMessage(message: string): Promise<string> {
     if (!this.signer) {
-      await this.connectWallet();
-    }
-    
-    if (!this.signer) {
-      throw new Error('No signer available');
+      throw new Error('No signer available. Please connect wallet first.');
     }
 
     try {
@@ -54,6 +68,11 @@ export class BlockchainService {
       return signature;
     } catch (error: any) {
       console.error('Error signing message:', error);
+      
+      if (error.code === 4001) {
+        throw new Error('Signature request rejected by user');
+      }
+      
       throw new Error(error.message || 'Failed to sign message');
     }
   }
@@ -65,10 +84,10 @@ export class BlockchainService {
   }
 
   async getContract() {
-    if (!this.contract) {
-      await this.connectWallet();
+    if (!this.contract || !this.signer) {
+      throw new Error('Wallet not connected. Please connect wallet first.');
     }
-    return this.contract!;
+    return this.contract;
   }
 
   async getCurrentAccount(): Promise<string | null> {

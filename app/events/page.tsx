@@ -25,7 +25,7 @@ export default function EventsPage() {
     const progressInterval = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) return 100
-        return prev + 100 / 50 // 5000ms / 100ms = 50 steps
+        return prev + 100 / 50
       })
     }, 100)
     return () => clearInterval(progressInterval)

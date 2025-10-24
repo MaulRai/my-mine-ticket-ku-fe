@@ -4,7 +4,7 @@ import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { Menu, X, LogOut, Shield, Briefcase, Wallet } from "lucide-react"
+import { Menu, X, LogOut, Shield, Briefcase, Wallet, User } from "lucide-react"
 import { useState, useEffect } from "react"
 import { useRouter, usePathname } from "next/navigation"
 import { blockchainService } from "@/lib/blockchain"
@@ -13,6 +13,7 @@ import { apiClient } from "@/lib/api"
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [walletAddress, setWalletAddress] = useState<string | null>(null)
+  const [username, setUsername] = useState<string | null>(null)
   const [userRole, setUserRole] = useState<'USER' | 'EO' | 'ADMIN' | null>(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const router = useRouter()
@@ -29,12 +30,14 @@ export function Navbar() {
         setIsLoggedIn(false)
         setUserRole(null)
         setWalletAddress(null)
+        setUsername(null)
         return
       }
 
       const { user } = await apiClient.verifyToken()
       setUserRole(user.role)
       setIsLoggedIn(true)
+      setUsername(user.username || user.email?.split('@')[0] || 'User')
       
       if (user.walletAddress) {
         setWalletAddress(user.walletAddress)
@@ -44,6 +47,7 @@ export function Navbar() {
       setIsLoggedIn(false)
       setUserRole(null)
       setWalletAddress(null)
+      setUsername(null)
       apiClient.clearToken()
     }
   }
@@ -61,9 +65,15 @@ export function Navbar() {
       const nonceResponse = await apiClient.getWalletNonce(address)
       const signature = await blockchainService.signMessage(nonceResponse.message)
       
-      await apiClient.connectWallet(address, signature, nonceResponse.message)
+      const response = await apiClient.connectWallet(address, signature, nonceResponse.message)
+      
+      console.log('Connect wallet response:', response)
       
       setWalletAddress(address)
+      
+      if (response.user.username) {
+        setUsername(response.user.username)
+      }
       
       await checkAuth()
     } catch (error: any) {
@@ -90,6 +100,7 @@ export function Navbar() {
       setWalletAddress(null)
       setUserRole(null)
       setIsLoggedIn(false)
+      setUsername(null)
       router.push("/login")
     } catch (error) {
       console.error("Error during logout:", error)
@@ -97,6 +108,7 @@ export function Navbar() {
       setWalletAddress(null)
       setUserRole(null)
       setIsLoggedIn(false)
+      setUsername(null)
       router.push("/login")
     }
   }
@@ -184,6 +196,14 @@ export function Navbar() {
               <>
                 <div className="h-6 w-px bg-white/20" />
                 <div className="flex items-center gap-2">
+                  {/* Username Display */}
+                  <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                    <User className="h-4 w-4 text-white/70" />
+                    <span className="text-sm text-white font-subheading font-semibold">
+                      {username}
+                    </span>
+                  </div>
+                  
                   {userRole && (
                     <Badge className={`text-xs font-subheading font-semibold ${
                       userRole === 'ADMIN' ? 'bg-red-500/20 text-red-400 border-red-500/30' :
@@ -330,8 +350,9 @@ export function Navbar() {
                       </Badge>
                     )}
                   </div>
+                  <p className="text-sm text-white font-subheading font-semibold mb-1">{username}</p>
                   {walletAddress && (
-                    <p className="text-sm text-white font-mono">{formatAddress(walletAddress)}</p>
+                    <p className="text-sm text-white/70 font-mono">{formatAddress(walletAddress)}</p>
                   )}
                 </div>
                 
