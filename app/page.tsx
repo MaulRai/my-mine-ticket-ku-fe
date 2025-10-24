@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
@@ -11,6 +11,12 @@ const rotatingTexts = ["Penyelenggara", "Artis", "Penggemar", "Sponsor", "Invest
 export default function Home() {
   const [currentTextIndex, setCurrentTextIndex] = useState(0)
   const [isAnimating, setIsAnimating] = useState(false)
+  const [visibleSections, setVisibleSections] = useState<Set<string>>(new Set())
+  
+  const heroRef = useRef<HTMLDivElement>(null)
+  const visionRef = useRef<HTMLDivElement>(null)
+  const featuresRef = useRef<HTMLDivElement>(null)
+  const ctaRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -22,6 +28,41 @@ export default function Home() {
     }, 3000)
 
     return () => clearInterval(interval)
+  }, [])
+
+  useEffect(() => {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    }
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const sectionId = entry.target.getAttribute('data-section')
+          if (sectionId) {
+            setVisibleSections(prev => new Set([...prev, sectionId]))
+          }
+        }
+      })
+    }
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions)
+
+    const sections = [heroRef, visionRef, featuresRef, ctaRef]
+    sections.forEach(ref => {
+      if (ref.current) {
+        observer.observe(ref.current)
+      }
+    })
+
+    return () => {
+      sections.forEach(ref => {
+        if (ref.current) {
+          observer.unobserve(ref.current)
+        }
+      })
+    }
   }, [])
 
   return (
@@ -49,7 +90,13 @@ export default function Home() {
       <div className="relative z-10 min-h-screen flex flex-col">
         {/* Hero Section */}
         <section className="flex-1 flex items-center justify-center px-4 py-20 pt-36">
-          <div className="max-w-6xl mx-auto w-full">
+          <div 
+            ref={heroRef}
+            data-section="hero"
+            className={`max-w-6xl mx-auto w-full transition-all duration-1000 ${
+              visibleSections.has('hero') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+            }`}
+          >
             <div className="flex flex-col md:flex-row items-center gap-8">
               {/* Left Content */}
               <div className="flex-1 space-y-4">
@@ -123,7 +170,13 @@ export default function Home() {
             />
           </div>
 
-          <div className="max-w-6xl mx-auto relative z-10">
+          <div 
+            ref={visionRef}
+            data-section="vision"
+            className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 delay-200 ${
+              visibleSections.has('vision') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+            }`}
+          >
             {/* Section Header */}
             <div className="text-center mb-16 space-y-4">
               <h3 className="text-3xl sm:text-4xl md:text-5xl font-heading text-white">
@@ -176,7 +229,13 @@ export default function Home() {
             />
           </div>
 
-          <div className="max-w-6xl mx-auto relative z-10">
+          <div 
+            ref={featuresRef}
+            data-section="features"
+            className={`max-w-6xl mx-auto relative z-10 transition-all duration-1000 delay-300 ${
+              visibleSections.has('features') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+            }`}
+          >
             <h3 className="text-3xl sm:text-4xl font-heading text-white text-center mb-12">Mengapa MyMineTicketKu?</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -234,7 +293,13 @@ export default function Home() {
 
         {/* CTA Section */}
         <section className="py-20 px-4">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
+          <div 
+            ref={ctaRef}
+            data-section="cta"
+            className={`max-w-4xl mx-auto text-center space-y-8 transition-all duration-1000 delay-500 ${
+              visibleSections.has('cta') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'
+            }`}
+          >
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-heading text-white">
               Siap memasuki era baru Web3 <span className="italic">ticketing?</span>
             </h3>
