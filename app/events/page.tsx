@@ -198,7 +198,7 @@ export default function EventsPage() {
 
         {/* Search Bar Overlay */}
         <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-full max-w-xs sm:max-w-md md:max-w-2xl px-4 sm:px-8">
-          <div className="clear-glass-fx bg-black/80 p-1.5 sm:p-2">
+          <div className="clear-glass-fx bg-black/60 p-1.5 sm:p-2">
             <div className="relative">
               <Search className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-white/70" />
               <Input

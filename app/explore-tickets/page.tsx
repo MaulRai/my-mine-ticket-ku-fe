@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react"
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search, Shuffle } from "lucide-react"
@@ -94,8 +95,14 @@ export default function ExploreTicketsPage() {
           {/* Feature Cards */}
           <div className="grid md:grid-cols-3 gap-6 mt-16">
             <div className="clear-glass-fx bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
-              <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mx-auto">
-                <span className="text-2xl">🔗</span>
+              <div className="w-16 h-16 rounded-lg flex items-center justify-center mx-auto">
+                <Image
+                  src="/images/explore-tickets/illustration-1.png"
+                  alt="Blockchain Verification"
+                  width={64}
+                  height={64}
+                  className="object-contain"
+                />
               </div>
               <h3 className="font-subheading text-xl font-semibold text-white">Terverifikasi Blockchain</h3>
               <p className="font-body text-gray-400 text-sm leading-relaxed">
@@ -103,8 +110,14 @@ export default function ExploreTicketsPage() {
               </p>
             </div>
             <div className="clear-glass-fx bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
-              <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mx-auto">
-                <span className="text-2xl">📊</span>
+              <div className="w-16 h-16 rounded-lg flex items-center justify-center mx-auto">
+                <Image
+                  src="/images/explore-tickets/illustration-3.png"
+                  alt="Real-Time Tracking"
+                  width={64}
+                  height={64}
+                  className="object-contain"
+                />
               </div>
               <h3 className="font-subheading text-xl font-semibold text-white">Pelacakan Real-Time</h3>
               <p className="font-body text-gray-400 text-sm leading-relaxed">
@@ -112,8 +125,14 @@ export default function ExploreTicketsPage() {
               </p>
             </div>
             <div className="clear-glass-fx bg-black/40 p-6 rounded-xl space-y-3 border border-white/10">
-              <div className="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center mx-auto">
-                <span className="text-2xl">✅</span>
+              <div className="w-16 h-16 rounded-lg flex items-center justify-center mx-auto">
+                <Image
+                  src="/images/explore-tickets/illustration-2.png"
+                  alt="Guaranteed Authenticity"
+                  width={64}
+                  height={64}
+                  className="object-contain"
+                />
               </div>
               <h3 className="font-subheading text-xl font-semibold text-white">Keaslian Terjamin</h3>
               <p className="font-body text-gray-400 text-sm leading-relaxed">
