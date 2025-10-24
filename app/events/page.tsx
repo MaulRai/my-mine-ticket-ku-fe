@@ -265,12 +265,12 @@ export default function EventsPage() {
             <Link key={event.id} href={`/events/${event.id}`}>
               <Card className="group overflow-hidden pb-0 border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md hover:border-white/20 transition-all duration-300 hover:shadow-2xl hover:shadow-white/5 cursor-pointer hover:-translate-y-1">
                 <div className="relative h-40 sm:h-44 md:h-48 w-full overflow-hidden">
-                  <Image
-                    src={event.logo || "/placeholder.svg"}
-                    alt={event.name}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
+                    <Image
+                      src={event.logo || "/placeholder.svg"}
+                      alt={event.name}
+                      fill
+                      className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
                   {/* Gradient overlay for better text contrast */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-60 group-hover:opacity-40 transition-opacity duration-300" />
 
@@ -279,6 +279,38 @@ export default function EventsPage() {
                     <Badge className="glass-fx text-white border-white/30 font-subheading font-semibold text-xs px-2 sm:px-3 py-0.5 sm:py-1">
                       {event.category}
                     </Badge>
+                  </div>
+
+                  {/* Band logos carousel - shows on hover */}
+                  <div className="absolute bottom-0 left-0 right-0 h-16 opacity-0 group-hover:opacity-100 transition-opacity duration-300 overflow-hidden">
+                    {/* Black fading overlay */}
+                    <div className="absolute inset-0 bg-linear-to-t from-blue-950/80 via-white/70 to-transparent z-0" />
+                    
+                    {/* Scrolling band logos */}
+                    <div className="relative z-10 flex gap-3 animate-scroll-left h-full items-center py-2">
+                      {/* First set of band logos */}
+                      {event.featuring.map((band, idx) => (
+                        <div key={`${event.id}-band-${idx}`} className="flex-shrink-0 h-12 w-12 relative">
+                          <Image
+                            src={`/images/bands/${band.toLowerCase().replace(/ /g, '_').replace(/&/g, 'and')}.png`}
+                            alt={band}
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                      ))}
+                      {/* Duplicate set for seamless loop */}
+                      {event.featuring.map((band, idx) => (
+                        <div key={`${event.id}-band-dup-${idx}`} className="flex-shrink-0 h-12 w-12 relative">
+                          <Image
+                            src={`/images/bands/${band.toLowerCase().replace(/ /g, '_').replace(/&/g, 'and')}.png`}
+                            alt={band}
+                            fill
+                            className="object-contain"
+                          />
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
@@ -314,6 +346,21 @@ export default function EventsPage() {
           </div>
         )}
       </div>
+
+      {/* Custom styles for scrolling animation */}
+      <style jsx>{`
+        @keyframes scroll-left {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .animate-scroll-left {
+          animation: scroll-left 10s linear infinite;
+        }
+      `}</style>
     </div>
   )
 }
