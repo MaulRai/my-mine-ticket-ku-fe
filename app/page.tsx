@@ -25,7 +25,7 @@ export default function Home() {
         setCurrentTextIndex((prev) => (prev + 1) % rotatingTexts.length)
         setIsAnimating(false)
       }, 500)
-    }, 3000)
+    }, 2000)
 
     return () => clearInterval(interval)
   }, [])
