@@ -242,7 +242,7 @@ export default function EventsPage() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="h-10 px-4 sm:px-5 pr-10 rounded-full bg-gradient-to-b from-gray-300/60 via-gray-500/60 to-gray-700/60 border border-none text-white text-sm sm:text-base font-medium backdrop-blur-md cursor-pointer appearance-none transition-all duration-200 focus:ring-2 focus:ring-white/30 hover:from-gray-200/70 hover:to-gray-600/70 w-full sm:w-auto"
+              className="h-10 pl-4 sm:pl-5 pr-10 sm:pr-12 rounded-full bg-gradient-to-b from-gray-300/60 via-gray-500/60 to-gray-700/60 border border-none text-white text-sm sm:text-base font-medium backdrop-blur-md cursor-pointer appearance-none transition-all duration-200 focus:ring-2 focus:ring-white/30 hover:from-gray-200/70 hover:to-gray-600/70 w-full sm:w-auto"
             >
               {categories.map((category) => (
                 <option key={category} value={category} className="bg-gray-800 text-white">
@@ -252,7 +252,7 @@ export default function EventsPage() {
             </select>
 
             {/* Custom caret icon */}
-            <div className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none">
+            <div className="absolute right-3 sm:right-4 top-1/2 -translate-y-1/2 pointer-events-none">
               <svg className="h-4 w-4 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
