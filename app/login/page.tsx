@@ -156,6 +156,17 @@ export default function LoginPage() {
               </Link>
             </p>
           </div>
+
+          <div className="mt-4">
+            <Link href="/">
+              <Button
+                variant="outline"
+                className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-purple-500 font-body text-sm"
+              >
+                ← Kembali ke Landing Page
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

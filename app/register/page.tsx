@@ -96,7 +96,7 @@ export default function RegisterPage() {
       </div>
 
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12">
-        <div className="w-full max-w-md">
+        <div className="w-full max-w-md">        
           <div className="mb-8 flex justify-center">
             <Image src="/images/app-logo.png" alt="App Logo" width={400} height={80} className="h-auto w-100" />
           </div>
@@ -246,6 +246,17 @@ export default function RegisterPage() {
                 Masuk
               </Link>
             </p>
+          </div>
+
+          <div className="mt-4">
+            <Link href="/">
+              <Button
+                variant="outline"
+                className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-purple-500 font-body text-sm"
+              >
+                ← Kembali ke Landing Page
+              </Button>
+            </Link>
           </div>
         </div>
       </div>
