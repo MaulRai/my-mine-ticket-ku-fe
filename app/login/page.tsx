@@ -54,6 +54,16 @@ export default function LoginPage() {
         <div className="absolute bottom-1/4 left-1/4 h-96 w-96 animate-pulse rounded-full bg-blue-500/5 blur-3xl" />
       </div>
 
+      {/* Bottom right overlay */}
+      <div className="absolute bottom-0 right-0 w-3/4 h-3/4 pointer-events-none">
+        <Image 
+          src="/images/overlay-5.png" 
+          alt="" 
+          fill 
+          className="object-contain object-bottom-right opacity-60"
+        />
+      </div>
+
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4 py-12">
         <div className="w-full max-w-md">
           <div className="mb-8 flex justify-center">
