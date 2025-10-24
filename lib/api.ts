@@ -367,6 +367,12 @@ class ApiClient {
       percentage: number;
     }>;
     taxWalletAddress?: string;
+    attachments?: Array<{
+      fileName: string;
+      fileUrl: string;
+      fileType: string;
+      fileSize: number;
+    }>;
   }): Promise<{ event: Event; proposal: Proposal }> {
     return this.request('/eo/events', {
       method: 'POST',
