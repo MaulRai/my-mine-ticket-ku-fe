@@ -44,15 +44,16 @@ export class BlockchainService {
       this.contract = new ethers.Contract(CONTRACT_ADDRESS, EVENT_CHAIN_ABI, this.signer);
 
       return accounts[0];
-    } catch (error: any) {
+    } catch (error) {
       this.disconnect();
       console.error('Error connecting wallet:', error);
       
-      if (error.code === 4001) {
+      const err = error as { code?: number; message?: string }
+      if (err.code === 4001) {
         throw new Error('Connection request rejected by user');
       }
       
-      throw new Error(error.message || 'Failed to connect wallet');
+      throw new Error(err.message || 'Failed to connect wallet');
     } finally {
       this.isConnecting = false;
     }
@@ -66,14 +67,15 @@ export class BlockchainService {
     try {
       const signature = await this.signer.signMessage(message);
       return signature;
-    } catch (error: any) {
+    } catch (error) {
       console.error('Error signing message:', error);
       
-      if (error.code === 4001) {
+      const err = error as { code?: number; message?: string }
+      if (err.code === 4001) {
         throw new Error('Signature request rejected by user');
       }
       
-      throw new Error(error.message || 'Failed to sign message');
+      throw new Error(err.message || 'Failed to sign message');
     }
   }
 
@@ -141,8 +143,8 @@ export class BlockchainService {
       txHash: receipt.hash,
       blockNumber: receipt.blockNumber,
       ticketIds: receipt.logs
-        .filter((log: any) => log.topics[0] === ethers.id('TicketMinted(uint256,uint256,uint256,address,uint256)'))
-        .map((log: any) => Number(ethers.getBigInt(log.topics[1])))
+        .filter((log: { topics: string[] }) => log.topics[0] === ethers.id('TicketMinted(uint256,uint256,uint256,address,uint256)'))
+        .map((log: { topics: string[] }) => Number(ethers.getBigInt(log.topics[1])))
     };
   }
 
@@ -214,8 +216,14 @@ export class BlockchainService {
 
 export const blockchainService = new BlockchainService();
 
+interface EthereumProvider {
+  request: (args: { method: string; params?: unknown[] }) => Promise<unknown>
+  on: (event: string, handler: (...args: unknown[]) => void) => void
+  removeListener: (event: string, handler: (...args: unknown[]) => void) => void
+}
+
 declare global {
   interface Window {
-    ethereum?: any;
+    ethereum?: EthereumProvider;
   }
 }

@@ -38,7 +38,8 @@ export default function LoginPage() {
           router.push('/events')
         }
       }
-    } catch (err: any) {
+    } catch (error) {
+      const err = error as Error
       console.error('Login error:', err)
       setError(err.message || 'Login failed. Please try again.')
     } finally {

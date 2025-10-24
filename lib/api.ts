@@ -77,7 +77,7 @@ export interface TicketType {
   sold: number;
   saleStartDate: string;
   saleEndDate: string;
-  benefits?: any;
+  benefits?: string;
   active: boolean;
   createdAt: string;
   updatedAt: string;
@@ -303,7 +303,7 @@ class ApiClient {
     sortBy?: string;
     order?: string;
   }): Promise<Event[]> {
-    const params = new URLSearchParams(filters as any);
+    const params = new URLSearchParams(filters as Record<string, string>);
     return this.request<Event[]>(`/events?${params}`);
   }
 
@@ -319,7 +319,7 @@ class ApiClient {
     status?: string;
     eventId?: string;
   }): Promise<Ticket[]> {
-    const params = new URLSearchParams(filters as any);
+    const params = new URLSearchParams(filters as Record<string, string>);
     return this.request<Ticket[]>(`/tickets/user/${address}?${params}`);
   }
 
@@ -331,7 +331,7 @@ class ApiClient {
     type?: string;
     eventId?: string;
   }): Promise<Transaction[]> {
-    const params = new URLSearchParams(filters as any);
+    const params = new URLSearchParams(filters as Record<string, string>);
     return this.request<Transaction[]>(`/users/${address}/transactions?${params}`);
   }
 
@@ -342,14 +342,14 @@ class ApiClient {
   async approveProposal(proposalId: string, data: {
     taxWalletAddress?: string;
     adminComment?: string;
-  }): Promise<any> {
+  }): Promise<{ message: string }> {
     return this.request(`/admin/proposals/${proposalId}/approve`, {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  async rejectProposal(proposalId: string, adminComment: string): Promise<any> {
+  async rejectProposal(proposalId: string, adminComment: string): Promise<{ message: string }> {
     return this.request(`/admin/proposals/${proposalId}/reject`, {
       method: 'POST',
       body: JSON.stringify({ adminComment }),
@@ -360,11 +360,11 @@ class ApiClient {
     return this.request<AdminStats>('/admin/stats');
   }
 
-  async getEventOrganizers(): Promise<any[]> {
-    return this.request<any[]>('/admin/eos');
+  async getEventOrganizers(): Promise<User[]> {
+    return this.request<User[]>('/admin/eos');
   }
 
-  async addAdmin(address: string): Promise<any> {
+  async addAdmin(address: string): Promise<{ message: string }> {
     return this.request('/admin/add', {
       method: 'POST',
       body: JSON.stringify({ address }),
@@ -422,7 +422,7 @@ class ApiClient {
     stock: number;
     saleStartDate: string;
     saleEndDate: string;
-    benefits?: any;
+    benefits?: string;
   }): Promise<TicketType> {
     return this.request<TicketType>(`/eo/events/${eventId}/ticket-types`, {
       method: 'POST',
@@ -435,7 +435,7 @@ class ApiClient {
     stock?: number;
     saleStartDate?: string;
     saleEndDate?: string;
-    benefits?: any;
+    benefits?: string;
   }): Promise<TicketType> {
     return this.request<TicketType>(`/eo/ticket-types/${typeId}`, {
       method: 'PUT',
@@ -443,19 +443,19 @@ class ApiClient {
     });
   }
 
-  async getEventRevenue(eventId: string): Promise<any> {
+  async getEventRevenue(eventId: string): Promise<{ revenue: string; withdrawable: string }> {
     return this.request(`/eo/events/${eventId}/revenue`);
   }
 
-  async getEventAnalytics(eventId: string): Promise<any> {
+  async getEventAnalytics(eventId: string): Promise<{ views: number; ticketsSold: number }> {
     return this.request(`/eo/events/${eventId}/analytics`);
   }
 
-  async getDashboardStats(address: string): Promise<any> {
+  async getDashboardStats(address: string): Promise<{ totalEvents: number; activeEvents: number; totalRevenue: string }> {
     return this.request(`/eo/dashboard/${address}`);
   }
 
-  async verifyTicket(ticketId: number, scannerAddress?: string): Promise<any> {
+  async verifyTicket(ticketId: number, scannerAddress?: string): Promise<{ valid: boolean; ticket: Ticket }> {
     return this.request(`/eo/tickets/${ticketId}/verify`, {
       method: 'POST',
       body: JSON.stringify({ scannerAddress }),
@@ -465,7 +465,7 @@ class ApiClient {
   async useTicket(ticketId: number, data: {
     eventCreatorAddress: string;
     scannerAddress: string;
-  }): Promise<any> {
+  }): Promise<{ message: string; txHash: string }> {
     return this.request(`/eo/tickets/${ticketId}/use`, {
       method: 'POST',
       body: JSON.stringify(data),

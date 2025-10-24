@@ -69,7 +69,8 @@ export default function RegisterPage() {
           router.push('/events')
         }
       }
-    } catch (err: any) {
+    } catch (error) {
+      const err = error as Error
       console.error('Registration error:', err)
       setError(err.message || 'Registration failed. Please try again.')
     } finally {

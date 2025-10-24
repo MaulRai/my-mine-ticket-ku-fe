@@ -19,18 +19,25 @@ import {
 } from "lucide-react"
 import { apiClient, type Proposal, type AdminStats } from "@/lib/api"
 
+interface EventOrganizer {
+  id: string
+  name?: string
+  email?: string
+  walletAddress: string
+  createdAt: string
+  _count?: {
+    events: number
+  }
+}
+
 export default function AdminDashboardPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(true)
   const [stats, setStats] = useState<AdminStats | null>(null)
   const [proposals, setProposals] = useState<Proposal[]>([])
-  const [eos, setEos] = useState<any[]>([])
+  const [eos, setEos] = useState<EventOrganizer[]>([])
   const [processingProposal, setProcessingProposal] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    checkAdminAccess()
-  }, [])
 
   const checkAdminAccess = async () => {
     try {
@@ -46,7 +53,8 @@ export default function AdminDashboardPage() {
         fetchProposals(),
         fetchEOs()
       ])
-    } catch (err: any) {
+    } catch (error) {
+      const err = error as Error
       console.error('Admin access error:', err)
       setError(err.message)
       router.push('/login')
@@ -55,12 +63,16 @@ export default function AdminDashboardPage() {
     }
   }
 
+  useEffect(() => {
+    checkAdminAccess()
+  }, [checkAdminAccess])
+
   const fetchStats = async () => {
     try {
       const data = await apiClient.getAdminStats()
       setStats(data)
-    } catch (err: any) {
-      console.error('Error fetching stats:', err)
+    } catch (error) {
+      console.error('Error fetching stats:', error)
     }
   }
 
@@ -68,17 +80,17 @@ export default function AdminDashboardPage() {
     try {
       const data = await apiClient.getPendingProposals()
       setProposals(data)
-    } catch (err: any) {
-      console.error('Error fetching proposals:', err)
+    } catch (error) {
+      console.error('Error fetching proposals:', error)
     }
   }
 
   const fetchEOs = async () => {
     try {
       const data = await apiClient.getEventOrganizers()
-      setEos(data)
-    } catch (err: any) {
-      console.error('Error fetching EOs:', err)
+      setEos(data as EventOrganizer[])
+    } catch (error) {
+      console.error('Error fetching EOs:', error)
     }
   }
 
@@ -92,7 +104,8 @@ export default function AdminDashboardPage() {
       
       await fetchProposals()
       await fetchStats()
-    } catch (err: any) {
+    } catch (error) {
+      const err = error as Error
       console.error('Error approving proposal:', err)
       alert(err.message || 'Failed to approve proposal')
     } finally {
@@ -107,7 +120,8 @@ export default function AdminDashboardPage() {
       
       await fetchProposals()
       await fetchStats()
-    } catch (err: any) {
+    } catch (error) {
+      const err = error as Error
       console.error('Error rejecting proposal:', err)
       alert(err.message || 'Failed to reject proposal')
     } finally {
