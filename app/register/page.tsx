@@ -36,17 +36,17 @@ export default function RegisterPage() {
     setError(null)
 
     if (formData.password !== formData.confirmPassword) {
-      setError("Passwords don't match!")
+      setError("Kata sandi tidak cocok!")
       return
     }
 
     if (!agreeToTerms) {
-      setError("Please agree to the terms and conditions")
+      setError("Harap setujui syarat dan ketentuan")
       return
     }
 
     if (formData.password.length < 6) {
-      setError("Password must be at least 6 characters long")
+      setError("Kata sandi harus minimal 6 karakter")
       return
     }
 
@@ -103,8 +103,8 @@ export default function RegisterPage() {
           
           <div className="glass-fx p-8">
             <div className="mb-8 text-center">
-              <h1 className="font-heading mb-2 text-4xl text-white">Create Account</h1>
-              <p className="font-body text-white/60">Join us and start collecting tickets</p>
+              <h1 className="font-heading mb-2 text-4xl text-white">Buat Akun</h1>
+              <p className="font-body text-white/60">Bergabunglah dengan kami dan mulai kumpulkan tiket</p>
             </div>
 
             {error && (
@@ -116,7 +116,7 @@ export default function RegisterPage() {
             <form onSubmit={handleSubmit} className="space-y-5">
               <div className="space-y-2">
                 <Label htmlFor="username" className="font-body text-sm font-medium text-white/90">
-                  Username
+                  Nama Pengguna
                 </Label>
                 <Input
                   id="username"
@@ -133,13 +133,13 @@ export default function RegisterPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="email" className="font-body text-sm font-medium text-white/90">
-                  Email Address
+                  Alamat Email
                 </Label>
                 <Input
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="anda@contoh.com"
                   value={formData.email}
                   onChange={handleChange}
                   required
@@ -150,7 +150,7 @@ export default function RegisterPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="role" className="font-body text-sm font-medium text-white/90">
-                  Account Type
+                  Tipe Akun
                 </Label>
                 <select
                   id="role"
@@ -160,19 +160,19 @@ export default function RegisterPage() {
                   disabled={isLoading}
                   className="w-full h-9 px-3 rounded-md border border-white/20 bg-white/5 text-white text-sm focus:border-purple-500/50 focus:ring-purple-500/20 focus:outline-none"
                 >
-                  <option value="USER" className="bg-gray-800">Regular User</option>
+                  <option value="USER" className="bg-gray-800">Pengguna Reguler</option>
                   <option value="EO" className="bg-gray-800">Event Organizer (EO)</option>
                 </select>
                 <p className="text-xs text-white/50 mt-1">
                   {formData.role === 'EO' 
-                    ? 'EO accounts can create and manage events but cannot purchase tickets' 
-                    : 'Regular users can purchase and collect tickets'}
+                    ? 'Akun EO dapat membuat dan mengelola acara tetapi tidak dapat membeli tiket' 
+                    : 'Pengguna reguler dapat membeli dan mengumpulkan tiket'}
                 </p>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="password" className="font-body text-sm font-medium text-white/90">
-                  Password
+                  Kata Sandi
                 </Label>
                 <Input
                   id="password"
@@ -189,7 +189,7 @@ export default function RegisterPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="confirmPassword" className="font-body text-sm font-medium text-white/90">
-                  Confirm Password
+                  Konfirmasi Kata Sandi
                 </Label>
                 <Input
                   id="confirmPassword"
@@ -213,13 +213,13 @@ export default function RegisterPage() {
                   className="mt-1 border-white/20 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
                 />
                 <Label htmlFor="terms" className="font-body text-sm text-white/70 cursor-pointer leading-relaxed">
-                  I agree to the{" "}
+                  Saya menyetujui{" "}
                   <Link href="#" className="text-purple-400 hover:text-purple-300 transition-colors">
-                    Terms of Service
+                    Syarat Layanan
                   </Link>{" "}
-                  and{" "}
+                  dan{" "}
                   <Link href="#" className="text-purple-400 hover:text-purple-300 transition-colors">
-                    Privacy Policy
+                    Kebijakan Privasi
                   </Link>
                 </Label>
               </div>
@@ -232,18 +232,18 @@ export default function RegisterPage() {
                 {isLoading ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Creating account...
+                    Membuat akun...
                   </>
                 ) : (
-                  'Create Account'
+                  'Buat Akun'
                 )}
               </Button>
             </form>
 
             <p className="font-body mt-6 text-center text-sm text-white/60">
-              Already have an account?{" "}
+              Sudah punya akun?{" "}
               <Link href="/login" className="text-purple-400 hover:text-purple-300 transition-colors">
-                Sign in
+                Masuk
               </Link>
             </p>
           </div>

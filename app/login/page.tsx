@@ -72,8 +72,8 @@ export default function LoginPage() {
           
           <div className="glass-fx p-8">
             <div className="mb-8 text-center">
-              <h1 className="font-heading mb-2 text-4xl text-white">Welcome Back</h1>
-              <p className="font-body text-white/60">Sign in to access your tickets</p>
+              <h1 className="font-heading mb-2 text-2xl text-white">Selamat Datang Kembali!</h1>
+              <p className="font-body text-white/60">Masuk untuk mengakses tiket Anda</p>
             </div>
 
             {error && (
@@ -85,12 +85,12 @@ export default function LoginPage() {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="space-y-2">
                 <Label htmlFor="email" className="font-body text-sm font-medium text-white/90">
-                  Email Address
+                  Alamat Email
                 </Label>
                 <Input
                   id="email"
                   type="email"
-                  placeholder="you@example.com"
+                  placeholder="anda@contoh.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
@@ -101,7 +101,7 @@ export default function LoginPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="password" className="font-body text-sm font-medium text-white/90">
-                  Password
+                  Kata Sandi
                 </Label>
                 <Input
                   id="password"
@@ -125,11 +125,11 @@ export default function LoginPage() {
                     className="border-white/20 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
                   />
                   <Label htmlFor="remember" className="font-body text-sm text-white/70 cursor-pointer">
-                    Remember me
+                    Ingat saya
                   </Label>
                 </div>
                 <Link href="#" className="font-body text-sm text-purple-400 hover:text-purple-300 transition-colors">
-                  Forgot password?
+                  Lupa kata sandi?
                 </Link>
               </div>
 
@@ -141,18 +141,18 @@ export default function LoginPage() {
                 {isLoading ? (
                   <>
                     <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Signing in...
+                    Masuk...
                   </>
                 ) : (
-                  'Sign In'
+                  'Masuk'
                 )}
               </Button>
             </form>
 
             <p className="font-body mt-6 text-center text-sm text-white/60">
-              Don&apos;t have an account?{" "}
+              Belum punya akun?{" "}
               <Link href="/register" className="text-purple-400 hover:text-purple-300 transition-colors">
-                Sign up
+                Daftar
               </Link>
             </p>
           </div>
