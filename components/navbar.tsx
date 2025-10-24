@@ -106,6 +106,32 @@ export function Navbar() {
           </Link>
 
           <div className="hidden md:flex items-center gap-2 md:gap-4">
+            <Link href="/events">
+              <Button
+                variant="ghost"
+                className={`font-body text-sm transition-colors md:text-base ${
+                  pathname === "/events" || pathname?.startsWith("/events/")
+                    ? "bg-white/20 text-white font-semibold"
+                    : "text-white/90 hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                Beranda Event
+              </Button>
+            </Link>
+
+            <Link href="/explore-tickets">
+              <Button
+                variant="ghost"
+                className={`font-body text-sm transition-colors md:text-base ${
+                  pathname === "/explore-tickets"
+                    ? "bg-white/20 text-white font-semibold"
+                    : "text-white/90 hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                Jelajahi Tiket
+              </Button>
+            </Link>
+
             {isLoggedIn && (
               <>
                 {(userRole === 'ADMIN' || userRole === 'EO') && (
@@ -143,26 +169,17 @@ export function Navbar() {
                 <Link href="/profile">
                   <Button
                     variant="ghost"
-                    className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
+                    className={`font-body text-sm transition-colors md:text-base ${
+                      pathname === "/profile" || pathname?.startsWith("/tickets/")
+                        ? "bg-white/20 text-white font-semibold hover:bg-white hover:text-black"
+                        : "text-white/90 hover:bg-white/10 hover:text-white"
+                    }`}
                   >
                     Profil
                   </Button>
                 </Link>
               </>
             )}
-            
-            <Link href="/explore-tickets">
-              <Button
-                variant="ghost"
-                className={`font-body text-sm transition-colors md:text-base ${
-                  pathname === "/explore-tickets"
-                    ? "bg-white/20 text-white font-semibold"
-                    : "text-white/90 hover:bg-white/10 hover:text-white"
-                }`}
-              >
-                Jelajahi Tiket
-              </Button>
-            </Link>
 
             {isLoggedIn ? (
               <>
@@ -240,6 +257,32 @@ export function Navbar() {
 
         {isMenuOpen && (
           <div className="md:hidden mt-2 glass-fx px-4 py-3 space-y-2">
+            <Link href="/events" onClick={() => setIsMenuOpen(false)}>
+              <Button
+                variant="ghost"
+                className={`w-full justify-start font-body text-sm transition-colors ${
+                  pathname === "/events" || pathname?.startsWith("/events/")
+                    ? "bg-white/20 text-white font-semibold"
+                    : "text-white/90 hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                Beranda Event
+              </Button>
+            </Link>
+
+            <Link href="/explore-tickets" onClick={() => setIsMenuOpen(false)}>
+              <Button
+                variant="ghost"
+                className={`w-full justify-start font-body text-sm transition-colors ${
+                  pathname === "/explore-tickets"
+                    ? "bg-white/20 text-white font-semibold"
+                    : "text-white/90 hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                Jelajahi Tiket
+              </Button>
+            </Link>
+
             {isLoggedIn && (
               <>
                 {(userRole === 'ADMIN' || userRole === 'EO') && (
@@ -269,7 +312,7 @@ export function Navbar() {
                       variant="ghost"
                       className="w-full justify-start font-body text-sm transition-colors text-white/90 hover:bg-white/10 hover:text-white"
                     >
-                      My Tickets
+                      Tiketku
                     </Button>
                   </Link>
                 )}
@@ -277,26 +320,17 @@ export function Navbar() {
                 <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
                   <Button
                     variant="ghost"
-                    className="w-full justify-start font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+                    className={`w-full justify-start font-body text-sm transition-colors ${
+                      pathname === "/profile" || pathname?.startsWith("/tickets/")
+                        ? "bg-white/20 text-white font-semibold hover:bg-white hover:text-black"
+                        : "text-white/90 hover:bg-white/10 hover:text-white"
+                    }`}
                   >
-                    Profile
+                    Profil
                   </Button>
                 </Link>
               </>
             )}
-            
-            <Link href="/explore-tickets" onClick={() => setIsMenuOpen(false)}>
-              <Button
-                variant="ghost"
-                className={`w-full justify-start font-body text-sm transition-colors ${
-                  pathname === "/explore-tickets"
-                    ? "bg-white/20 text-white font-semibold"
-                    : "text-white/90 hover:bg-white/10 hover:text-white"
-                }`}
-              >
-                Explore Tickets
-              </Button>
-            </Link>
             
             {isLoggedIn ? (
               <>

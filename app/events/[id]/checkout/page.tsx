@@ -191,7 +191,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
               </Link>
               <Link href="/profile" className="flex-1">
                 <Button className="w-full bg-gradient-to-b from-gray-300 via-gray-500 to-gray-700 hover:from-gray-200 hover:to-gray-600 text-white font-subheading font-semibold">
-                  Lihat Tiket Saya
+                  Lihat Tiketku
                 </Button>
               </Link>
             </div>

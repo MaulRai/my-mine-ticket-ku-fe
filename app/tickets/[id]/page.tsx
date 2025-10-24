@@ -290,7 +290,7 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
           className="mb-6 text-gray-400 hover:text-white hover:bg-white/10"
         >
           <ArrowLeft className="h-4 w-4 mr-2" />
-          Kembali ke Tiket Saya
+          Kembali ke Tiketku
         </Button>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

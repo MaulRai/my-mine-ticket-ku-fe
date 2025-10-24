@@ -224,7 +224,7 @@ function ProfileContent() {
                     : "text-gray-300 hover:text-white hover:bg-white/10"
                 }`}
             >
-              Tiket Saya
+              Tiketku
             </Button>
           </div>
         </div>
@@ -242,7 +242,7 @@ function ProfileContent() {
             >
               <div className="mb-6">
                 <div className="flex items-center justify-between">
-                  <h2 className="text-2xl font-subheading font-semibold text-white">Tiket Saya ({myTickets.length})</h2>
+                  <h2 className="text-2xl font-subheading font-semibold text-white">Tiketku ({myTickets.length})</h2>
                   <div className="flex items-center gap-2">
                     <Badge className="bg-green-500/20 text-green-400 border-green-500/30 font-subheading text-sm px-3 py-1">
                       {myTickets.filter((t) => t.status === "active").length} Aktif
