@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react"
 import { useRouter, useSearchParams } from "next/navigation"
 import Image from "next/image"
+import { motion, AnimatePresence } from "framer-motion"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -229,21 +230,29 @@ function ProfileContent() {
         </div>
 
         {/* Tab Content */}
-        {activeTab === "my-tickets" && (
-          <div className="space-y-6">
-            <div className="mb-6">
-              <div className="flex items-center justify-between">
-                <h2 className="text-2xl font-subheading font-semibold text-white">Tiket Saya ({myTickets.length})</h2>
-                <div className="flex items-center gap-2">
-                  <Badge className="bg-green-500/20 text-green-400 border-green-500/30 font-subheading text-sm px-3 py-1">
-                    {myTickets.filter((t) => t.status === "active").length} Aktif
-                  </Badge>
-                  <Badge className="bg-white/10 text-white border-white/20 font-subheading text-sm px-3 py-1">
-                    {myTickets.filter((t) => t.status === "used").length} Terpakai
-                  </Badge>
+        <AnimatePresence mode="wait">
+          {activeTab === "my-tickets" && (
+            <motion.div
+              key="my-tickets"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.3, ease: "easeInOut" }}
+              className="space-y-6"
+            >
+              <div className="mb-6">
+                <div className="flex items-center justify-between">
+                  <h2 className="text-2xl font-subheading font-semibold text-white">Tiket Saya ({myTickets.length})</h2>
+                  <div className="flex items-center gap-2">
+                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 font-subheading text-sm px-3 py-1">
+                      {myTickets.filter((t) => t.status === "active").length} Aktif
+                    </Badge>
+                    <Badge className="bg-white/10 text-white border-white/20 font-subheading text-sm px-3 py-1">
+                      {myTickets.filter((t) => t.status === "used").length} Terpakai
+                    </Badge>
+                  </div>
                 </div>
               </div>
-            </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {myTickets.map((ticket) => (
@@ -324,11 +333,18 @@ function ProfileContent() {
                 </Card>
               ))}
             </div>
-          </div>
+          </motion.div>
         )}
 
         {activeTab === "wallet-info" && (
-          <div className="space-y-8">
+          <motion.div
+            key="wallet-info"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className="space-y-8"
+          >
             {/* Connected Wallets Section */}
             <div>
               <div className="flex items-center justify-between mb-4">
@@ -457,8 +473,9 @@ function ProfileContent() {
                 </CardContent>
               </Card>
             </div>
-          </div>
+          </motion.div>
         )}
+        </AnimatePresence>
       </div>
 
       {/* Custom animations */}
