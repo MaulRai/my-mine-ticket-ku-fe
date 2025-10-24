@@ -251,10 +251,12 @@ export function Navbar() {
                       onClick={handleConnectWallet}
                       variant="outline"
                       size="sm"
-                      className="relative overflow-hidden bg-black border-white/20 text-white hover:bg-white/10 before:absolute before:inset-0 before:bg-gradient-to-r before:from-transparent before:via-[#7411bc] before:to-transparent before:animate-[shine_3s_ease-in-out_infinite]"
+                      className="relative overflow-hidden bg-black border-white/20 text-white hover:bg-white/60 before:absolute before:inset-0 before:bg-linear-to-r before:from-transparent before:via-[#7411bc] before:to-transparent before:animate-[shine_3s_ease-in-out_infinite] before:z-0"
                     >
-                      <Wallet className="h-4 w-4 mr-2" />
-                      Hubungkan Wallet
+                      <span className="relative z-10 flex items-center">
+                        <Wallet className="h-4 w-4 mr-2" />
+                        Hubungkan Wallet
+                      </span>
                     </Button>
                   )}
                   
