@@ -217,10 +217,11 @@ export default function Home() {
                 <div className="w-12 h-12 bg-blue-200/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
                   <Users className="h-6 w-6 text-[#4a0dc3]" />
                 </div>
-                <h4 className="font-subheading text-xl font-semibold text-white mb-2">Ekosistem Terhubung</h4>
+                <h4 className="font-subheading text-xl font-semibold text-white mb-2">Transparansi Kepatuhan Finansial</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
-                  Satu platform, ribuan kemungkinan. Menghubungkan <span className="italic">event organizer</span>, 
-                  artis, sponsor, dan penggemar dalam harmoni ekosistem yang saling menghidupkan.
+                  Laporan keuangan dan status pajak <span className="italic">event</span> tersaji secara <span className="italic">real-time</span>. Memudahkan 
+                  <span className="italic">Event Organizer</span> dengan integrasi sederhana untuk laporan royalti otomatis ke LMKN dan menyediakan data yang 
+                  kompatibel untuk audit oleh regulator dan sponsor
                 </p>
               </div>
 
@@ -231,7 +232,7 @@ export default function Home() {
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">NFT & POAP Badge</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
-                  Kenangan yang bernyawa. Tiket NFT sebagai bukti digital <span className="italic">ownership</span> 
+                  Kenangan yang bernyawa. Tiket NFT sebagai bukti digital <span className="italic">ownership</span>
                   dan POAP badge eksklusif untuk setiap momen spesial yang Anda hadiri
                 </p>
               </div>
