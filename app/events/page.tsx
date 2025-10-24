@@ -10,13 +10,13 @@ import { Badge } from "@/components/ui/badge"
 import { Search, MapPin, Calendar, ChevronLeft, ChevronRight } from "lucide-react"
 import { allEvents, featuredEvents } from "@/lib/events-data"
 
-const categories = ["Semua", "Musik", "Seni & Pameran", "Olahraga"]
+const categories = ["Semua kategori", "Musik", "Seni & Pameran", "Olahraga"]
 
 export default function EventsPage() {
   const [currentBannerIndex, setCurrentBannerIndex] = useState(0)
   const [isTransitioning, setIsTransitioning] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
-  const [selectedCategory, setSelectedCategory] = useState("Semua")
+  const [selectedCategory, setSelectedCategory] = useState("Semua kategori")
   const [selectedTimeFilter, setSelectedTimeFilter] = useState("Semua")
   const [progress, setProgress] = useState(0)
 
@@ -106,7 +106,7 @@ export default function EventsPage() {
 
   const filteredEvents = allEvents.filter((event) => {
     const matchesSearch = event.name.toLowerCase().includes(searchQuery.toLowerCase())
-    const matchesCategory = selectedCategory === "Semua" || event.category === selectedCategory
+    const matchesCategory = selectedCategory === "Semua kategori" || event.category === selectedCategory
     const matchesTime = filterEventsByTime(event)
     return matchesSearch && matchesCategory && matchesTime
   })

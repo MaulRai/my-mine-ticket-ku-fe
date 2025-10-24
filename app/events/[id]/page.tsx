@@ -201,7 +201,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
       {/* sold-out mode is derived from ticket config; dev toggle removed */}
 
       {/* Hero Section with Banner */}
-      <div className="relative h-[370px] m-4 sm:m-6 md:m-8 mt-0 mb-0 overflow-visible rounded-b-2xl bg-black">
+      <div className="relative h-[450px] sm:h-[370px] m-4 sm:m-6 md:m-8 mt-0 mb-0 overflow-visible rounded-b-2xl bg-black">
         <div className="absolute inset-0 overflow-hidden rounded-b-2xl">
           <Image src={event.banner || "/placeholder.svg"} alt="Event banner" fill className="object-cover" />
         </div>
@@ -216,7 +216,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
             </Link>
 
             {/* Event Logo */}
-            <div className="relative h-24 w-24 sm:h-32 sm:w-32 md:h-40 md:w-40 rounded-xl overflow-hidden shadow-2xl border-2 sm:border-4 border-white/20">
+            <div className="relative mt-0 h-24 w-24 sm:h-32 sm:w-32 md:h-40 md:w-40 rounded-xl overflow-hidden shadow-2xl border-2 sm:border-4 border-white/20">
               <Image src={event.logo || "/placeholder.svg"} alt={event.name} fill className="object-cover" />
             </div>
 
@@ -235,9 +235,8 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                 </button>
                 <button
                   onClick={() => setIsFavorite(!isFavorite)}
-                  className={`glass-fx p-1.5 sm:p-2 rounded-full hover:bg-white/30 transition-all ${
-                    isFavorite ? "bg-red-500/30" : ""
-                  }`}
+                  className={`glass-fx p-1.5 sm:p-2 rounded-full hover:bg-white/30 transition-all ${isFavorite ? "bg-red-500/30" : ""
+                    }`}
                   aria-label="Favorite event"
                 >
                   <Heart className={`h-4 w-4 sm:h-5 sm:w-5 ${isFavorite ? "fill-red-500 text-red-500" : "text-white"}`} />
@@ -399,37 +398,38 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
             <div className="lg:hidden">
               <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md shadow-2xl">
                 <CardContent className="p-4 sm:p-5 md:p-6 space-y-4 sm:space-y-5 md:space-y-6">
-              {isSoldOut ? (
-                <>
-                  <div>
-                    <h2 className="text-xl sm:text-2xl font-heading text-white mb-2">Tiket Habis Terjual</h2>
-                    <p className="text-gray-400 font-body text-xs sm:text-sm">
-                      Semua tiket sudah terjual. Periksa pasar jual beli tiket di bawah untuk tiket yang tersedia.
-                    </p>
-                  </div>
-                  <div className="p-3 sm:p-4 rounded-lg border-2 border-red-500/30 bg-red-500/10">
-                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
-                      <Ticket className="h-5 w-5 sm:h-6 sm:w-6 text-red-400" />
-                      <h3 className="font-subheading font-semibold text-sm sm:text-base text-red-400">
-                        Tidak Ada Tiket Tersedia
-                      </h3>
-                    </div>
-                    <p className="text-gray-300 font-body text-xs sm:text-sm">
-                      Jelajahi tiket jual beli dari penjual terverifikasi di bagian pasar di bawah.
-                    </p>
-                  </div>
-                  <div className="pt-4 border-t border-white/10">
-                    <p className="text-gray-400 font-body text-xs text-center">
-                      Diselenggarakan oleh <span className="text-white font-semibold">{event.organizer}</span>
-                    </p>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <div>
-                    <h2 className="text-xl sm:text-2xl font-heading text-white mb-2">Dapatkan Tiket Anda</h2>
-                    <p className="text-gray-400 font-body text-xs sm:text-sm">Amankan tempat Anda di acara luar biasa ini</p>
-                  </div>                      <div className="space-y-2 sm:space-y-3">
+                  {isSoldOut ? (
+                    <>
+                      <div>
+                        <h2 className="text-xl sm:text-2xl font-heading text-white mb-2">Tiket Habis Terjual</h2>
+                        <p className="text-gray-400 font-body text-xs sm:text-sm">
+                          Semua tiket sudah terjual. Periksa pasar jual beli tiket di bawah untuk tiket yang tersedia.
+                        </p>
+                      </div>
+                      <div className="p-3 sm:p-4 rounded-lg border-2 border-red-500/30 bg-red-500/10">
+                        <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                          <Ticket className="h-5 w-5 sm:h-6 sm:w-6 text-red-400" />
+                          <h3 className="font-subheading font-semibold text-sm sm:text-base text-red-400">
+                            Tidak Ada Tiket Tersedia
+                          </h3>
+                        </div>
+                        <p className="text-gray-300 font-body text-xs sm:text-sm">
+                          Jelajahi tiket jual beli dari penjual terverifikasi di bagian pasar di bawah.
+                        </p>
+                      </div>
+                      <div className="pt-4 border-t border-white/10">
+                        <p className="text-gray-400 font-body text-xs text-center">
+                          Diselenggarakan oleh <span className="text-white font-semibold">{event.organizer}</span>
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div>
+                        <h2 className="text-xl sm:text-2xl font-heading text-white mb-2">Dapatkan Tiket Anda</h2>
+                        <p className="text-gray-400 font-body text-xs sm:text-sm">Amankan tempat Anda di acara luar biasa ini</p>
+                      </div>
+                      <div className="space-y-2 sm:space-y-3">
                         <div className="p-3 sm:p-4 rounded-lg border-2 border-white/10 hover:border-white/20 transition-all">
                           <div className="flex justify-between items-start mb-2">
                             <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">Tiket Reguler</h3>
@@ -623,11 +623,10 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                                 <p className="text-gray-400 font-body text-xs truncate">Seller: {ticket.seller}</p>
                               </div>
                               <Badge
-                                className={`${
-                                  priceIncrease > 10
-                                    ? "bg-orange-500/20 text-orange-400 border-orange-500/30"
-                                    : "bg-green-500/20 text-green-400 border-green-500/30"
-                                } font-subheading text-xs shrink-0`}
+                                className={`${priceIncrease > 10
+                                  ? "bg-orange-500/20 text-orange-400 border-orange-500/30"
+                                  : "bg-green-500/20 text-green-400 border-green-500/30"
+                                  } font-subheading text-xs shrink-0`}
                               >
                                 {priceIncrease > 0 ? "+" : ""}
                                 {priceIncrease.toFixed(0)}%
