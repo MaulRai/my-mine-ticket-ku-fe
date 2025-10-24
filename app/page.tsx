@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { ArrowRight, Sparkles, Shield, Users, TrendingUp } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 const rotatingTexts = ["Penyelenggara", "Artis", "Penggemar", "Sponsor", "Investor", "Semua Orang"]
 
@@ -240,8 +240,14 @@ export default function Home() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {/* Feature 1 */}
               <div className="glass-fx bg-gray-900/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
-                <div className="w-12 h-12 bg-blue-200/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
-                  <Shield className="h-6 w-6 text-[#4a0dc3]" />
+                <div className="w-24 h-24 rounded-lg flex items-center justify-center mb-4 transition-all">
+                  <Image
+                    src="/images/landing/ft-icon-1.png"
+                    alt="Blockchain Icon"
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Terverifikasi Blockchain</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
@@ -252,8 +258,14 @@ export default function Home() {
 
               {/* Feature 2 */}
               <div className="glass-fx bg-gray-900/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
-                <div className="w-12 h-12 bg-blue-200/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
-                  <TrendingUp className="h-6 w-6 text-[#4a0dc3]" />
+                <div className="w-24 h-24 rounded-lg flex items-center justify-center mb-4 transition-all">
+                  <Image
+                    src="/images/landing/ft-icon-3.png"
+                    alt="Revenue Icon"
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Pembagian Hasil Otomatis</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
@@ -264,8 +276,14 @@ export default function Home() {
 
               {/* Feature 3 */}
               <div className="glass-fx bg-gray-900/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
-                <div className="w-12 h-12 bg-blue-200/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
-                  <Users className="h-6 w-6 text-[#4a0dc3]" />
+                <div className="w-24 h-24 rounded-lg flex items-center justify-center mb-4 transition-all">
+                  <Image
+                    src="/images/landing/ft-icon-2.png"
+                    alt="Financial Icon"
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">Transparansi Kepatuhan Finansial</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
@@ -277,8 +295,14 @@ export default function Home() {
 
               {/* Feature 4 */}
               <div className="glass-fx bg-gray-900/40 p-6 rounded-xl border border-white/10 hover:border-blue-500/30 transition-all group">
-                <div className="w-12 h-12 bg-blue-200/10 rounded-lg flex items-center justify-center mb-4 group-hover:bg-blue-500/20 transition-all">
-                  <Sparkles className="h-6 w-6 text-[#4a0dc3]" />
+                <div className="w-24 h-24 rounded-lg flex items-center justify-center mb-4 transition-all">
+                  <Image
+                    src="/images/landing/ft-icon-4.png"
+                    alt="NFT Icon"
+                    width={96}
+                    height={96}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
                 <h4 className="font-subheading text-xl font-semibold text-white mb-2">NFT & POAP Badge</h4>
                 <p className="font-body text-gray-400 text-sm leading-relaxed">
