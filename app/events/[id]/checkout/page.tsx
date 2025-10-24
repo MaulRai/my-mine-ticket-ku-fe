@@ -146,28 +146,28 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
               </div>
             </div>
 
-            <h1 className="text-3xl font-heading text-white mb-3">Payment Successful!</h1>
-            <p className="text-gray-300 font-body text-lg mb-6">Your tickets have been purchased successfully</p>
+            <h1 className="text-3xl font-heading text-white mb-3">Pembayaran Berhasil!</h1>
+            <p className="text-gray-300 font-body text-lg mb-6">Tiket Anda telah berhasil dibeli</p>
 
             <div className="bg-white/5 border border-white/10 rounded-lg p-6 mb-6">
               <div className="flex items-center justify-between mb-4">
-                <span className="text-gray-400 font-body text-sm">Event</span>
+                <span className="text-gray-400 font-body text-sm">Acara</span>
                 <span className="text-white font-subheading font-semibold">{event.name}</span>
               </div>
               <div className="flex items-center justify-between mb-4">
-                <span className="text-gray-400 font-body text-sm">Tickets</span>
+                <span className="text-gray-400 font-body text-sm">Tiket</span>
                 <span className="text-white font-subheading font-semibold">
-                  {regularTicketCount > 0 && `${regularTicketCount}x Regular`}
+                  {regularTicketCount > 0 && `${regularTicketCount}x Reguler`}
                   {regularTicketCount > 0 && vipTicketCount > 0 && ", "}
                   {vipTicketCount > 0 && `${vipTicketCount}x VIP`}
                 </span>
               </div>
               <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/10">
-                <span className="text-gray-400 font-body text-sm">Total Paid</span>
+                <span className="text-gray-400 font-body text-sm">Total Dibayar</span>
                 <span className="text-white font-heading text-xl">{totalPrice.toFixed(4)} ETH</span>
               </div>
               <div className="flex items-center justify-between">
-                <span className="text-gray-400 font-body text-sm">Transaction Hash</span>
+                <span className="text-gray-400 font-body text-sm">Hash Transaksi</span>
                 <a
                   href={`https://explorer.sophon.xyz/tx/${transactionHash}`}
                   target="_blank"
@@ -186,12 +186,12 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                   variant="outline"
                   className="w-full border-white/20 bg-white/5 hover:bg-white/10 text-white font-subheading font-semibold"
                 >
-                  Back to Event
+                  Kembali ke Acara
                 </Button>
               </Link>
               <Link href="/profile" className="flex-1">
                 <Button className="w-full bg-gradient-to-b from-gray-300 via-gray-500 to-gray-700 hover:from-gray-200 hover:to-gray-600 text-white font-subheading font-semibold">
-                  View My Tickets
+                  Lihat Tiket Saya
                 </Button>
               </Link>
             </div>
@@ -212,7 +212,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
             </button>
           </Link>
           <h1 className="text-4xl font-heading text-white mb-2">Checkout</h1>
-          <p className="text-gray-400 font-body">Complete your ticket purchase</p>
+          <p className="text-gray-400 font-body">Selesaikan pembelian tiket Anda</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
@@ -237,8 +237,8 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
             {/* Ticket Selection */}
             <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
               <CardContent className="p-6">
-                <h2 className="text-2xl font-heading text-white mb-4">Select Tickets</h2>
-                <p className="text-gray-400 font-body text-sm mb-6">Maximum {MAX_TICKETS} tickets per purchase</p>
+                <h2 className="text-2xl font-heading text-white mb-4">Pilih Tiket</h2>
+                <p className="text-gray-400 font-body text-sm mb-6">Maksimal {MAX_TICKETS} tiket per pembelian</p>
 
                 <div className="space-y-4">
                   {/* Regular Ticket */}
@@ -252,10 +252,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className="font-subheading font-semibold text-white text-lg">Regular Ticket</h3>
+                          <h3 className="font-subheading font-semibold text-white text-lg">Tiket Reguler</h3>
                           {isRegularSoldOut && (
                             <Badge className="bg-red-500/20 text-red-400 border-red-500/30 font-subheading text-xs">
-                              Sold Out
+                              Habis
                             </Badge>
                           )}
                         </div>
@@ -263,7 +263,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                           {event.regularTicketPrice} ETH
                         </p>
                         <p className="text-gray-400 font-body text-sm">
-                          {regularTicketsRemaining.toLocaleString("id-ID")} tickets remaining
+                          {regularTicketsRemaining.toLocaleString("id-ID")} tiket tersisa
                         </p>
                       </div>
                       <div className="flex items-center gap-3">
@@ -299,10 +299,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <h3 className="font-subheading font-semibold text-white text-lg">VIP Ticket</h3>
+                          <h3 className="font-subheading font-semibold text-white text-lg">Tiket VIP</h3>
                           {isVipSoldOut && (
                             <Badge className="bg-red-500/20 text-red-400 border-red-500/30 font-subheading text-xs">
-                              Sold Out
+                              Habis
                             </Badge>
                           )}
                         </div>
@@ -310,7 +310,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                           {event.vipTicketPrice} ETH
                         </p>
                         <p className="text-gray-400 font-body text-sm">
-                          {vipTicketsRemaining.toLocaleString("id-ID")} tickets remaining
+                          {vipTicketsRemaining.toLocaleString("id-ID")} tiket tersisa
                         </p>
                       </div>
                       <div className="flex items-center gap-3">
@@ -342,41 +342,18 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                   <div className="mt-4 p-3 rounded-lg bg-orange-500/10 border border-orange-500/30 flex items-center gap-2">
                     <AlertCircle className="h-5 w-5 text-orange-400 flex-shrink-0" />
                     <p className="text-orange-400 font-body text-sm">
-                      Maximum ticket limit reached ({MAX_TICKETS} tickets)
+                      Batas maksimal tiket tercapai ({MAX_TICKETS} tiket)
                     </p>
                   </div>
                 )}
               </CardContent>
-            </Card>
-
-            {/* Buyer Information */}
-            <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-heading text-white mb-4">Buyer Information</h2>
-
-                <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="buyerName" className="text-white font-subheading mb-2 block">
-                      Full Name <span className="text-gray-500 text-sm">(Optional)</span>
-                    </Label>
-                    <Input
-                      id="buyerName"
-                      type="text"
-                      placeholder="Enter your name"
-                      value={buyerName}
-                      onChange={(e) => setBuyerName(e.target.value)}
-                      className="bg-white/5 border-white/20 text-white placeholder:text-gray-500 focus:border-white/40"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+            </Card>            
 
             {/* Wallet Selection */}
             <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
               <CardContent className="p-6">
-                <h2 className="text-2xl font-heading text-white mb-4">Payment Method</h2>
-                <p className="text-gray-400 font-body text-sm mb-6">Select your wallet to complete the transaction</p>
+                <h2 className="text-2xl font-heading text-white mb-4">Metode Pembayaran</h2>
+                <p className="text-gray-400 font-body text-sm mb-6">Pilih dompet Anda untuk menyelesaikan transaksi</p>
 
                 <div className="space-y-3 mb-4">
                   {walletOptions.map((wallet) => (
@@ -409,7 +386,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                 {selectedWallet && (
                   <div>
                     <Label htmlFor="walletAddress" className="text-white font-subheading mb-2 block">
-                      Wallet Address
+                      Alamat Dompet
                     </Label>
                     <Input
                       id="walletAddress"
@@ -429,13 +406,13 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
           <div className="lg:col-span-1">
             <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md sticky top-8">
               <CardContent className="p-6">
-                <h2 className="text-2xl font-heading text-white mb-6">Order Summary</h2>
+                <h2 className="text-2xl font-heading text-white mb-6">Ringkasan Pesanan</h2>
 
                 <div className="space-y-4 mb-6">
                   {regularTicketCount > 0 && (
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-white font-subheading font-semibold">Regular Ticket</p>
+                        <p className="text-white font-subheading font-semibold">Tiket Reguler</p>
                         <p className="text-gray-400 font-body text-sm">
                           {regularTicketCount}x {event.regularTicketPrice} ETH
                         </p>
@@ -449,7 +426,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                   {vipTicketCount > 0 && (
                     <div className="flex items-center justify-between">
                       <div>
-                        <p className="text-white font-subheading font-semibold">VIP Ticket</p>
+                        <p className="text-white font-subheading font-semibold">Tiket VIP</p>
                         <p className="text-gray-400 font-body text-sm">
                           {vipTicketCount}x {event.vipTicketPrice} ETH
                         </p>
@@ -463,7 +440,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                   {totalTickets === 0 && (
                     <div className="text-center py-8">
                       <Ticket className="h-12 w-12 text-gray-600 mx-auto mb-3" />
-                      <p className="text-gray-500 font-body text-sm">No tickets selected</p>
+                      <p className="text-gray-500 font-body text-sm">Belum ada tiket dipilih</p>
                     </div>
                   )}
                 </div>
@@ -476,7 +453,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                         <p className="text-white font-subheading">{subtotal.toFixed(4)} ETH</p>
                       </div>
                       <div className="flex items-center justify-between">
-                        <p className="text-gray-400 font-body text-sm">Platform Fee ({PLATFORM_FEE_PERCENTAGE}%)</p>
+                        <p className="text-gray-400 font-body text-sm">Biaya Platform ({PLATFORM_FEE_PERCENTAGE}%)</p>
                         <p className="text-white font-subheading">{platformFee.toFixed(4)} ETH</p>
                       </div>
                     </div>
@@ -497,10 +474,11 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                           className="mt-1"
                         />
                         <label htmlFor="terms" className="text-gray-300 font-body text-sm cursor-pointer">
-                          I agree to the event&apos;s{" "}
+                          Saya menyetujui{" "}
                           <a href="#" className="text-blue-400 hover:text-blue-300 underline">
-                            Terms & Conditions
-                          </a>
+                            Syarat & Ketentuan
+                          </a>{" "}
+                          acara ini
                         </label>
                       </div>
                     </div>
@@ -513,18 +491,18 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                       {isProcessing ? (
                         <>
                           <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
-                          Processing...
+                          Memproses...
                         </>
                       ) : (
                         <>
                           <Wallet className="h-5 w-5 mr-2" />
-                          Pay Now
+                          Bayar Sekarang
                         </>
                       )}
                     </Button>
 
                     <p className="text-gray-500 font-body text-xs text-center mt-4">
-                      Secure payment powered by Sophon blockchain
+                      Pembayaran aman didukung oleh blockchain Sophon
                     </p>
                   </>
                 )}
