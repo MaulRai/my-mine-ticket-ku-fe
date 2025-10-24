@@ -100,7 +100,7 @@ const generateEventDetails = (): Record<string, EventDataType> => {
 
   const ticketConfigs = [
     { regular: 4000, regularSold: 3200, vip: 1000, vipSold: 850 },
-    { regular: 3500, regularSold: 2100, vip: 1000, vipSold: 600 },
+    { regular: 3500, regularSold: 3500, vip: 1000, vipSold: 1000 },
     { regular: 2800, regularSold: 1400, vip: 700, vipSold: 350 },
     { regular: 4800, regularSold: 3840, vip: 1200, vipSold: 1080 },
     { regular: 3200, regularSold: 2240, vip: 800, vipSold: 560 },
@@ -158,15 +158,13 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
   const router = useRouter()
   const event = eventData[id] || eventData["1"]
   const [marketPage, setMarketPage] = useState(0)
-  const [devSoldOutMode, setDevSoldOutMode] = useState(false)
   const [isFavorite, setIsFavorite] = useState(false)
 
   const TICKETS_PER_PAGE = 9
   const totalPages = Math.ceil(resaleTickets.length / TICKETS_PER_PAGE)
   const currentTickets = resaleTickets.slice(marketPage * TICKETS_PER_PAGE, (marketPage + 1) * TICKETS_PER_PAGE)
 
-  const isSoldOut = devSoldOutMode || event.soldOut
-  const isDevMode = process.env.NODE_ENV === "development"
+  // sold out state will be derived from ticket counts below
 
   const handleShare = async () => {
     if (navigator.share) {
@@ -191,6 +189,8 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
   const totalTickets = event.regularTickets + event.vipTickets
   const totalTicketsSold = event.regularTicketsSold + event.vipTicketsSold
   const ticketsSoldPercentage = ((totalTicketsSold / totalTickets) * 100).toFixed(1)
+  // Determine sold-out mode from ticket configuration (both tiers sold)
+  const isSoldOut = (regularTicketsRemaining <= 0 && vipTicketsRemaining <= 0) || event.soldOut
 
   const handleCheckout = () => {
     router.push(`/events/${id}/checkout`)
@@ -198,18 +198,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
 
   return (
     <div className="min-h-screen bg-background">
-      {isDevMode && (
-        <button
-          onClick={() => setDevSoldOutMode(!devSoldOutMode)}
-          className="fixed top-24 right-6 z-50 glass-fx px-4 py-2 rounded-full hover:bg-white/30 transition-all flex items-center gap-2 border border-white/20"
-          title="Toggle between normal and sold-out mode"
-        >
-          <Eye className="h-4 w-4 text-white" />
-          <span className="text-white font-subheading text-sm font-semibold">
-            DEV: {devSoldOutMode ? "Habis Terjual" : "Tersedia"}
-          </span>
-        </button>
-      )}
+      {/* sold-out mode is derived from ticket config; dev toggle removed */}
 
       {/* Hero Section with Banner */}
       <div className="relative h-[370px] m-4 sm:m-6 md:m-8 mt-0 mb-0 overflow-visible rounded-b-2xl bg-black">
@@ -234,7 +223,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
             {/* Event Info */}
             <div className="flex-1 pb-2 w-full sm:w-auto">
               <div className="mb-2 sm:mb-3 flex items-center gap-2 sm:gap-3 flex-wrap">
-                <Badge className="glass-fx text-white border-white/30 font-subheading font-semibold text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5">
+                <Badge className="glass-fx text-white font-subheading font-semibold text-xs sm:text-sm px-3 sm:px-4 py-1 sm:py-1.5">
                   {event.category}
                 </Badge>
                 <button
@@ -302,7 +291,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                 <>
                   <div>
                     <h2 className="text-xl sm:text-2xl font-heading text-white mb-2">Dapatkan Tiket Anda</h2>
-                    <p className="text-gray-400 font-body text-xs sm:text-sm">Amankan tempat Anda di acara luar biasa ini</p>
+                    <p className="text-gray-400 font-body text-xs sm:text-sm">Pesan tiketmu dan jadi bagian dari momen luar biasa ini</p>
                   </div>
 
                   <div className="space-y-2 sm:space-y-3">
@@ -312,6 +301,24 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                       </div>
                       <p className="text-xl sm:text-2xl font-heading text-white mb-1">Rp 350.000</p>
                       <p className="text-gray-400 font-body text-xs mb-2">Masuk umum</p>
+                      <div className="space-y-1 mb-3">
+                        <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                          <span className="text-green-400 mt-0.5">✓</span>
+                          <span>Akses ke area umum venue</span>
+                        </p>
+                        <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                          <span className="text-green-400 mt-0.5">✓</span>
+                          <span>Tiket NFT terverifikasi <span className="italic">blockchain</span></span>
+                        </p>
+                        <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                          <span className="text-green-400 mt-0.5">✓</span>
+                          <span>Akses ke semua panggung utama</span>
+                        </p>
+                        <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                          <span className="text-green-400 mt-0.5">✓</span>
+                          <span>Kesempatan mendapat <span className="italic">POAP badge</span></span>
+                        </p>
+                      </div>
                       <div className="flex items-center justify-between pt-2 border-t border-white/10">
                         <span className="text-gray-400 font-body text-xs">Tersisa</span>
                         <span className="text-white font-subheading font-semibold text-xs sm:text-sm">
@@ -321,13 +328,40 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                       </div>
                     </div>
 
-                    <div className="p-3 sm:p-4 rounded-lg border-2 border-white/10 hover:border-white/20 transition-all">
+                    <div className="p-3 sm:p-4 rounded-lg border-2 border-purple-500/30 bg-purple-500/5 hover:border-purple-500/40 transition-all">
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">Tiket VIP</h3>
+                        <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30 font-subheading text-xs">Premium</Badge>
                       </div>
                       <p className="text-xl sm:text-2xl font-heading text-white mb-1">Rp 750.000</p>
-                      <p className="text-gray-400 font-body text-xs mb-2">Tempat duduk premium + keistimewaan eksklusif</p>
-                      <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                      <p className="text-gray-400 font-body text-xs mb-2">Akses area premium dengan pengalaman eksklusif</p>
+                      <div className="space-y-1 mb-3">
+                        <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                          <span className="text-purple-400 mt-0.5">✓</span>
+                          <span className="font-semibold text-purple-200">Semua benefit Tiket Reguler</span>
+                        </p>
+                        <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                          <span className="text-purple-400 mt-0.5">✓</span>
+                          <span>Akses area VIP eksklusif dengan view terbaik</span>
+                        </p>
+                        <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                          <span className="text-purple-400 mt-0.5">✓</span>
+                          <span>Lounge premium dengan makanan & minuman gratis</span>
+                        </p>
+                        <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                          <span className="text-purple-400 mt-0.5">✓</span>
+                          <span>Prioritas masuk & jalur <span className="italic">fast-track</span></span>
+                        </p>
+                        <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                          <span className="text-purple-400 mt-0.5">✓</span>
+                          <span>Merchandise eksklusif & <span className="italic">meet & greet</span></span>
+                        </p>
+                        <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                          <span className="text-purple-400 mt-0.5">✓</span>
+                          <span>Parkir khusus VIP</span>
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-between pt-2 border-t border-purple-500/20">
                         <span className="text-gray-400 font-body text-xs">Tersisa</span>
                         <span className="text-white font-subheading font-semibold text-xs sm:text-sm">
                           {vipTicketsRemaining.toLocaleString("id-ID")} / {event.vipTickets.toLocaleString("id-ID")}
@@ -402,6 +436,24 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                           </div>
                           <p className="text-xl sm:text-2xl font-heading text-white mb-1">Rp 350.000</p>
                           <p className="text-gray-400 font-body text-xs mb-2">Masuk umum</p>
+                          <div className="space-y-1 mb-3">
+                            <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                              <span className="text-green-400 mt-0.5">✓</span>
+                              <span>Akses ke area umum venue</span>
+                            </p>
+                            <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                              <span className="text-green-400 mt-0.5">✓</span>
+                              <span>Tiket NFT terverifikasi <span className="italic">blockchain</span></span>
+                            </p>
+                            <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                              <span className="text-green-400 mt-0.5">✓</span>
+                              <span>Akses ke semua panggung utama</span>
+                            </p>
+                            <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                              <span className="text-green-400 mt-0.5">✓</span>
+                              <span>Kesempatan mendapat <span className="italic">POAP badge</span></span>
+                            </p>
+                          </div>
                           <div className="flex items-center justify-between pt-2 border-t border-white/10">
                             <span className="text-gray-400 font-body text-xs">Tersisa</span>
                             <span className="text-white font-subheading font-semibold text-xs sm:text-sm">
@@ -411,13 +463,40 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                           </div>
                         </div>
 
-                        <div className="p-3 sm:p-4 rounded-lg border-2 border-white/10 hover:border-white/20 transition-all">
+                        <div className="p-3 sm:p-4 rounded-lg border-2 border-purple-500/30 bg-purple-500/5 hover:border-purple-500/40 transition-all">
                           <div className="flex justify-between items-start mb-2">
                             <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">Tiket VIP</h3>
+                            <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30 font-subheading text-xs">Premium</Badge>
                           </div>
                           <p className="text-xl sm:text-2xl font-heading text-white mb-1">Rp 750.000</p>
-                          <p className="text-gray-400 font-body text-xs mb-2">Tempat duduk premium + keistimewaan eksklusif</p>
-                          <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                          <p className="text-gray-400 font-body text-xs mb-2">Akses area premium dengan pengalaman eksklusif</p>
+                          <div className="space-y-1 mb-3">
+                            <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                              <span className="text-purple-400 mt-0.5">✓</span>
+                              <span className="font-semibold text-purple-200">Semua benefit Tiket Reguler</span>
+                            </p>
+                            <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                              <span className="text-purple-400 mt-0.5">✓</span>
+                              <span>Akses area VIP eksklusif dengan view terbaik</span>
+                            </p>
+                            <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                              <span className="text-purple-400 mt-0.5">✓</span>
+                              <span>Lounge premium dengan makanan & minuman gratis</span>
+                            </p>
+                            <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                              <span className="text-purple-400 mt-0.5">✓</span>
+                              <span>Prioritas masuk & jalur <span className="italic">fast-track</span></span>
+                            </p>
+                            <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                              <span className="text-purple-400 mt-0.5">✓</span>
+                              <span>Merchandise eksklusif & <span className="italic">meet & greet</span></span>
+                            </p>
+                            <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
+                              <span className="text-purple-400 mt-0.5">✓</span>
+                              <span>Parkir khusus VIP</span>
+                            </p>
+                          </div>
+                          <div className="flex items-center justify-between pt-2 border-t border-purple-500/20">
                             <span className="text-gray-400 font-body text-xs">Tersisa</span>
                             <span className="text-white font-subheading font-semibold text-xs sm:text-sm">
                               {vipTicketsRemaining.toLocaleString("id-ID")} / {event.vipTickets.toLocaleString("id-ID")}

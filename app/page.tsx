@@ -26,6 +26,17 @@ export default function Home() {
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-gradient-to-br from-[#0a0a0a] via-[#1a0a2e] to-[#0a0a0a]">
+      {/* Overlay Background Image */}
+      <div className="absolute top-0 right-0 w-3/4 h-3/4 pointer-events-none opacity-70 z-0">
+        <Image
+          src="/images/overlay-1.png"
+          alt="Overlay"
+          fill
+          className="object-contain object-top-right"
+          priority
+        />
+      </div>
+
       {/* Ambient animated background */}
       <div className="fixed inset-0 overflow-hidden opacity-40 pointer-events-none">
         <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-blue-900/30 to-transparent animate-pulse-slow" />
@@ -37,67 +48,82 @@ export default function Home() {
       {/* Main Content */}
       <div className="relative z-10 min-h-screen flex flex-col">
         {/* Hero Section */}
-        <section className="flex-1 flex items-center justify-center px-4 py-20 pt-32">
-          <div className="max-w-6xl mx-auto text-center space-y-8">
-            {/* App Icon */}
-            <div className="flex justify-center">
-              <Image
-                src="/images/app-icon.png"
-                alt="MyMineTicketKu Logo"
-                width={120}
-                height={120}
-                className="object-contain"
-              />
-            </div>
+        <section className="flex-1 flex items-center justify-center px-4 py-20 pt-36">
+          <div className="max-w-6xl mx-auto w-full">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              {/* Left Content */}
+              <div className="flex-1 space-y-4">
+                {/* Main Heading with Animation */}
+                <div>
+                  <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-heading text-white leading-tight text-left">
+                    Ticketing Web3 untuk
+                  </h1>
+                  <div className="h-20 sm:h-24 md:h-28 lg:h-32 flex items-center justify-start overflow-visible">
+                    <h2
+                      className={`text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading bg-gradient-to-b from-white via-[#afa7d7] to-[#1b1166] bg-clip-text text-transparent transition-all duration-500 leading-tight ${isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"
+                        }`}
+                    >
+                      {rotatingTexts[currentTextIndex]}
+                    </h2>
+                  </div>
+                </div>
 
-            {/* Main Heading with Animation */}
-            <div className="space-y-1">
-              <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-heading text-white leading-tight">
-                <span className="italic">Ticketing</span> Web3 untuk
-              </h1>
-              <div className="h-20 sm:h-24 md:h-28 lg:h-32 flex items-center justify-center overflow-visible">
-                <h2
-                  className={`text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-heading bg-gradient-to-b from-white via-[#afa7d7] to-[#1b1166] bg-clip-text text-transparent transition-all duration-500 leading-tight ${isAnimating ? "opacity-0 scale-95" : "opacity-100 scale-100"
-                    }`}
-                >
-                  {rotatingTexts[currentTextIndex]}
-                </h2>
+                {/* Subtext */}
+                <p className="text-base sm:text-lg md:text-xl text-gray-300 font-body leading-relaxed max-w-2xl text-left">
+                  Memberdayakan ekosistem kreatif melalui sistem tiket berbasis <span className="italic">blockchain</span>{" "}
+                  yang transparan, terverifikasi, dan berbagi hasil secara otomatis.
+                </p>
+
+                {/* CTA Buttons */}
+                <div className="flex flex-col sm:flex-row gap-4 justify-start items-start pt-8">
+                  <Link href="/events">
+                    <Button
+                      size="lg"
+                      className="px-8 py-6 text-base sm:text-lg bg-white hover:bg-gray-100 text-black font-subheading font-semibold shadow-lg shadow-white/20 transition-all"
+                    >
+                      Jelajahi Acara
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Button>
+                  </Link>
+                  <Link href="/explore-tickets">
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="px-8 py-6 text-base sm:text-lg border-2 border-white/20 bg-black/40 hover:bg-white/10 text-white hover:text-[#9060ce] font-subheading font-semibold backdrop-blur-sm transition-all"
+                    >
+                      Verifikasi Tiket NFT
+                    </Button>
+                  </Link>
+                </div>
               </div>
-            </div>
 
-            {/* Subtext */}
-            <p className="text-lg sm:text-xl md:text-2xl text-gray-300 font-body leading-relaxed max-w-4xl mx-auto px-4">
-              Memberdayakan ekosistem kreatif melalui sistem tiket berbasis <span className="italic">blockchain</span>{" "}
-              yang transparan, terverifikasi, dan berbagi hasil secara otomatis.
-            </p>
-
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8">
-              <Link href="/events">
-                <Button
-                  size="lg"
-                  className="px-8 py-6 text-base sm:text-lg bg-white hover:bg-gray-100 text-black font-subheading font-semibold shadow-lg shadow-white/20 transition-all"
-                >
-                  Jelajahi Acara
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <Link href="/explore-tickets">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="px-8 py-6 text-base sm:text-lg border-2 border-white/20 bg-black/40 hover:bg-white/10 text-white font-subheading font-semibold backdrop-blur-sm transition-all"
-                >
-                  Verifikasi Tiket NFT
-                </Button>
-              </Link>
+              {/* Right - App Icon */}
+              <div className="flex justify-center md:justify-end items-center flex-shrink-0">
+                <Image
+                  src="/images/app-icon.png"
+                  alt="MyMineTicketKu Logo"
+                  width={300}
+                  height={300}
+                  className="object-contain"
+                />
+              </div>
             </div>
           </div>
         </section>
 
         {/* Vision Statement Section */}
-        <section className="py-20 px-4">
-          <div className="max-w-6xl mx-auto">
+        <section className="py-20 px-4 relative">
+          {/* Overlay Background Image */}
+          <div className="absolute top-0 left-0 w-3/4 h-full pointer-events-none opacity-50 z-0">
+            <Image
+              src="/images/overlay-2.png"
+              alt="Overlay"
+              fill
+              className="object-contain object-left-center"
+            />
+          </div>
+
+          <div className="max-w-6xl mx-auto relative z-10">
             {/* Section Header */}
             <div className="text-center mb-16 space-y-4">
               <h3 className="text-3xl sm:text-4xl md:text-5xl font-heading text-white">
@@ -147,8 +173,18 @@ export default function Home() {
         </section>
 
         {/* Features Section */}
-        <section className="py-20 px-4">
-          <div className="max-w-6xl mx-auto">
+        <section className="py-20 px-4 relative">
+          {/* Overlay Background Image */}
+          <div className="absolute top-0 right-0 w-full h-full pointer-events-none opacity-50 z-0">
+            <Image
+              src="/images/overlay-3.png"
+              alt="Overlay"
+              fill
+              className="object-cover object-right-center"
+            />
+          </div>
+
+          <div className="max-w-6xl mx-auto relative z-10">
             <h3 className="text-3xl sm:text-4xl font-heading text-white text-center mb-12">Mengapa MyMineTicketKu?</h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -206,8 +242,8 @@ export default function Home() {
         {/* CTA Section */}
         <section className="py-20 px-4">
           <div className="max-w-4xl mx-auto text-center space-y-8">
-            <h3 className="text-3xl sm:text-4xl md:text-5xl font-heading text-white">
-              Siap bergabung dengan revolusi ticketing Web3?
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-heading text-white">
+              Siap memasuki era baru Web3 <span className="italic">ticketing?</span>
             </h3>
             <p className="text-lg sm:text-xl text-gray-300 font-body">
               Mulai perjalanan Anda bersama MyMineTicketKu hari ini.

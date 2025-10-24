@@ -273,8 +273,16 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
   }
 
   return (
-    <div className="min-h-screen bg-background pt-32 pb-12">
-      <div className="container mx-auto px-4 max-w-7xl">
+    <div className="min-h-screen bg-background pt-32 pb-12 relative overflow-hidden">
+      {/* Dark Cyan-Turquoise Ambient Background */}
+      <div className="fixed inset-0 overflow-hidden opacity-70 pointer-events-none">
+        <div className="absolute top-0 -left-1/3 w-2/3 h-full bg-gradient-radial from-cyan-600/80 to-transparent animate-pulse-slow" />
+        <div className="absolute bottom-0 -right-1/3 w-2/3 h-full bg-gradient-radial from-teal-600/60 to-transparent animate-pulse-slow animation-delay-2000" />
+        <div className="absolute top-1/4 -left-48 w-96 h-96 bg-cyan-500/40 rounded-full blur-3xl animate-float-drift" />
+        <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-teal-500/40 rounded-full blur-3xl animate-float-drift animation-delay-4000" />
+      </div>
+
+      <div className="container mx-auto px-4 max-w-7xl relative z-10">
         {/* Back Button */}
         <Button
           variant="ghost"
@@ -640,8 +648,40 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
           </div>
         </div>
       </div>
-    </div>
       </div>
+      </div>
+
+      {/* Custom animations */}
+      <style jsx>{`
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.25; }
+          33% { opacity: 0.35; }
+          66% { opacity: 0.45; }
+        }
+        @keyframes float-drift {
+          0%, 100% { transform: translate(0px, 0px); opacity: 0.2; }
+          25% { transform: translate(30px, -25px); opacity: 0.25; }
+          50% { transform: translate(-20px, -40px); opacity: 0.3; }
+          75% { transform: translate(-35px, -15px); opacity: 0.25; }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 12s ease-in-out infinite;
+          opacity: 0.25;
+        }
+        .animate-float-drift {
+          animation: float-drift 20s ease-in-out infinite;
+          opacity: 0.2;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+        .bg-gradient-radial {
+          background: radial-gradient(circle, var(--tw-gradient-stops));
+        }
+      `}</style>
     </div>
   )
 }

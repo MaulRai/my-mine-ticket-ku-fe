@@ -198,7 +198,7 @@ export default function EventsPage() {
 
         {/* Search Bar Overlay */}
         <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 w-full max-w-xs sm:max-w-md md:max-w-2xl px-4 sm:px-8">
-          <div className="clear-glass-fx bg-black/80 p-1.5 sm:p-2">
+          <div className="clear-glass-fx bg-black/60 p-1.5 sm:p-2">
             <div className="relative">
               <Search className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 h-4 w-4 sm:h-5 sm:w-5 text-white/70" />
               <Input
@@ -242,7 +242,7 @@ export default function EventsPage() {
             <select
               value={selectedCategory}
               onChange={(e) => setSelectedCategory(e.target.value)}
-              className="h-10 px-4 sm:px-5 pr-10 rounded-full bg-gradient-to-b from-gray-300/60 via-gray-500/60 to-gray-700/60 border border-white/20 text-white text-sm sm:text-base font-medium backdrop-blur-md cursor-pointer appearance-none transition-all duration-200 focus:ring-2 focus:ring-white/30 hover:from-gray-200/70 hover:to-gray-600/70 w-full sm:w-auto"
+              className="h-10 px-4 sm:px-5 pr-10 rounded-full bg-gradient-to-b from-gray-300/60 via-gray-500/60 to-gray-700/60 border border-none text-white text-sm sm:text-base font-medium backdrop-blur-md cursor-pointer appearance-none transition-all duration-200 focus:ring-2 focus:ring-white/30 hover:from-gray-200/70 hover:to-gray-600/70 w-full sm:w-auto"
             >
               {categories.map((category) => (
                 <option key={category} value={category} className="bg-gray-800 text-white">
