@@ -110,7 +110,7 @@ export default function Home() {
               </div>
 
               {/* Main Content */}
-              <div className="flex-1 space-y-4">
+              <div className="sm:pt-28 flex-1 space-y-4">
                 {/* Main Heading with Animation */}
                 <div>
                   <h1 className="text-2xl sm:text-4xl md:text-5xl lg:text-6xl font-heading text-white leading-tight text-left">
