@@ -27,7 +27,7 @@ export function Navbar() {
             <Link href="/profile?tab=my-tickets">
               <Button
                 variant="ghost"
-                className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
+                className="font-body text-sm transition-colors md:text-base text-white/90 hover:bg-white/10 hover:text-white"
               >
                 Tiket Saya
               </Button>
@@ -35,7 +35,11 @@ export function Navbar() {
             <Link href="/explore-tickets">
               <Button
                 variant="ghost"
-                className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
+                className={`font-body text-sm transition-colors md:text-base ${
+                  pathname === "/explore-tickets"
+                    ? "bg-white/20 text-white font-semibold"
+                    : "text-white/90 hover:bg-white/10 hover:text-white"
+                }`}
               >
                 Jelajahi Tiket
               </Button>
@@ -43,7 +47,11 @@ export function Navbar() {
             <Link href="/profile">
               <Button
                 variant="ghost"
-                className="font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white md:text-base"
+                className={`font-body text-sm transition-colors md:text-base ${
+                  pathname === "/profile" || pathname?.startsWith("/tickets/")
+                    ? "bg-white/20 text-white font-semibold"
+                    : "text-white/90 hover:bg-white/10 hover:text-white"
+                }`}
               >
                 Profil
               </Button>
@@ -70,7 +78,7 @@ export function Navbar() {
             <Link href="/profile?tab=my-tickets" onClick={() => setIsMenuOpen(false)}>
               <Button
                 variant="ghost"
-                className="w-full justify-start font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+                className="w-full justify-start font-body text-sm transition-colors text-white/90 hover:bg-white/10 hover:text-white"
               >
                 Tiket Saya
               </Button>
@@ -78,7 +86,11 @@ export function Navbar() {
             <Link href="/explore-tickets" onClick={() => setIsMenuOpen(false)}>
               <Button
                 variant="ghost"
-                className="w-full justify-start font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+                className={`w-full justify-start font-body text-sm transition-colors ${
+                  pathname === "/explore-tickets"
+                    ? "bg-white/20 text-white font-semibold"
+                    : "text-white/90 hover:bg-white/10 hover:text-white"
+                }`}
               >
                 Jelajahi Tiket
               </Button>
@@ -86,7 +98,11 @@ export function Navbar() {
             <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
               <Button
                 variant="ghost"
-                className="w-full justify-start font-body text-sm text-white/90 transition-colors hover:bg-white/10 hover:text-white"
+                className={`w-full justify-start font-body text-sm transition-colors ${
+                  pathname === "/profile" || pathname?.startsWith("/tickets/")
+                    ? "bg-white/20 text-white font-semibold"
+                    : "text-white/90 hover:bg-white/10 hover:text-white"
+                }`}
               >
                 Profil
               </Button>
