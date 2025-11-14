@@ -41,17 +41,29 @@ export default function EODashboardPage() {
         return
       }
 
+      // Try to get wallet address, but don't require it for EO/Admin users
       const address = await blockchainService.getCurrentAccount()
-      if (!address) {
-        router.push('/login')
-        return
+      
+      // Use wallet address if available, otherwise use user's wallet address from profile
+      const walletToUse = address || user.walletAddress || null
+      
+      if (walletToUse) {
+        setWalletAddress(walletToUse)
+        await Promise.all([
+          fetchDashboardStats(walletToUse),
+          fetchEOEvents(walletToUse)
+        ])
+      } else {
+        // If no wallet address, still show the page but with empty data
+        setWalletAddress(null)
+        setStats({
+          totalEvents: 0,
+          activeEvents: 0,
+          totalTicketsSold: 0,
+          totalRevenue: '0'
+        })
+        setEvents([])
       }
-
-      setWalletAddress(address)
-      await Promise.all([
-        fetchDashboardStats(address),
-        fetchEOEvents(address)
-      ])
     } catch (err: any) {
       console.error('EO access error:', err)
       setError(err.message)
