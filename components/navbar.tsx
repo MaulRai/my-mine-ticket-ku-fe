@@ -179,7 +179,6 @@ export function Navbar() {
                         </>
                       ) : (
                         <>
-                          <Briefcase className="h-4 w-4 mr-2" />
                           EO Dashboard
                         </>
                       )}
@@ -304,7 +303,6 @@ export function Navbar() {
                         </>
                       ) : (
                         <>
-                          <Briefcase className="h-4 w-4 mr-2" />
                           EO Dashboard
                         </>
                       )}
