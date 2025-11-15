@@ -134,31 +134,35 @@ export function Navbar() {
           </Link>
 
           <div className="hidden lg:flex items-center gap-2 md:gap-4">
-            <Link href="/events">
-              <Button
-                variant="ghost"
-                className={`font-body text-sm transition-colors md:text-base ${
-                  pathname === "/events" || pathname?.startsWith("/events/")
-                    ? "bg-white/20 text-white font-semibold"
-                    : "text-white/90 hover:bg-white/10 hover:text-white"
-                }`}
-              >
-                Beranda Event
-              </Button>
-            </Link>
+            {userRole !== 'EO' && (
+              <>
+                <Link href="/events">
+                  <Button
+                    variant="ghost"
+                    className={`font-body text-sm transition-colors md:text-base ${
+                      pathname === "/events" || pathname?.startsWith("/events/")
+                        ? "bg-white/20 text-white font-semibold"
+                        : "text-white/90 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    Beranda Event
+                  </Button>
+                </Link>
 
-            <Link href="/explore-tickets">
-              <Button
-                variant="ghost"
-                className={`font-body text-sm transition-colors md:text-base ${
-                  pathname === "/explore-tickets"
-                    ? "bg-white/20 text-white font-semibold"
-                    : "text-white/90 hover:bg-white/10 hover:text-white"
-                }`}
-              >
-                Jelajahi Tiket
-              </Button>
-            </Link>
+                <Link href="/explore-tickets">
+                  <Button
+                    variant="ghost"
+                    className={`font-body text-sm transition-colors md:text-base ${
+                      pathname === "/explore-tickets"
+                        ? "bg-white/20 text-white font-semibold"
+                        : "text-white/90 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    Jelajahi Tiket
+                  </Button>
+                </Link>
+              </>
+            )}
 
             {isLoggedIn && (
               <>
@@ -220,35 +224,6 @@ export function Navbar() {
                     </Badge>
                   )}
                   
-                  {walletAddress ? (
-                    <>
-                      <span className="text-sm text-white/70 font-mono">
-                        {formatAddress(walletAddress)}
-                      </span>
-                      <Button
-                        variant="ghost"
-                        size="icon-sm"
-                        onClick={handleDisconnectWallet}
-                        className="text-white/90 hover:bg-yellow-500/20 hover:text-yellow-400"
-                        title="Disconnect Wallet"
-                      >
-                        <Wallet className="h-4 w-4" />
-                      </Button>
-                    </>
-                  ) : (
-                    <Button
-                      onClick={handleConnectWallet}
-                      variant="outline"
-                      size="sm"
-                      className="relative overflow-hidden bg-black border-white/20 text-white hover:bg-white/60 before:absolute before:inset-0 before:bg-linear-to-r before:from-transparent before:via-[#7411bc] before:to-transparent before:animate-[shine_3s_ease-in-out_infinite] before:z-0"
-                    >
-                      <span className="relative z-10 flex items-center">
-                        <Wallet className="h-4 w-4 mr-2" />
-                        Hubungkan Wallet
-                      </span>
-                    </Button>
-                  )}
-                  
                   <Button
                     variant="ghost"
                     size="icon-sm"
@@ -284,31 +259,35 @@ export function Navbar() {
 
         {isMenuOpen && (
           <div className="lg:hidden mt-2 glass-fx px-4 py-3 space-y-2">
-            <Link href="/events" onClick={() => setIsMenuOpen(false)}>
-              <Button
-                variant="ghost"
-                className={`w-full justify-start font-body text-sm transition-colors ${
-                  pathname === "/events" || pathname?.startsWith("/events/")
-                    ? "bg-white/20 text-white font-semibold"
-                    : "text-white/90 hover:bg-white/10 hover:text-white"
-                }`}
-              >
-                Beranda Event
-              </Button>
-            </Link>
+            {userRole !== 'EO' && (
+              <>
+                <Link href="/events" onClick={() => setIsMenuOpen(false)}>
+                  <Button
+                    variant="ghost"
+                    className={`w-full justify-start font-body text-sm transition-colors ${
+                      pathname === "/events" || pathname?.startsWith("/events/")
+                        ? "bg-white/20 text-white font-semibold"
+                        : "text-white/90 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    Beranda Event
+                  </Button>
+                </Link>
 
-            <Link href="/explore-tickets" onClick={() => setIsMenuOpen(false)}>
-              <Button
-                variant="ghost"
-                className={`w-full justify-start font-body text-sm transition-colors ${
-                  pathname === "/explore-tickets"
-                    ? "bg-white/20 text-white font-semibold"
-                    : "text-white/90 hover:bg-white/10 hover:text-white"
-                }`}
-              >
-                Jelajahi Tiket
-              </Button>
-            </Link>
+                <Link href="/explore-tickets" onClick={() => setIsMenuOpen(false)}>
+                  <Button
+                    variant="ghost"
+                    className={`w-full justify-start font-body text-sm transition-colors ${
+                      pathname === "/explore-tickets"
+                        ? "bg-white/20 text-white font-semibold"
+                        : "text-white/90 hover:bg-white/10 hover:text-white"
+                    }`}
+                  >
+                    Jelajahi Tiket
+                  </Button>
+                </Link>
+              </>
+            )}
 
             {isLoggedIn && (
               <>
@@ -365,36 +344,7 @@ export function Navbar() {
                     )}
                   </div>
                   <p className="text-sm text-white font-subheading font-semibold mb-1">{username}</p>
-                  {walletAddress && (
-                    <p className="text-sm text-white/70 font-mono">{formatAddress(walletAddress)}</p>
-                  )}
                 </div>
-                
-                {walletAddress ? (
-                  <Button
-                    variant="ghost"
-                    onClick={() => {
-                      handleDisconnectWallet()
-                      setIsMenuOpen(false)
-                    }}
-                    className="w-full justify-start font-body text-sm text-yellow-400 hover:bg-yellow-500/20 hover:text-yellow-300"
-                  >
-                    <Wallet className="h-4 w-4 mr-2" />
-                    Disconnect Wallet
-                  </Button>
-                ) : (
-                  <Button
-                    onClick={() => {
-                      handleConnectWallet()
-                      setIsMenuOpen(false)
-                    }}
-                    variant="ghost"
-                    className="w-full justify-start font-body text-sm text-white/90 hover:bg-white/10"
-                  >
-                    <Wallet className="h-4 w-4 mr-2" />
-                    Connect Wallet
-                  </Button>
-                )}
                 
                 <Button
                   variant="ghost"
