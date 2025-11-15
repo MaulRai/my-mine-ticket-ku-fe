@@ -167,6 +167,18 @@
       @apply absolute inset-0 rounded-xl pointer-events-none;
     }
 
+    .dark-glass-fx {
+      @apply relative rounded-xl border-none bg-black/80 backdrop-blur-md shadow-xl;
+    }
+
+    .dark-glass-fx::before {
+      content: "";
+      @apply absolute inset-0 rounded-xl pointer-events-none;
+      background: radial-gradient(circle at top left,
+          rgba(255, 255, 255, 0.1),
+          transparent 40%);
+    }
+
     /* Tambahan variasi jika mau lebih kuat efeknya */
     .strong-glass-fx {
       @apply relative rounded-2xl border border-white/30 bg-white/20 backdrop-blur-xl shadow-2xl;
