@@ -127,7 +127,7 @@ export function Navbar() {
     <nav className="fixed top-0 left-0 right-0 z-50 px-4 py-4 md:px-8">
       <div className="mx-auto max-w-7xl">
         <div className="glass-fx flex items-center justify-between px-4 py-3">
-          <Link href="/events" className="flex items-center gap-2 transition-opacity hover:opacity-80">
+          <Link href={userRole === 'EO' ? '/eo/dashboard' : '/events'} className="flex items-center gap-2 transition-opacity hover:opacity-80">
             <div className="relative w-48 h-8 sm:w-48 sm:h-10 md:w-64">
               <Image src="/images/app-logo.png" alt="App Logo" fill className="object-contain" />
             </div>
