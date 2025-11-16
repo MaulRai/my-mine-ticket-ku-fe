@@ -371,7 +371,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
 
                   <Button
                     onClick={handleCheckout}
-                    className="w-full h-10 sm:h-11 md:h-12 bg-gradient-to-b from-gray-400 via-gray-500 to-gray-700 hover:from-gray-300 hover:to-gray-600 text-white font-subheading font-semibold text-sm sm:text-base transition-all duration-300"
+                    className="w-full h-10 sm:h-11 md:h-12 bg-gradient-to-r from-emerald-500 via-emerald-400 to-[#4de957] hover:from-emerald-400 hover:via-emerald-300 hover:to-[#62ed6b] text-white font-subheading font-bold text-sm sm:text-base transition-all duration-300 shadow-lg shadow-emerald-500/50 hover:shadow-xl hover:shadow-emerald-400/60 hover:scale-[1.02] active:scale-[0.98]"
                   >
                     <Ticket className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                     Beli Tiket
@@ -507,7 +507,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
 
                       <Button
                         onClick={handleCheckout}
-                        className="w-full h-10 sm:h-11 md:h-12 bg-gradient-to-b from-gray-400 via-gray-500 to-gray-700 hover:from-gray-300 hover:to-gray-600 text-white font-subheading font-semibold text-sm sm:text-base transition-all duration-300"
+                        className="w-full h-10 sm:h-11 md:h-12 bg-gradient-to-r from-emerald-600 via-emerald-500 to-teal-500 hover:from-emerald-500 hover:via-emerald-400 hover:to-teal-400 text-white font-subheading font-bold text-sm sm:text-base transition-all duration-300 shadow-lg shadow-emerald-500/50 hover:shadow-xl hover:shadow-emerald-400/60 hover:scale-[1.02] active:scale-[0.98]"
                       >
                         <Ticket className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
                         Beli Tiket
