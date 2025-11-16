@@ -307,348 +307,343 @@ export default function TicketDetailPage({ params }: { params: Promise<{ id: str
                   }}
                 />
               </div>            {/* Event Cover Header */}
-            <div className="relative h-64 w-full overflow-hidden">
-              <Image
-                src={ticket.eventCover || "/placeholder.svg"}
-                alt={ticket.eventName}
-                fill
-                className="object-cover"
-              />
-              <div className="absolute inset-0 bg-linear-to-t from-black via-black/60 to-transparent" />
+              <div className="relative h-64 w-full overflow-hidden">
+                <Image
+                  src={ticket.eventCover || "/placeholder.svg"}
+                  alt={ticket.eventName}
+                  fill
+                  className="object-cover"
+                />
+                <div className="absolute inset-0 bg-linear-to-t from-black via-black/60 to-transparent" />
 
-              {/* Status Badge */}
-              <div className="absolute top-6 right-6">
-                <Badge
-                  className={`font-subheading font-bold text-sm px-4 py-2 ${
-                    ticket.status === "active"
+                {/* Status Badge */}
+                <div className="absolute top-6 right-6">
+                  <Badge
+                    className={`font-subheading font-bold text-sm px-4 py-2 ${ticket.status === "active"
                       ? "bg-green-500 text-white border-green-400"
                       : "bg-white text-gray-900 border-white"
-                  }`}
-                >
-                  {ticket.status === "active" ? "Aktif / Belum Ditukar" : "Terpakai"}
-                </Badge>
-              </div>
-
-              {/* Event Info Overlay */}
-              <div className="absolute bottom-6 left-6 right-6">
-                <h1 className="text-3xl font-heading text-white mb-2 text-balance">{ticket.eventName}</h1>
-                <div className="flex flex-wrap items-center gap-4 text-gray-300 font-body text-sm">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="h-4 w-4" />
-                    <span>
-                      {new Date(ticket.eventDate).toLocaleDateString("id-ID", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })}{" "}
-                      pukul {ticket.eventTime}
-                    </span>
-                  </div>
-                  <span className="text-gray-600">•</span>
-                  <span>{ticket.eventLocation}</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Ticket Content */}
-            <div className="p-8 space-y-6">
-              {/* QR Code and Ticket Category */}
-              <div className="flex flex-col md:flex-row gap-6 items-start">
-                {/* QR Code */}
-                <div className="shrink-0">
-                  <div className="p-4 bg-white rounded-xl">
-                    <Image
-                      src={`/images/example/qr-example.png?height=180&width=180&query=QR code for ${ticket.nftCode}`}
-                      alt="QR Code"
-                      width={180}
-                      height={180}
-                      className="w-full h-auto"
-                    />
-                  </div>
-                  <p className="text-center text-xs text-gray-400 font-body mt-2">Pindai saat check-in di venue</p>
-                </div>
-
-                {/* Ticket Details */}
-                <div className="flex-1 space-y-4">
-                  {/* Ticket Category */}
-                  <div className="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/10">
-                    <span className="text-gray-400 font-body text-sm">Kategori Tiket</span>
-                    <Badge
-                      className={`font-subheading font-bold text-sm px-4 py-1.5 ${
-                        ticket.ticketCategory === "VIP"
-                          ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
-                          : "bg-blue-500/20 text-blue-300 border-blue-500/40"
                       }`}
-                    >
-                      {ticket.ticketCategory}
-                    </Badge>
-                  </div>
-
-                  {/* NFT Code */}
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Hash className="h-4 w-4 text-gray-400" />
-                      <span className="text-gray-400 font-body text-sm">Kode NFT</span>
-                    </div>
-                    <p className="text-lg text-white font-mono font-semibold">#{ticket.nftCode}</p>
-                  </div>
-
-                  {/* Sale Price */}
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                    <div className="flex items-center gap-2 mb-2">
-                      <DollarSign className="h-4 w-4 text-gray-400" />
-                      <span className="text-gray-400 font-body text-sm">Harga Jual</span>
-                    </div>
-                    <p className="text-lg text-white font-subheading font-bold">{ticket.salePrice}</p>
-                    <p className="text-sm text-gray-400 font-body">{ticket.salePriceUSD}</p>
-                  </div>
-
-                  {/* Purchase Date */}
-                  <div className="p-4 rounded-lg bg-white/5 border border-white/10">
-                    <div className="flex items-center gap-2 mb-2">
-                      <Clock className="h-4 w-4 text-gray-400" />
-                      <span className="text-gray-400 font-body text-sm">Tanggal Pembelian</span>
-                    </div>
-                    <p className="text-lg text-white font-subheading font-semibold">
-                      {new Date(ticket.purchaseDate).toLocaleDateString("id-ID", {
-                        day: "numeric",
-                        month: "long",
-                        year: "numeric",
-                      })}
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Transaction Hash */}
-              <div className="p-4 rounded-lg bg-linear-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20">
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex-1 min-w-0">
-                    <p className="text-gray-400 font-body text-sm mb-1">Hash Transaksi di Sophon</p>
-                    <p className="text-white font-mono text-sm truncate">{ticket.transactionHash}</p>
-                  </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="shrink-0 text-blue-400 hover:text-blue-300 hover:bg-blue-500/10"
-                    onClick={() => window.open(`https://sophon.xyz/tx/${ticket.transactionHash}`, "_blank")}
                   >
-                    <ExternalLink className="h-4 w-4 mr-2" />
-                    Lihat
-                  </Button>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Transaction History */}
-          {ticket.transactionHistory.length > 0 && (
-            <Card className="border-white/10 bg-linear-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
-              <CardContent className="p-6">
-                <h2 className="text-xl font-subheading font-semibold text-white mb-4">Riwayat Transaksi</h2>
-                <div className="space-y-3">
-                {ticket.transactionHistory.map((transaction, index) => (
-                  <div
-                    key={transaction.id}
-                    className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
-                  >
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-2">
-                          <Badge
-                            variant="outline"
-                            className={`text-xs font-body ${
-                              transaction.type === "purchase"
-                                ? "border-green-500/30 text-green-400"
-                                : "border-blue-500/30 text-blue-400"
-                            }`}
-                          >
-                            {transaction.type === "purchase" ? "Penjualan Primer" : "Jual Beli"}
-                          </Badge>
-                          {index === ticket.transactionHistory.length - 1 && (
-                            <Badge variant="outline" className="text-xs font-body border-purple-500/30 text-purple-400">
-                              Pemilik Saat Ini
-                            </Badge>
-                          )}
-                        </div>
-                        <div className="space-y-1 text-sm">
-                          <div className="flex items-center gap-2 text-gray-400 font-body">
-                            <span>Dari:</span>
-                            <span className="text-white font-mono">{transaction.from}</span>
-                          </div>
-                          <div className="flex items-center gap-2 text-gray-400 font-body">
-                            <span>Ke:</span>
-                            <span className="text-white font-mono">{transaction.to}</span>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-lg font-subheading font-bold text-white">{transaction.price}</p>
-                        <p className="text-xs text-gray-400 font-body mt-1">
-                          {transaction.date} pukul {transaction.time}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-            </div>
-          </CardContent>
-        </Card>
-        )}
-
-        {/* POAP Badge */}
-        <Card className="border-white/10 bg-linear-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
-          <CardContent className="p-6">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-linear-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
-                <Award className="h-5 w-5 text-white" />
-              </div>
-              <h2 className="text-xl font-subheading font-semibold text-white">Bukti Protokol Kehadiran (POAP)</h2>
-            </div>
-
-            <div className="flex flex-col md:flex-row items-center gap-6 p-6 rounded-lg bg-linear-to-br from-yellow-500/10 to-orange-500/10 border border-yellow-500/20">
-              <div className="shrink-0">
-                <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-yellow-500/30">
-                  <Image
-                    src={ticket.poapBadge.image || "/placeholder.svg"}
-                    alt={ticket.poapBadge.name}
-                    fill
-                    className="object-cover"
-                  />
-                  {!ticket.poapBadge.earned && (
-                    <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center">
-                      <span className="text-white font-subheading font-bold text-sm">Terkunci</span>
-                    </div>
-                  )}
-                </div>
-              </div>
-              <div className="flex-1 text-center md:text-left">
-                <h3 className="text-xl font-subheading font-bold text-white mb-2">{ticket.poapBadge.name}</h3>
-                {ticket.poapBadge.earned ? (
-                  <div>
-                    <Badge className="bg-green-500/20 text-green-400 border-green-500/30 font-subheading mb-2">
-                      Diperoleh
-                    </Badge>
-                    <p className="text-gray-400 font-body text-sm">
-                      Selamat! Anda telah memperoleh lencana POAP ini karena menghadiri acara.
-                    </p>
-                  </div>
-                ) : (
-                  <div>
-                    <Badge className="bg-gray-500/20 text-gray-400 border-gray-500/30 font-subheading mb-2">
-                      Belum Diperoleh
-                    </Badge>
-                    <p className="text-gray-400 font-body text-sm">
-                      Hadiri acara dan check-in di venue untuk memperoleh lencana POAP eksklusif ini.
-                    </p>
-                  </div>
-                )}
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-
-      {/* Right Column - Interactive 3D Ticket (Desktop Only) */}
-      <div className="hidden lg:block lg:col-span-1">
-        <div className="sticky top-36">
-          <div
-            ref={ticketRef}
-            className="relative"
-            style={{
-              perspective: "1000px",
-              transformStyle: "preserve-3d",
-            }}
-          >
-            <div
-              className="relative overflow-hidden bg-linear-to-br from-[#230c3f] via-[#0f051d] to-[#2e0535] border border-purple-700/20 shadow-2xl shadow-purple-900/30 transition-transform duration-100 ease-out"
-              style={{
-                transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
-                clipPath: "polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px)",
-              }}
-            >
-              {/* Background Pattern */}
-              <div className="absolute inset-0 opacity-5">
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px)`,
-                  }}
-                />
-              </div>
-
-              {/* Ticket Content */}
-              <div className="relative p-6 space-y-4">
-                {/* Event Name */}
-                <div>
-                  <h3 className="text-2xl font-heading text-white mb-2">{ticket.eventName}</h3>
-                  <Badge
-                    className={`font-subheading font-bold text-xs px-3 py-1 ${
-                      ticket.ticketCategory === "VIP"
-                        ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
-                        : "bg-blue-500/20 text-blue-300 border-blue-500/40"
-                    }`}
-                  >
-                    {ticket.ticketCategory}
+                    {ticket.status === "active" ? "Aktif / Belum Ditukar" : "Terpakai"}
                   </Badge>
                 </div>
 
-                {/* Divider */}
-                <div className="border-t border-white/10 border-dashed" />
-
-                {/* Event Details */}
-                <div className="space-y-3 text-sm">
-                  <div>
-                    <p className="text-gray-400 font-body text-xs mb-1">Tanggal & Waktu</p>
-                    <p className="text-white font-subheading font-semibold">
-                      {new Date(ticket.eventDate).toLocaleDateString("id-ID", {
-                        day: "numeric",
-                        month: "short",
-                        year: "numeric",
-                      })}
-                    </p>
-                    <p className="text-gray-300 font-body">{ticket.eventTime}</p>
+                {/* Event Info Overlay */}
+                <div className="absolute bottom-6 left-6 right-6">
+                  <h1 className="text-3xl font-heading text-white mb-2 text-balance">{ticket.eventName}</h1>
+                  <div className="flex flex-wrap items-center gap-4 text-gray-300 font-body text-sm">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="h-4 w-4" />
+                      <span>
+                        {new Date(ticket.eventDate).toLocaleDateString("id-ID", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}{" "}
+                        pukul {ticket.eventTime}
+                      </span>
+                    </div>
+                    <span className="text-gray-600">•</span>
+                    <span>{ticket.eventLocation}</span>
                   </div>
-
-                  <div>
-                    <p className="text-gray-400 font-body text-xs mb-1">Lokasi</p>
-                    <p className="text-white font-subheading font-semibold text-sm">{ticket.eventLocation}</p>
-                  </div>
-
-                  <div>
-                    <p className="text-gray-400 font-body text-xs mb-1">Kode NFT</p>
-                    <p className="text-white font-mono text-xs break-all">#{ticket.nftCode}</p>
-                  </div>
-                </div>
-
-                {/* Divider */}
-                <div className="border-t border-white/10 border-dashed" />
-
-                {/* Barcode */}
-                <div className="space-y-2">
-                  <div className="flex gap-[2px] h-16">
-                    {Array.from({ length: 30 }).map((_, i) => (
-                      <div
-                        key={i}
-                        className="flex-1 bg-white"
-                        style={{
-                          opacity: Math.random() > 0.3 ? 1 : 0.3,
-                        }}
-                      />
-                    ))}
-                  </div>
-                  <p className="text-center text-gray-400 font-mono text-xs">{ticket.nftCode}</p>
                 </div>
               </div>
 
-              {/* Corner decorations */}
-              <div className="absolute top-0 left-0 w-4 h-4 border-t-2 border-l-2 border-purple-500/40" />
-              <div className="absolute bottom-0 right-0 w-4 h-4 border-b-2 border-r-2 border-purple-500/40" />
+              {/* Ticket Content */}
+              <div className="p-8 space-y-6">
+                {/* QR Code and Ticket Category */}
+                <div className="flex flex-col md:flex-row gap-6 items-start">
+                  {/* QR Code */}
+                  <div className="shrink-0">
+                    <div className="p-4 bg-white rounded-xl">
+                      <Image
+                        src={`/images/example/qr-example.png?height=180&width=180&query=QR code for ${ticket.nftCode}`}
+                        alt="QR Code"
+                        width={180}
+                        height={180}
+                        className="w-full h-auto"
+                      />
+                    </div>
+                    <p className="text-center text-xs text-gray-400 font-body mt-2">Pindai saat check-in di venue</p>
+                  </div>
+
+                  {/* Ticket Details */}
+                  <div className="flex-1 space-y-4">
+                    {/* Ticket Category */}
+                    <div className="flex items-center justify-between p-4 rounded-lg bg-white/5 border border-white/10">
+                      <span className="text-gray-400 font-body text-sm">Kategori Tiket</span>
+                      <Badge
+                        className={`font-subheading font-bold text-sm px-4 py-1.5 ${ticket.ticketCategory === "VIP"
+                          ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
+                          : "bg-blue-500/20 text-blue-300 border-blue-500/40"
+                          }`}
+                      >
+                        {ticket.ticketCategory}
+                      </Badge>
+                    </div>
+
+                    {/* NFT Code */}
+                    <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Hash className="h-4 w-4 text-gray-400" />
+                        <span className="text-gray-400 font-body text-sm">Kode NFT</span>
+                      </div>
+                      <p className="text-lg text-white font-mono font-semibold">#{ticket.nftCode}</p>
+                    </div>
+
+                    {/* Sale Price */}
+                    <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                      <div className="flex items-center gap-2 mb-2">
+                        <DollarSign className="h-4 w-4 text-gray-400" />
+                        <span className="text-gray-400 font-body text-sm">Harga Jual</span>
+                      </div>
+                      <p className="text-lg text-white font-subheading font-bold">{ticket.salePrice}</p>
+                      <p className="text-sm text-gray-400 font-body">{ticket.salePriceUSD}</p>
+                    </div>
+
+                    {/* Purchase Date */}
+                    <div className="p-4 rounded-lg bg-white/5 border border-white/10">
+                      <div className="flex items-center gap-2 mb-2">
+                        <Clock className="h-4 w-4 text-gray-400" />
+                        <span className="text-gray-400 font-body text-sm">Tanggal Pembelian</span>
+                      </div>
+                      <p className="text-lg text-white font-subheading font-semibold">
+                        {new Date(ticket.purchaseDate).toLocaleDateString("id-ID", {
+                          day: "numeric",
+                          month: "long",
+                          year: "numeric",
+                        })}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Transaction Hash */}
+                <div className="p-4 rounded-lg bg-linear-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-gray-400 font-body text-sm mb-1">Hash Transaksi di Sophon</p>
+                      <p className="text-white font-mono text-sm truncate">{ticket.transactionHash}</p>
+                    </div>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="shrink-0 text-blue-400 hover:text-blue-300 hover:bg-blue-500/10"
+                      onClick={() => window.open(`https://sophon.xyz/tx/${ticket.transactionHash}`, "_blank")}
+                    >
+                      <ExternalLink className="h-4 w-4 mr-2" />
+                      Lihat
+                    </Button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Transaction History */}
+            {ticket.transactionHistory.length > 0 && (
+              <Card className="border-white/10 bg-linear-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
+                <CardContent className="p-6">
+                  <h2 className="text-xl font-subheading font-semibold text-white mb-4">Riwayat Transaksi</h2>
+                  <div className="space-y-3">
+                    {ticket.transactionHistory.map((transaction, index) => (
+                      <div
+                        key={transaction.id}
+                        className="p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 transition-colors"
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex-1">
+                            <div className="flex items-center gap-2 mb-2">
+                              <Badge
+                                variant="outline"
+                                className={`text-xs font-body ${transaction.type === "purchase"
+                                  ? "border-green-500/30 text-green-400"
+                                  : "border-blue-500/30 text-blue-400"
+                                  }`}
+                              >
+                                {transaction.type === "purchase" ? "Penjualan Primer" : "Jual Beli"}
+                              </Badge>
+                              {index === ticket.transactionHistory.length - 1 && (
+                                <Badge variant="outline" className="text-xs font-body border-purple-500/30 text-purple-400">
+                                  Pemilik Saat Ini
+                                </Badge>
+                              )}
+                            </div>
+                            <div className="space-y-1 text-sm">
+                              <div className="flex items-center gap-2 text-gray-400 font-body">
+                                <span>Dari:</span>
+                                <span className="text-white font-mono">{transaction.from}</span>
+                              </div>
+                              <div className="flex items-center gap-2 text-gray-400 font-body">
+                                <span>Ke:</span>
+                                <span className="text-white font-mono">{transaction.to}</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="text-right">
+                            <p className="text-lg font-subheading font-bold text-white">{transaction.price}</p>
+                            <p className="text-xs text-gray-400 font-body mt-1">
+                              {transaction.date} pukul {transaction.time}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            )}
+
+            {/* POAP Badge */}
+            <Card className="border-white/10 bg-linear-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 rounded-full bg-linear-to-br from-yellow-500 to-orange-600 flex items-center justify-center">
+                    <Award className="h-5 w-5 text-white" />
+                  </div>
+                  <h2 className="text-xl font-subheading font-semibold text-white">Bukti Protokol Kehadiran (POAP)</h2>
+                </div>
+
+                <div className="flex flex-col md:flex-row items-center gap-6 p-6 rounded-lg bg-linear-to-br from-yellow-500/10 to-orange-500/10 border border-yellow-500/20">
+                  <div className="shrink-0">
+                    <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-yellow-500/30">
+                      <Image
+                        src={ticket.poapBadge.image || "/placeholder.svg"}
+                        alt={ticket.poapBadge.name}
+                        fill
+                        className="object-cover"
+                      />
+                      {!ticket.poapBadge.earned && (
+                        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center">
+                          <span className="text-white font-subheading font-bold text-sm">Terkunci</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex-1 text-center md:text-left">
+                    <h3 className="text-xl font-subheading font-bold text-white mb-2">{ticket.poapBadge.name}</h3>
+                    {ticket.poapBadge.earned ? (
+                      <div>
+                        <Badge className="bg-green-500/20 text-green-400 border-green-500/30 font-subheading mb-2">
+                          Diperoleh
+                        </Badge>
+                        <p className="text-gray-400 font-body text-sm">
+                          Selamat! Anda telah memperoleh lencana POAP ini karena menghadiri acara.
+                        </p>
+                      </div>
+                    ) : (
+                      <div>
+                        <Badge className="bg-gray-500/20 text-gray-400 border-gray-500/30 font-subheading mb-2">
+                          Belum Diperoleh
+                        </Badge>
+                        <p className="text-gray-400 font-body text-sm">
+                          Hadiri acara dan check-in di venue untuk memperoleh lencana POAP eksklusif ini.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Right Column - Interactive 3D Ticket (Desktop Only) */}
+          <div className="hidden lg:block lg:col-span-1">
+            <div className="sticky top-36">
+              <div
+                ref={ticketRef}
+                className="relative"
+                style={{
+                  perspective: "1000px",
+                  transformStyle: "preserve-3d",
+                }}
+              >
+                <div
+                  className="relative overflow-hidden bg-linear-to-br from-[#230c3f] via-[#0f051d] to-[#2e0535] border border-purple-700/20 shadow-2xl shadow-purple-900/30 transition-transform duration-100 ease-out rounded-lg"
+                  style={{
+                    transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+                  }}
+                >
+                  {/* Background Pattern */}
+                  <div className="absolute inset-0 opacity-5">
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        backgroundImage: `repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px)`,
+                      }}
+                    />
+                  </div>
+
+                  {/* Ticket Content */}
+                  <div className="relative p-6 space-y-4">
+                    {/* Event Name */}
+                    <div>
+                      <h3 className="text-2xl font-heading text-white mb-2">{ticket.eventName}</h3>
+                      <Badge
+                        className={`font-subheading font-bold text-xs px-3 py-1 ${ticket.ticketCategory === "VIP"
+                          ? "bg-purple-500/20 text-purple-300 border-purple-500/40"
+                          : "bg-blue-500/20 text-blue-300 border-blue-500/40"
+                          }`}
+                      >
+                        {ticket.ticketCategory}
+                      </Badge>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="relative my-4">
+                      <div className="absolute -left-6 top-1/2 -translate-y-1/2 w-4 h-4 bg-background rounded-r-full" />
+                      <div className="border-t-2 border-white/30 border-dashed" />
+                      <div className="absolute -right-6 top-1/2 -translate-y-1/2 w-4 h-4 bg-background rounded-l-full" />
+                    </div>
+
+                    {/* Event Details */}
+                    <div className="space-y-3 text-sm">
+                      <div>
+                        <p className="text-gray-400 font-body text-xs mb-1">Tanggal & Waktu</p>
+                        <p className="text-white font-subheading font-semibold">
+                          {new Date(ticket.eventDate).toLocaleDateString("id-ID", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </p>
+                        <p className="text-gray-300 font-body">{ticket.eventTime}</p>
+                      </div>
+
+                      <div>
+                        <p className="text-gray-400 font-body text-xs mb-1">Lokasi</p>
+                        <p className="text-white font-subheading font-semibold text-sm">{ticket.eventLocation}</p>
+                      </div>
+
+                      <div>
+                        <p className="text-gray-400 font-body text-xs mb-1">Kode NFT</p>
+                        <p className="text-white font-mono text-xs break-all">#{ticket.nftCode}</p>
+                      </div>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="border-t border-white/10 border-dashed" />
+
+                    {/* Barcode */}
+                    <div className="space-y-2">
+                      <div className="flex gap-[2px] h-16">
+                        {Array.from({ length: 30 }).map((_, i) => (
+                          <div
+                            key={i}
+                            className="flex-1 bg-white"
+                            style={{
+                              opacity: Math.random() > 0.3 ? 1 : 0.3,
+                            }}
+                          />
+                        ))}
+                      </div>
+                      <p className="text-center text-gray-400 font-mono text-xs">{ticket.nftCode}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      </div>
       </div>
 
       {/* Custom animations */}
