@@ -373,13 +373,13 @@ export default function TicketDetailPage({
               </div>
 
               {/* Ticket Content */}
-              <div className="p-8 space-y-6">
+              <div className="p-4 md:p-8 space-y-6">
                 {/* QR Code and Ticket Category */}
-                <div className="flex flex-col md:flex-row gap-6 items-start">
+                <div className="flex flex-col md:flex-row gap-6 items-stretch md:items-start">
                   {/* --- MODIFIED QR CODE WRAPPER --- */}
-                  <div className="shrink-0">
+                  <div className="shrink-0 w-full md:w-auto flex flex-col items-center">
                     <div
-                      className="p-4 bg-white rounded-xl cursor-pointer transition-transform hover:scale-105"
+                      className="p-4 bg-white rounded-xl cursor-pointer transition-transform hover:scale-105 w-full md:w-auto max-w-[220px]"
                       onClick={() => setIsQrModalOpen(true)}
                       role="button"
                       aria-label="Perbesar QR Code"
