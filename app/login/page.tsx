@@ -19,9 +19,14 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleDummyLogin = () => {
-    setEmail("dummy@user.com")
-    setPassword("dummy123")
+  const handleDummyLogin = (role: 'USER' | 'EO' = 'USER') => {
+    if (role === 'EO') {
+      setEmail("dummy@eo.com")
+      setPassword("dummyeo123")
+    } else {
+      setEmail("dummy@user.com")
+      setPassword("dummy123")
+    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -30,6 +35,7 @@ export default function LoginPage() {
     setError(null)
 
     try {
+      // Check for dummy USER login
       if (email === 'dummy@user.com' && password === 'dummy123') {
         const dummyToken = 'dummy-token-for-testing-' + Date.now()
         const dummyUser = {
@@ -46,6 +52,26 @@ export default function LoginPage() {
         localStorage.setItem('dummy_user', JSON.stringify(dummyUser))
         
         router.push('/profile')
+        return
+      }
+
+      // Check for dummy EO login
+      if (email === 'dummy@eo.com' && password === 'dummyeo123') {
+        const dummyToken = 'dummy-token-for-testing-' + Date.now()
+        const dummyEO = {
+          id: 'dummy-eo-id',
+          email: 'dummy@eo.com',
+          username: 'Dummy Event Organizer',
+          role: 'EO' as const,
+          walletAddress: undefined,
+          createdAt: new Date().toISOString(),
+          updatedAt: new Date().toISOString()
+        }
+        
+        apiClient.setToken(dummyToken)
+        localStorage.setItem('dummy_user', JSON.stringify(dummyEO))
+        
+        router.push('/eo/dashboard')
         return
       }
 
@@ -173,15 +199,26 @@ export default function LoginPage() {
                 )}
               </Button>
 
-              <Button
-                type="button"
-                onClick={handleDummyLogin}
-                disabled={isLoading}
-                variant="outline"
-                className="font-body w-full border-purple-500/30 bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 hover:text-purple-200 hover:border-purple-500/50 transition-all duration-300"
-              >
-                Login dengan Akun Dummy
-              </Button>
+              <div className="flex gap-2">
+                <Button
+                  type="button"
+                  onClick={() => handleDummyLogin('USER')}
+                  disabled={isLoading}
+                  variant="outline"
+                  className="font-body flex-1 border-purple-500/30 bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 hover:text-purple-200 hover:border-purple-500/50 transition-all duration-300"
+                >
+                  Dummy User
+                </Button>
+                <Button
+                  type="button"
+                  onClick={() => handleDummyLogin('EO')}
+                  disabled={isLoading}
+                  variant="outline"
+                  className="font-body flex-1 border-blue-500/30 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 hover:text-blue-200 hover:border-blue-500/50 transition-all duration-300"
+                >
+                  Dummy EO
+                </Button>
+              </div>
             </form>
 
             <p className="font-body mt-6 text-center text-sm text-white/60">

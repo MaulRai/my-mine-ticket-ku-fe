@@ -276,9 +276,9 @@ export default function EventsPage() {
 
                   {/* Category badge positioned on image */}
                   <div className="absolute top-2 sm:top-3 right-2 sm:right-3">
-                    <Badge className="glass-fx text-white border-white/30 font-subheading font-semibold text-xs px-2 sm:px-3 py-0.5 sm:py-1">
+                    <div className="dark-glass-fx text-white font-subheading font-semibold text-xs px-2 sm:px-3 py-0.5 sm:py-1">
                       {event.category}
-                    </Badge>
+                    </div>
                   </div>
 
                   {/* Band logos carousel - shows on hover */}
