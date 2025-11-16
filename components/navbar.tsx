@@ -215,16 +215,6 @@ export function Navbar() {
                     </span>
                   </div>
                   
-                  {userRole && (
-                    <Badge className={`text-xs font-subheading font-semibold ${
-                      userRole === 'ADMIN' ? 'bg-red-500/20 text-red-400 border-red-500/30' :
-                      userRole === 'EO' ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' :
-                      'bg-green-500/20 text-green-400 border-green-500/30'
-                    }`}>
-                      {userRole}
-                    </Badge>
-                  )}
-                  
                   <Button
                     variant="ghost"
                     size="icon-sm"
@@ -333,18 +323,7 @@ export function Navbar() {
               <>
                 <div className="border-t border-white/10 my-2" />
                 <div className="p-2 rounded-lg bg-white/5">
-                  <div className="flex items-center justify-between mb-2">
-                    <p className="text-xs text-white/50">Account</p>
-                    {userRole && (
-                      <Badge className={`text-xs font-subheading font-semibold ${
-                        userRole === 'ADMIN' ? 'bg-red-500/20 text-red-400 border-red-500/30' :
-                        userRole === 'EO' ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' :
-                        'bg-green-500/20 text-green-400 border-green-500/30'
-                      }`}>
-                        {userRole}
-                      </Badge>
-                    )}
-                  </div>
+                  <p className="text-xs text-white/50 mb-2">Account</p>
                   <p className="text-sm text-white font-subheading font-semibold mb-1">{username}</p>
                 </div>
                 
