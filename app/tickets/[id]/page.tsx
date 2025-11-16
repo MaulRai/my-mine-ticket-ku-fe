@@ -639,11 +639,18 @@ export default function TicketDetailPage({
                 }}
               >
                 <div
-                  className="relative overflow-hidden bg-linear-to-br from-[#230c3f] via-[#0f051d] to-[#2e0535] border border-purple-700/20 shadow-2xl shadow-purple-900/30 transition-transform duration-100 ease-out rounded-lg"
+                  className="relative overflow-visible bg-linear-to-br from-[#230c3f] via-[#0f051d] to-[#2e0535] shadow-2xl shadow-purple-900/30 transition-transform duration-100 ease-out rounded-lg"
                   style={{
                     transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+                    clipPath: "path('M 0,0 L calc(100% - 0px),0 L calc(100% - 0px),calc(50% - 8px) Q calc(100% - 0px),calc(50% + 8px) calc(100% - 0px),calc(50% + 8px) L calc(100% - 0px),100% L 0,100% L 0,calc(50% + 8px) Q 0,calc(50% - 8px) 0,calc(50% - 8px) Z')",
                   }}
                 >
+                  {/* Border overlay to recreate the border effect */}
+                  <div className="absolute inset-0 rounded-lg pointer-events-none" style={{
+                    clipPath: "path('M 0,0 L calc(100% - 0px),0 L calc(100% - 0px),calc(50% - 8px) Q calc(100% - 0px),calc(50% + 8px) calc(100% - 0px),calc(50% + 8px) L calc(100% - 0px),100% L 0,100% L 0,calc(50% + 8px) Q 0,calc(50% - 8px) 0,calc(50% - 8px) Z')",
+                    boxShadow: "inset 0 0 0 1px rgba(126, 58, 242, 0.2)"
+                  }} />
+                  
                   {/* Background Pattern */}
                   <div className="absolute inset-0 opacity-5">
                     <div
