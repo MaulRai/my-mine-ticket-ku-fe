@@ -186,6 +186,21 @@ export function Navbar() {
                   </Link>
                 )}
                 
+                {userRole === 'EO' && (
+                  <Link href="/tickets/scan">
+                    <Button
+                      variant="ghost"
+                      className={`font-body text-sm transition-colors md:text-base ${
+                        pathname === "/tickets/scan"
+                          ? "bg-white/20 text-white font-semibold"
+                          : "text-white/90 hover:bg-white/10 hover:text-white"
+                      }`}
+                    >
+                      Scan Tiket
+                    </Button>
+                  </Link>
+                )}
+                
                 {userRole !== 'EO' && (
                   <Link href="/profile">
                     <Button
@@ -298,6 +313,21 @@ export function Navbar() {
                           EO Dashboard
                         </>
                       )}
+                    </Button>
+                  </Link>
+                )}
+                
+                {userRole === 'EO' && (
+                  <Link href="/tickets/scan" onClick={() => setIsMenuOpen(false)}>
+                    <Button
+                      variant="ghost"
+                      className={`w-full justify-start font-body text-sm transition-colors ${
+                        pathname === "/tickets/scan"
+                          ? "bg-white/20 text-white font-semibold"
+                          : "text-white/90 hover:bg-white/10 hover:text-white"
+                      }`}
+                    >
+                      Scan Tiket
                     </Button>
                   </Link>
                 )}

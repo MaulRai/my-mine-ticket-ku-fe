@@ -124,7 +124,7 @@ const generateEventDetails = (): Record<string, EventDataType> => {
       vipTickets: ticketConfigs[index].vip,
       vipTicketsSold: ticketConfigs[index].vipSold,
       description: `Rasakan pengalaman festival musik terbaik yang menampilkan ${event.featuring.slice(0, 3).join(", ")} dan banyak lagi! ${event.name} menghadirkan musik Indonesia terbaik dalam malam pertunjukan, cahaya, dan energi yang tak terlupakan. Bergabunglah dengan ribuan pencinta musik untuk acara spektakuler ini.`,
-      ticketPrice: "Mulai dari 0.0055 ETH",
+      ticketPrice: "Mulai dari IDR 200.000",
       organizer: organizers[index],
       soldOut: false,
     }
@@ -298,7 +298,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                       <div className="flex justify-between items-start mb-2">
                         <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">Tiket Reguler</h3>
                       </div>
-                      <p className="text-xl sm:text-2xl font-heading text-white mb-1">0.0055 ETH</p>
+                      <p className="text-xl sm:text-2xl font-heading text-white mb-1">IDR 200.000</p>
                       <p className="text-gray-400 font-body text-xs mb-2">Masuk umum</p>
                       <div className="space-y-1 mb-3">
                         <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
@@ -332,7 +332,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                         <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">Tiket VIP</h3>
                         <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30 font-subheading text-xs">Premium</Badge>
                       </div>
-                      <p className="text-xl sm:text-2xl font-heading text-white mb-1">0.011 ETH</p>
+                      <p className="text-xl sm:text-2xl font-heading text-white mb-1">IDR 500.000</p>
                       <p className="text-gray-400 font-body text-xs mb-2">Akses area premium dengan pengalaman eksklusif</p>
                       <div className="space-y-1 mb-3">
                         <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
@@ -434,7 +434,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                           <div className="flex justify-between items-start mb-2">
                             <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">Tiket Reguler</h3>
                           </div>
-                          <p className="text-xl sm:text-2xl font-heading text-white mb-1">0.0055 ETH</p>
+                          <p className="text-xl sm:text-2xl font-heading text-white mb-1">IDR 200.000</p>
                           <p className="text-gray-400 font-body text-xs mb-2">Masuk umum</p>
                           <div className="space-y-1 mb-3">
                             <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
@@ -468,7 +468,7 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                             <h3 className="font-subheading font-semibold text-sm sm:text-base text-white">Tiket VIP</h3>
                             <Badge className="bg-purple-500/20 text-purple-300 border-purple-500/30 font-subheading text-xs">Premium</Badge>
                           </div>
-                          <p className="text-xl sm:text-2xl font-heading text-white mb-1">0.011 ETH</p>
+                          <p className="text-xl sm:text-2xl font-heading text-white mb-1">IDR 500.000</p>
                           <p className="text-gray-400 font-body text-xs mb-2">Akses area premium dengan pengalaman eksklusif</p>
                           <div className="space-y-1 mb-3">
                             <p className="text-gray-300 font-body text-xs flex items-start gap-1.5">
@@ -620,7 +620,6 @@ export default function EventDetailPage({ params }: { params: Promise<{ id: stri
                                 <h3 className="font-subheading font-semibold text-white text-xs sm:text-sm mb-1">
                                   {ticket.type} Ticket
                                 </h3>
-                                <p className="text-gray-400 font-body text-xs truncate">Seller: {ticket.seller}</p>
                               </div>
                               <Badge
                                 className={`${priceIncrease > 10

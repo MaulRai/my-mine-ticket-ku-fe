@@ -30,7 +30,7 @@ const ticketsData = [
     purchaseDate: "2025-10-20",
     status: "active",
     salePrice: "0.25 ETH",
-    salePriceUSD: "$500.00",
+    salePriceUSD: "Rp7.850.000",
     transactionHash: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb9A1F3D8E2C4B6A8",
     transactionHistory: [
       {
@@ -61,7 +61,7 @@ const ticketsData = [
     purchaseDate: "2025-10-15",
     status: "active",
     salePrice: "45.00 SOL",
-    salePriceUSD: "$900.00",
+    salePriceUSD: "Rp14.130.000",
     transactionHash: "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063B2E4D7F1A9C5",
     transactionHistory: [
       {
@@ -92,7 +92,7 @@ const ticketsData = [
     purchaseDate: "2025-09-28",
     status: "used",
     salePrice: "0.12 ETH",
-    salePriceUSD: "$240.00",
+    salePriceUSD: "Rp3.768.000",
     transactionHash: "0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d",
     transactionHistory: [
       {
@@ -123,7 +123,7 @@ const ticketsData = [
     purchaseDate: "2025-09-15",
     status: "active",
     salePrice: "0.08 ETH",
-    salePriceUSD: "$160.00",
+    salePriceUSD: "Rp2.512.000",
     transactionHash: "0x9e8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b",
     transactionHistory: [
       {
@@ -162,8 +162,8 @@ const ticketsData = [
     nftCode: "NFT-6A2D8E4C1F9B",
     purchaseDate: "2025-08-30",
     status: "used",
-    salePrice: "0.35 ETH",
-    salePriceUSD: "$700.00",
+    salePrice: "IDR 500.000",
+    salePriceUSD: "Rp10.990.000",
     transactionHash: "0x2f3e4d5c6b7a8f9e0d1c2b3a4f5e6d7c8b9a0f1e2d3c4b5a6f7e8d9c",
     transactionHistory: [
       {
@@ -171,7 +171,7 @@ const ticketsData = [
         type: "purchase",
         from: "Primary Sale",
         to: "0x2f3e4d5c...8d9c",
-        price: "0.35 ETH",
+        price: "IDR 500.000",
         date: "2025-08-30",
         time: "11:45",
       },
@@ -193,8 +193,8 @@ const ticketsData = [
     nftCode: "NFT-1F7B3D9A5E2C",
     purchaseDate: "2025-08-12",
     status: "active",
-    salePrice: "0.15 ETH",
-    salePriceUSD: "$300.00",
+    salePrice: "IDR 200.000",
+    salePriceUSD: "Rp4.710.000",
     transactionHash: "0x7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1a0f9e8d7c6b5a4f3e2d1c0b",
     transactionHistory: [
       {
@@ -211,7 +211,7 @@ const ticketsData = [
         type: "resale",
         from: "0x3c4d5e6f...2d1c",
         to: "0x7e6d5c4b...1c0b",
-        price: "0.15 ETH",
+        price: "IDR 200.000",
         date: "2025-08-12",
         time: "09:30",
       },
