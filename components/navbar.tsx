@@ -186,18 +186,20 @@ export function Navbar() {
                   </Link>
                 )}
                 
-                <Link href="/profile">
-                  <Button
-                    variant="ghost"
-                    className={`font-body text-sm transition-colors md:text-base ${
-                      pathname === "/profile" || pathname?.startsWith("/tickets/")
-                        ? "bg-white/20 text-white font-semibold hover:bg-white hover:text-black"
-                        : "text-white/90 hover:bg-white/10 hover:text-white"
-                    }`}
-                  >
-                    Profil
-                  </Button>
-                </Link>
+                {userRole !== 'EO' && (
+                  <Link href="/profile">
+                    <Button
+                      variant="ghost"
+                      className={`font-body text-sm transition-colors md:text-base ${
+                        pathname === "/profile" || pathname?.startsWith("/tickets/")
+                          ? "bg-white/20 text-white font-semibold hover:bg-white hover:text-black"
+                          : "text-white/90 hover:bg-white/10 hover:text-white"
+                      }`}
+                    >
+                      Profil
+                    </Button>
+                  </Link>
+                )}
               </>
             )}
 
@@ -310,18 +312,20 @@ export function Navbar() {
                   </Link>
                 )}
                 
-                <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
-                  <Button
-                    variant="ghost"
-                    className={`w-full justify-start font-body text-sm transition-colors ${
-                      pathname === "/profile" || pathname?.startsWith("/tickets/")
-                        ? "bg-white/20 text-white font-semibold hover:bg-white hover:text-black"
-                        : "text-white/90 hover:bg-white/10 hover:text-white"
-                    }`}
-                  >
-                    Profil
-                  </Button>
-                </Link>
+                {userRole !== 'EO' && (
+                  <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
+                    <Button
+                      variant="ghost"
+                      className={`w-full justify-start font-body text-sm transition-colors ${
+                        pathname === "/profile" || pathname?.startsWith("/tickets/")
+                          ? "bg-white/20 text-white font-semibold hover:bg-white hover:text-black"
+                          : "text-white/90 hover:bg-white/10 hover:text-white"
+                      }`}
+                    >
+                      Profil
+                    </Button>
+                  </Link>
+                )}
               </>
             )}
             
