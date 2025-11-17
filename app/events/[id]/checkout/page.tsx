@@ -46,10 +46,10 @@ const eventData: Record<string, EventData> = {
     location: "Jakarta Convention Center",
     regularTickets: 4000,
     regularTicketsSold: 3880,
-    regularTicketPrice: 0.15,
+    regularTicketPrice: 200000,
     vipTickets: 1000,
     vipTicketsSold: 970,
-    vipTicketPrice: 0.35,
+    vipTicketPrice: 500000,
   },
   "2": {
     id: 2,
@@ -60,10 +60,10 @@ const eventData: Record<string, EventData> = {
     location: "Bali Art Center",
     regularTickets: 2800,
     regularTicketsSold: 1680,
-    regularTicketPrice: 0.18,
+    regularTicketPrice: 200000,
     vipTickets: 700,
     vipTicketsSold: 420,
-    vipTicketPrice: 0.40,
+    vipTicketPrice: 500000,
   },
 }
 
@@ -164,7 +164,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
               </div>
               <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/10">
                 <span className="text-gray-400 font-body text-sm">Total Dibayar</span>
-                <span className="text-white font-heading text-xl">{totalPrice.toFixed(4)} ETH</span>
+                <span className="text-white font-heading text-xl">Rp{totalPrice.toLocaleString("id-ID")}</span>
               </div>
               <div className="flex items-center justify-between">
                 <span className="text-gray-400 font-body text-sm">Hash Transaksi</span>
@@ -260,7 +260,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                           )}
                         </div>
                         <p className="text-2xl font-heading text-white mb-1">
-                          {event.regularTicketPrice} ETH
+                          Rp{event.regularTicketPrice.toLocaleString("id-ID")}
                         </p>
                         <p className="text-gray-400 font-body text-sm">
                           {regularTicketsRemaining.toLocaleString("id-ID")} tiket tersisa
@@ -307,7 +307,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                           )}
                         </div>
                         <p className="text-2xl font-heading text-white mb-1">
-                          {event.vipTicketPrice} ETH
+                          Rp{event.vipTicketPrice.toLocaleString("id-ID")}
                         </p>
                         <p className="text-gray-400 font-body text-sm">
                           {vipTicketsRemaining.toLocaleString("id-ID")} tiket tersisa
@@ -414,11 +414,11 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                       <div>
                         <p className="text-white font-subheading font-semibold">Tiket Reguler</p>
                         <p className="text-gray-400 font-body text-sm">
-                          {regularTicketCount}x {event.regularTicketPrice} ETH
+                          {regularTicketCount}x Rp{event.regularTicketPrice.toLocaleString("id-ID")}
                         </p>
                       </div>
                       <p className="text-white font-heading text-lg">
-                        {(regularTicketCount * event.regularTicketPrice).toFixed(4)} ETH
+                        Rp{(regularTicketCount * event.regularTicketPrice).toLocaleString("id-ID")}
                       </p>
                     </div>
                   )}
@@ -428,11 +428,11 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                       <div>
                         <p className="text-white font-subheading font-semibold">Tiket VIP</p>
                         <p className="text-gray-400 font-body text-sm">
-                          {vipTicketCount}x {event.vipTicketPrice} ETH
+                          {vipTicketCount}x Rp{event.vipTicketPrice.toLocaleString("id-ID")}
                         </p>
                       </div>
                       <p className="text-white font-heading text-lg">
-                        {(vipTicketCount * event.vipTicketPrice).toFixed(4)} ETH
+                        Rp{(vipTicketCount * event.vipTicketPrice).toLocaleString("id-ID")}
                       </p>
                     </div>
                   )}
@@ -450,18 +450,18 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                     <div className="border-t border-white/10 pt-4 mb-4 space-y-3">
                       <div className="flex items-center justify-between">
                         <p className="text-gray-400 font-body text-sm">Subtotal</p>
-                        <p className="text-white font-subheading">{subtotal.toFixed(4)} ETH</p>
+                        <p className="text-white font-subheading">Rp{subtotal.toLocaleString("id-ID")}</p>
                       </div>
                       <div className="flex items-center justify-between">
                         <p className="text-gray-400 font-body text-sm">Biaya Platform ({PLATFORM_FEE_PERCENTAGE}%)</p>
-                        <p className="text-white font-subheading">{platformFee.toFixed(4)} ETH</p>
+                        <p className="text-white font-subheading">Rp{platformFee.toLocaleString("id-ID")}</p>
                       </div>
                     </div>
 
                     <div className="border-t border-white/10 pt-4 mb-6">
                       <div className="flex items-center justify-between">
                         <p className="text-white font-subheading font-semibold text-lg">Total</p>
-                        <p className="text-white font-heading text-2xl">{totalPrice.toFixed(4)} ETH</p>
+                        <p className="text-white font-heading text-2xl">Rp{totalPrice.toLocaleString("id-ID")}</p>
                       </div>
                     </div>
 

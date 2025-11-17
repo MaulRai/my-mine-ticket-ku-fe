@@ -522,7 +522,7 @@ export default function ConfigureTicketsPage({ params }: { params: Promise<{ id:
             </h3>
             <ul className="space-y-2 text-gray-300 font-body text-sm">
               <li>• Semua field yang ditandai dengan * wajib diisi</li>
-              <li>• Harga tiket dalam satuan ETH (contoh: 0.15 ETH)</li>
+              <li>• Harga tiket dalam satuan ETH (contoh: IDR 200.000)</li>
               <li>• Tanggal akhir penjualan harus setelah tanggal mulai penjualan</li>
               <li>• Stok tiket harus lebih dari 0</li>
               <li>• Benefits bersifat opsional dan harus dalam format JSON yang valid</li>

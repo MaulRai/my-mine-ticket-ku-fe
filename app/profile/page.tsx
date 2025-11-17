@@ -18,7 +18,7 @@ const connectedWallets = [
     name: "MetaMask",
     address: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
     balance: "2.45 ETH",
-    balanceUSD: "$4,890.00",
+    balanceUSD: "Rp76.773.000",
     type: "Ethereum",
     isDefault: true,
   },
@@ -27,7 +27,7 @@ const connectedWallets = [
     name: "Phantom",
     address: "9xQeWvG816bUx9EPjHmaT23yvVM2ZWbrrpZb9PusVFin",
     balance: "125.30 SOL",
-    balanceUSD: "$2,506.00",
+    balanceUSD: "Rp39.344.200",
     type: "Solana",
     isDefault: false,
   },
@@ -36,7 +36,7 @@ const connectedWallets = [
     name: "Coinbase Wallet",
     address: "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063",
     balance: "0.15 BTC",
-    balanceUSD: "$6,450.00",
+    balanceUSD: "Rp101.265.000",
     type: "Bitcoin",
     isDefault: false,
   },
@@ -49,7 +49,7 @@ const transactions = [
     type: "purchase",
     description: "Neon Waves Festival - VIP Ticket",
     amount: "-0.25 ETH",
-    amountUSD: "-$500.00",
+    amountUSD: "-Rp7.850.000",
     date: "2025-10-20",
     time: "14:32",
     status: "completed",
@@ -60,7 +60,7 @@ const transactions = [
     type: "deposit",
     description: "Deposit from Bank Account",
     amount: "+1.00 ETH",
-    amountUSD: "+$2,000.00",
+    amountUSD: "+Rp31.400.000",
     date: "2025-10-18",
     time: "09:15",
     status: "completed",
@@ -71,7 +71,7 @@ const transactions = [
     type: "purchase",
     description: "Islands of Sound 2025 - General Admission",
     amount: "-45.00 SOL",
-    amountUSD: "-$900.00",
+    amountUSD: "-Rp14.130.000",
     date: "2025-10-15",
     time: "16:45",
     status: "completed",
@@ -82,7 +82,7 @@ const transactions = [
     type: "sale",
     description: "Resale: Rock Concert Night - Standard",
     amount: "+0.18 ETH",
-    amountUSD: "+$360.00",
+    amountUSD: "+Rp5.652.000",
     date: "2025-10-12",
     time: "11:20",
     status: "completed",
@@ -93,7 +93,7 @@ const transactions = [
     type: "purchase",
     description: "Sonic Future Conference - Early Bird",
     amount: "-0.12 ETH",
-    amountUSD: "-$240.00",
+    amountUSD: "-Rp3.768.000",
     date: "2025-10-10",
     time: "13:55",
     status: "completed",
@@ -104,7 +104,7 @@ const transactions = [
     type: "withdrawal",
     description: "Withdrawal to Bank Account",
     amount: "-0.50 ETH",
-    amountUSD: "-$1,000.00",
+    amountUSD: "-Rp15.700.000",
     date: "2025-10-08",
     time: "10:30",
     status: "pending",
@@ -172,6 +172,8 @@ const myTickets = [
 
 function ProfileContent() {
   const [activeTab, setActiveTab] = useState<Tab>("wallet-info")
+  const [showSnackbar, setShowSnackbar] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState("")
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -180,7 +182,24 @@ function ProfileContent() {
     if (tab === "my-tickets") {
       setActiveTab("my-tickets")
     }
-  }, [searchParams])
+    
+    // Check for success message
+    const success = searchParams.get("success")
+    if (success === "ticket-sold") {
+      setSnackbarMessage("Tiket berhasil dijual!")
+      setShowSnackbar(true)
+      
+      // Auto hide after 5 seconds
+      setTimeout(() => {
+        setShowSnackbar(false)
+      }, 5000)
+      
+      // Clean up URL
+      const newParams = new URLSearchParams(searchParams.toString())
+      newParams.delete("success")
+      router.replace(`/profile?${newParams.toString()}`, { scroll: false })
+    }
+  }, [searchParams, router])
 
   return (
     <div className="min-h-screen bg-background pt-32 pb-12 relative overflow-hidden">
@@ -477,6 +496,56 @@ function ProfileContent() {
         )}
         </AnimatePresence>
       </div>
+
+      {/* Snackbar Notification - Outside container for proper z-index */}
+      <AnimatePresence>
+        {showSnackbar && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-9999"
+          >
+            <div className="flex items-center gap-3 px-6 py-4 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-full shadow-2xl shadow-green-500/50 border border-green-400/30 backdrop-blur-sm">
+              <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+              <p className="font-subheading font-semibold">{snackbarMessage}</p>
+              <button
+                onClick={() => setShowSnackbar(false)}
+                className="ml-2 hover:bg-white/20 rounded-full p-1 transition-colors"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Custom animations */}
       <style jsx>{`
