@@ -172,6 +172,8 @@ const myTickets = [
 
 function ProfileContent() {
   const [activeTab, setActiveTab] = useState<Tab>("wallet-info")
+  const [showSnackbar, setShowSnackbar] = useState(false)
+  const [snackbarMessage, setSnackbarMessage] = useState("")
   const router = useRouter()
   const searchParams = useSearchParams()
 
@@ -180,7 +182,24 @@ function ProfileContent() {
     if (tab === "my-tickets") {
       setActiveTab("my-tickets")
     }
-  }, [searchParams])
+    
+    // Check for success message
+    const success = searchParams.get("success")
+    if (success === "ticket-sold") {
+      setSnackbarMessage("Tiket berhasil dijual!")
+      setShowSnackbar(true)
+      
+      // Auto hide after 5 seconds
+      setTimeout(() => {
+        setShowSnackbar(false)
+      }, 5000)
+      
+      // Clean up URL
+      const newParams = new URLSearchParams(searchParams.toString())
+      newParams.delete("success")
+      router.replace(`/profile?${newParams.toString()}`, { scroll: false })
+    }
+  }, [searchParams, router])
 
   return (
     <div className="min-h-screen bg-background pt-32 pb-12 relative overflow-hidden">
@@ -477,6 +496,56 @@ function ProfileContent() {
         )}
         </AnimatePresence>
       </div>
+
+      {/* Snackbar Notification - Outside container for proper z-index */}
+      <AnimatePresence>
+        {showSnackbar && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="fixed bottom-8 left-1/2 -translate-x-1/2 z-9999"
+          >
+            <div className="flex items-center gap-3 px-6 py-4 bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-full shadow-2xl shadow-green-500/50 border border-green-400/30 backdrop-blur-sm">
+              <div className="w-6 h-6 rounded-full bg-white/20 flex items-center justify-center">
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+              <p className="font-subheading font-semibold">{snackbarMessage}</p>
+              <button
+                onClick={() => setShowSnackbar(false)}
+                className="ml-2 hover:bg-white/20 rounded-full p-1 transition-colors"
+              >
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Custom animations */}
       <style jsx>{`

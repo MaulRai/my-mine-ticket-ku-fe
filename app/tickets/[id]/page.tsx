@@ -11,7 +11,7 @@ import {
   ExternalLink,
   Award,
   Calendar,
-  DollarSign,
+  Tag,
   Hash,
   Clock,
 } from "lucide-react"
@@ -30,7 +30,7 @@ const ticketsData = [
     purchaseDate: "2025-10-20",
     status: "active",
     salePrice: "0.25 ETH",
-    salePriceUSD: "Rp7.850.000",
+    salePriceIDR: "Rp7.850.000",
     transactionHash: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb9A1F3D8E2C4B6A8",
     transactionHistory: [
       {
@@ -61,7 +61,7 @@ const ticketsData = [
     purchaseDate: "2025-10-15",
     status: "active",
     salePrice: "45.00 SOL",
-    salePriceUSD: "Rp14.130.000",
+    salePriceIDR: "Rp14.130.000",
     transactionHash: "0x8f3Cf7ad23Cd3CaDbD9735AFf958023239c6A063B2E4D7F1A9C5",
     transactionHistory: [
       {
@@ -92,7 +92,7 @@ const ticketsData = [
     purchaseDate: "2025-09-28",
     status: "used",
     salePrice: "0.12 ETH",
-    salePriceUSD: "Rp3.768.000",
+    salePriceIDR: "Rp3.768.000",
     transactionHash: "0x1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d",
     transactionHistory: [
       {
@@ -123,7 +123,7 @@ const ticketsData = [
     purchaseDate: "2025-09-15",
     status: "active",
     salePrice: "0.08 ETH",
-    salePriceUSD: "Rp2.512.000",
+    salePriceIDR: "Rp2.512.000",
     transactionHash: "0x9e8d7c6b5a4f3e2d1c0b9a8f7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b",
     transactionHistory: [
       {
@@ -163,7 +163,7 @@ const ticketsData = [
     purchaseDate: "2025-08-30",
     status: "used",
     salePrice: "IDR 500.000",
-    salePriceUSD: "Rp10.990.000",
+    salePriceIDR: "Rp10.990.000",
     transactionHash: "0x2f3e4d5c6b7a8f9e0d1c2b3a4f5e6d7c8b9a0f1e2d3c4b5a6f7e8d9c",
     transactionHistory: [
       {
@@ -194,7 +194,7 @@ const ticketsData = [
     purchaseDate: "2025-08-12",
     status: "active",
     salePrice: "IDR 200.000",
-    salePriceUSD: "Rp4.710.000",
+    salePriceIDR: "Rp4.710.000",
     transactionHash: "0x7e6d5c4b3a2f1e0d9c8b7a6f5e4d3c2b1a0f9e8d7c6b5a4f3e2d1c0b",
     transactionHistory: [
       {
@@ -238,6 +238,69 @@ export default function TicketDetailPage({
 
   // --- ADDED STATE FOR MODAL ---
   const [isQrModalOpen, setIsQrModalOpen] = useState(false)
+  const [isSellModalOpen, setIsSellModalOpen] = useState(false)
+  const [sellPrice, setSellPrice] = useState("")
+  const [sellPriceError, setSellPriceError] = useState("")
+  const [isHolding, setIsHolding] = useState(false)
+  const holdingRef = useRef(false)
+  const holdTimeoutRef = useRef<NodeJS.Timeout | null>(null)
+
+  // Calculate max sell price (120% of purchase price)
+  const parsePurchasePrice = (priceString: string): number => {
+    // Extract numeric value from price string (remove IDR, Rp, commas, etc.)
+    const numericValue = priceString.replace(/[^\d]/g, "")
+    return Number.parseFloat(numericValue) || 0
+  }
+
+  const purchasePriceValue = parsePurchasePrice(ticket?.salePriceIDR || "0")
+  const maxSellPrice = Math.floor(purchasePriceValue * 1.2)
+
+  // Validate sell price
+  const validateSellPrice = (value: string) => {
+    const numericValue = Number.parseFloat(value)
+    if (!value) {
+      setSellPriceError("Harga jual harus diisi")
+      return false
+    }
+    if (Number.isNaN(numericValue) || numericValue <= 0) {
+      setSellPriceError("Harga jual harus lebih dari 0")
+      return false
+    }
+    if (numericValue > maxSellPrice) {
+      setSellPriceError(`Harga jual maksimal Rp${maxSellPrice.toLocaleString("id-ID")}`)
+      return false
+    }
+    setSellPriceError("")
+    return true
+  }
+
+  // Handle hold button
+  const handleHoldStart = () => {
+    if (!validateSellPrice(sellPrice)) return
+    setIsHolding(true)
+    holdingRef.current = true
+    
+    holdTimeoutRef.current = setTimeout(() => {
+      if (holdingRef.current) {
+        // Execute sell action
+        setIsSellModalOpen(false)
+        setSellPrice("")
+        setIsHolding(false)
+        holdingRef.current = false
+        // Redirect to profile with Tiketku tab and success message
+        router.push("/profile?tab=my-tickets&success=ticket-sold")
+      }
+    }, 1500)
+  }
+
+  const handleHoldEnd = () => {
+    setIsHolding(false)
+    holdingRef.current = false
+    if (holdTimeoutRef.current) {
+      clearTimeout(holdTimeoutRef.current)
+      holdTimeoutRef.current = null
+    }
+  }
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -432,16 +495,16 @@ export default function TicketDetailPage({
                     {/* Sale Price */}
                     <div className="p-4 rounded-lg bg-white/5 border border-white/10">
                       <div className="flex items-center gap-2 mb-2">
-                        <DollarSign className="h-4 w-4 text-gray-400" />
+                        <Tag className="h-4 w-4 text-gray-400" />
                         <span className="text-gray-400 font-body text-sm">
-                          Harga Jual
+                          Harga Beli
                         </span>
                       </div>
                       <p className="text-lg text-white font-subheading font-bold">
                         {ticket.salePrice}
                       </p>
                       <p className="text-sm text-gray-400 font-body">
-                        {ticket.salePriceUSD}
+                        {ticket.salePriceIDR}
                       </p>
                     </div>
 
@@ -494,6 +557,16 @@ export default function TicketDetailPage({
                     </Button>
                   </div>
                 </div>
+
+                {/* Sell Ticket Button */}
+                {ticket.status === "active" && (
+                  <Button
+                    onClick={() => setIsSellModalOpen(true)}
+                    className="w-full h-12 bg-linear-to-r from-orange-600 via-orange-500 to-amber-500 hover:from-orange-500 hover:via-orange-400 hover:to-amber-400 text-white font-subheading font-bold text-base transition-all duration-300 shadow-lg shadow-orange-500/50 hover:shadow-xl hover:shadow-orange-400/60 hover:scale-[1.02] active:scale-[0.98]"
+                  >
+                    Jual Tiket
+                  </Button>
+                )}
               </div>
             </div>
 
@@ -812,8 +885,135 @@ export default function TicketDetailPage({
       </div>
       {/* --- END ADDED QR CODE MODAL --- */}
 
+      {/* --- SELL TICKET MODAL --- */}
+      <div
+        className={`fixed inset-0 z-50 flex items-end justify-center transition-all duration-300 ease-in-out
+          ${isSellModalOpen ? "opacity-100" : "opacity-0 pointer-events-none"}
+        `}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="sell-modal-title"
+      >
+        {/* Backdrop */}
+        <div
+          className="absolute inset-0 bg-black/70 backdrop-blur-sm"
+          onClick={() => {
+            setIsSellModalOpen(false)
+            setSellPrice("")
+            setSellPriceError("")
+            setIsHolding(false)
+          }}
+        />
+
+        {/* Modal Content */}
+        <div
+          className={`relative w-full max-w-md bg-linear-to-br from-gray-900 to-gray-950 border-t border-white/20 rounded-t-2xl shadow-lg transition-transform duration-300 ease-in-out
+            ${isSellModalOpen ? "translate-y-0" : "translate-y-full"}
+          `}
+        >
+          <div className="p-6">
+            {/* Handle bar */}
+            <div className="w-16 h-1.5 bg-gray-700 rounded-full mx-auto mb-4" />
+
+            <h2
+              id="sell-modal-title"
+              className="text-xl font-subheading font-semibold text-white mb-2"
+            >
+              Jual Tiket
+            </h2>
+            <p className="text-sm text-gray-400 font-body mb-6">
+              Harga beli: {ticket?.salePrice} • Maksimal jual: Rp{maxSellPrice.toLocaleString("id-ID")}
+            </p>
+
+            {/* Price Input */}
+            <div className="mb-6">
+              <label htmlFor="sell-price" className="block text-sm font-body text-gray-300 mb-2">
+                Harga Jual (IDR)
+              </label>
+              <div className="relative">
+                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 font-body">
+                  Rp
+                </span>
+                <input
+                  id="sell-price"
+                  type="number"
+                  value={sellPrice}
+                  onChange={(e) => {
+                    setSellPrice(e.target.value)
+                    validateSellPrice(e.target.value)
+                  }}
+                  placeholder="0"
+                  className={`w-full pl-12 pr-4 py-3 bg-white/5 border ${
+                    sellPriceError ? "border-red-500" : "border-white/10"
+                  } rounded-lg text-white font-body placeholder:text-gray-500 focus:outline-none focus:ring-2 focus:ring-orange-500/50 transition-all [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none`}
+                />
+              </div>
+              {sellPriceError && (
+                <p className="text-red-400 text-sm font-body mt-2">{sellPriceError}</p>
+              )}
+              <p className="text-xs text-gray-500 font-body mt-2">
+                Platform akan mengenakan biaya 10% dari harga jual
+              </p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="space-y-3">
+              <button
+                onMouseDown={handleHoldStart}
+                onMouseUp={handleHoldEnd}
+                onMouseLeave={handleHoldEnd}
+                onTouchStart={handleHoldStart}
+                onTouchEnd={handleHoldEnd}
+                disabled={!sellPrice || !!sellPriceError}
+                className={`w-full h-12 rounded-lg font-subheading font-bold text-base transition-all duration-300 relative overflow-hidden
+                  ${
+                    !sellPrice || sellPriceError
+                      ? "bg-gray-600 text-gray-400 cursor-not-allowed"
+                      : "bg-linear-to-r from-orange-600 to-amber-600 text-white hover:from-orange-500 hover:to-amber-500 active:scale-95 shadow-lg shadow-orange-500/30"
+                  }
+                `}
+              >
+                {isHolding && (
+                  <div
+                    className="absolute inset-0 bg-white/20 transition-all duration-1500 ease-linear"
+                    style={{
+                      animation: "fillProgress 1.5s linear forwards",
+                    }}
+                  />
+                )}
+                <span className="relative z-10">
+                  {isHolding ? "Tahan..." : "Klik/Ketuk dan Tahan"}
+                </span>
+              </button>
+
+              <Button
+                variant="ghost"
+                onClick={() => {
+                  setIsSellModalOpen(false)
+                  setSellPrice("")
+                  setSellPriceError("")
+                  setIsHolding(false)
+                }}
+                className="w-full h-12 text-gray-300 hover:text-white hover:bg-white/10 font-subheading font-semibold"
+              >
+                Batal
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* --- END SELL TICKET MODAL --- */}
+
       {/* Custom animations */}
       <style jsx>{`
+        @keyframes fillProgress {
+          0% {
+            width: 0%;
+          }
+          100% {
+            width: 100%;
+          }
+        }
         @keyframes pulse-slow {
           0%,
           100% {
