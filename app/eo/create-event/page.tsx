@@ -373,7 +373,15 @@ export default function CreateEventPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-32 pb-12">
+    <div className="min-h-screen bg-background pt-32 pb-12 relative overflow-hidden">
+      {/* Dark Blue Ambient Background */}
+      <div className="fixed inset-0 overflow-hidden opacity-70 pointer-events-none">
+        <div className="absolute top-0 -left-1/3 w-2/3 h-full bg-gradient-radial from-blue-600/80 to-transparent animate-pulse-slow" />
+        <div className="absolute bottom-0 -right-1/3 w-2/3 h-full bg-gradient-radial from-indigo-600/60 to-transparent animate-pulse-slow animation-delay-2000" />
+        <div className="absolute top-1/4 -left-48 w-96 h-96 bg-blue-500/40 rounded-full blur-3xl animate-float-drift" />
+        <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-indigo-500/40 rounded-full blur-3xl animate-float-drift animation-delay-4000" />
+      </div>
+
       <div className="fixed top-4 right-4 z-50 space-y-3 max-w-md">
         {alerts.map(alert => {
           const IconComponent = getAlertIcon(alert.type)
@@ -414,9 +422,37 @@ export default function CreateEventPage() {
             opacity: 1;
           }
         }
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.25; }
+          33% { opacity: 0.35; }
+          66% { opacity: 0.45; }
+        }
+        @keyframes float-drift {
+          0%, 100% { transform: translate(0px, 0px); opacity: 0.2; }
+          25% { transform: translate(30px, -25px); opacity: 0.25; }
+          50% { transform: translate(-20px, -40px); opacity: 0.3; }
+          75% { transform: translate(-35px, -15px); opacity: 0.25; }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 12s ease-in-out infinite;
+          opacity: 0.25;
+        }
+        .animate-float-drift {
+          animation: float-drift 20s ease-in-out infinite;
+          opacity: 0.2;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+        .bg-gradient-radial {
+          background: radial-gradient(circle, var(--tw-gradient-stops));
+        }
       `}</style>
 
-      <div className="container mx-auto px-4 max-w-4xl">
+      <div className="container mx-auto px-4 max-w-4xl relative z-10">
         <Button
           variant="ghost"
           onClick={() => router.push('/eo/dashboard')}
@@ -432,7 +468,7 @@ export default function CreateEventPage() {
         </div>
 
         <form onSubmit={handleSubmit}>
-          <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md mb-6">
+          <Card className="border-white/10 bg-linear-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md mb-6">
             <CardContent className="p-6 space-y-6">
               <h2 className="text-xl font-subheading font-semibold text-white">Event Information</h2>
 
@@ -652,7 +688,7 @@ export default function CreateEventPage() {
             </CardContent>
           </Card>
 
-          <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md mb-6">
+          <Card className="border-white/10 bg-linear-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md mb-6">
             <CardContent className="p-6 space-y-6">
               <div className="flex items-center justify-between">
                 <div>
@@ -765,7 +801,7 @@ export default function CreateEventPage() {
             <Button
               type="submit"
               disabled={loading || uploadingPoster}
-              className="flex-1 bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 hover:from-blue-400 hover:to-blue-600 text-white font-subheading font-semibold"
+              className="flex-1 bg-linear-to-r from-blue-600 via-blue-500 to-indigo-500 hover:from-blue-500 hover:via-blue-400 hover:to-indigo-400 text-white font-subheading font-semibold shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-400/60 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
             >
               {loading ? (
                 <>

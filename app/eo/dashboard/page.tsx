@@ -136,8 +136,16 @@ export default function EODashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background pt-32 pb-12">
-      <div className="container mx-auto px-4 max-w-7xl">
+    <div className="min-h-screen bg-background pt-32 pb-12 relative overflow-hidden">
+      {/* Dark Blue Ambient Background */}
+      <div className="fixed inset-0 overflow-hidden opacity-70 pointer-events-none">
+        <div className="absolute top-0 -left-1/3 w-2/3 h-full bg-gradient-radial from-blue-600/80 to-transparent animate-pulse-slow" />
+        <div className="absolute bottom-0 -right-1/3 w-2/3 h-full bg-gradient-radial from-indigo-600/60 to-transparent animate-pulse-slow animation-delay-2000" />
+        <div className="absolute top-1/4 -left-48 w-96 h-96 bg-blue-500/40 rounded-full blur-3xl animate-float-drift" />
+        <div className="absolute bottom-1/4 -right-48 w-96 h-96 bg-indigo-500/40 rounded-full blur-3xl animate-float-drift animation-delay-4000" />
+      </div>
+
+      <div className="container mx-auto px-4 max-w-7xl relative z-10">
         <div className="mb-8 flex items-center justify-between">
           <div>
             <h1 className="text-4xl font-heading text-white mb-2">EO Dashboard</h1>
@@ -145,7 +153,7 @@ export default function EODashboardPage() {
           </div>
           <Button
             onClick={() => router.push('/eo/create-event')}
-            className="bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 hover:from-blue-400 hover:to-blue-600 text-white font-subheading font-semibold"
+            className="bg-linear-to-r from-blue-600 via-blue-500 to-indigo-500 hover:from-blue-500 hover:via-blue-400 hover:to-indigo-400 text-white font-subheading font-semibold shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-400/60 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
           >
             <Plus className="h-5 w-5 mr-2" />
             Create Event
@@ -206,7 +214,7 @@ export default function EODashboardPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-gray-400 font-body text-sm mb-1">Total Revenue</p>
-                  <p className="text-2xl font-heading text-white">{formatEther(stats?.totalRevenue || '0')} ETH</p>
+                  <p className="text-2xl font-heading text-white">Rp{(parseFloat(stats?.totalRevenue || '0')).toLocaleString('id-ID')}</p>
                 </div>
                 <div className="w-12 h-12 rounded-full bg-yellow-500/20 flex items-center justify-center">
                   <DollarSign className="h-6 w-6 text-yellow-400" />
@@ -221,13 +229,13 @@ export default function EODashboardPage() {
         </div>
 
         {events.length === 0 ? (
-          <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
+          <Card className="border-white/10 bg-linear-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
             <CardContent className="p-12 text-center">
               <Calendar className="h-16 w-16 text-gray-600 mx-auto mb-4" />
               <p className="text-gray-400 font-body mb-4">You haven't created any events yet</p>
               <Button
                 onClick={() => router.push('/eo/create-event')}
-                className="bg-gradient-to-b from-blue-500 via-blue-600 to-blue-700 hover:from-blue-400 hover:to-blue-600"
+                className="bg-linear-to-r from-blue-600 via-blue-500 to-indigo-500 hover:from-blue-500 hover:via-blue-400 hover:to-indigo-400 text-white shadow-lg shadow-blue-500/50 hover:shadow-xl hover:shadow-blue-400/60 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
               >
                 <Plus className="h-5 w-5 mr-2" />
                 Create Your First Event
@@ -237,7 +245,7 @@ export default function EODashboardPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {events.map((event) => (
-              <Card key={event.id} className="group overflow-hidden border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md hover:border-white/20 transition-all duration-300">
+              <Card key={event.id} className="group overflow-hidden border-white/10 bg-linear-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md hover:border-white/20 transition-all duration-300 hover:shadow-2xl hover:shadow-blue-500/10 hover:-translate-y-1">
                 <div className="relative h-40 w-full overflow-hidden">
                   <Image
                     src={event.posterUrl || "/placeholder.svg"}
@@ -245,7 +253,7 @@ export default function EODashboardPage() {
                     fill
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/60 via-black/20 to-transparent" />
                   
                   <div className="absolute top-3 right-3">
                     <Badge className={`font-subheading font-semibold text-xs px-3 py-1 ${getStatusColor(event.status)}`}>
@@ -298,6 +306,38 @@ export default function EODashboardPage() {
           </div>
         )}
       </div>
+
+      {/* Custom animations */}
+      <style jsx>{`
+        @keyframes pulse-slow {
+          0%, 100% { opacity: 0.25; }
+          33% { opacity: 0.35; }
+          66% { opacity: 0.45; }
+        }
+        @keyframes float-drift {
+          0%, 100% { transform: translate(0px, 0px); opacity: 0.2; }
+          25% { transform: translate(30px, -25px); opacity: 0.25; }
+          50% { transform: translate(-20px, -40px); opacity: 0.3; }
+          75% { transform: translate(-35px, -15px); opacity: 0.25; }
+        }
+        .animate-pulse-slow {
+          animation: pulse-slow 12s ease-in-out infinite;
+          opacity: 0.25;
+        }
+        .animate-float-drift {
+          animation: float-drift 20s ease-in-out infinite;
+          opacity: 0.2;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+        .bg-gradient-radial {
+          background: radial-gradient(circle, var(--tw-gradient-stops));
+        }
+      `}</style>
     </div>
   )
 }
