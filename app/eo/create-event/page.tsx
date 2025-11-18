@@ -145,16 +145,16 @@ export default function CreateEventPage() {
         return
       }
 
+      // Try to get wallet address, but don't require it for EO/Admin users
       const address = await blockchainService.getCurrentAccount()
-      if (!address) {
-        router.push('/login')
-        return
-      }
-
-      setWalletAddress(address)
+      
+      // Use wallet address if available, otherwise use user's wallet address from profile
+      const walletToUse = address || user.walletAddress || ''
+      
+      setWalletAddress(walletToUse)
       setFormData(prev => ({
         ...prev,
-        taxWalletAddress: address
+        taxWalletAddress: walletToUse
       }))
     } catch (err) {
       console.error('EO access error:', err)
