@@ -189,7 +189,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                   Kembali ke Acara
                 </Button>
               </Link>
-              <Link href="/profile" className="flex-1">
+              <Link href="/profile?tab=my-tickets" className="flex-1">
                 <Button className="w-full bg-gradient-to-b from-gray-300 via-gray-500 to-gray-700 hover:from-gray-200 hover:to-gray-600 text-white font-subheading font-semibold">
                   Lihat Tiketku
                 </Button>
@@ -466,27 +466,26 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                     </div>
 
                     <div className="mb-6">
-                      <div className="flex items-start gap-3 p-4 rounded-lg bg-white/5 border border-white/10">
+                      <label htmlFor="terms" className="flex items-start gap-3 p-4 rounded-lg bg-white/5 border border-white/10 cursor-pointer">
                         <Checkbox
                           id="terms"
                           checked={agreedToTerms}
-                          onCheckedChange={(checked) => setAgreedToTerms(checked as boolean)}
-                          className="mt-1"
+                          onCheckedChange={(checked) => setAgreedToTerms(!!checked)}
                         />
-                        <label htmlFor="terms" className="text-gray-300 font-body text-sm cursor-pointer">
+                        <span className="text-gray-300 font-body text-sm flex-1">
                           Saya menyetujui{" "}
-                          <a href="#" className="text-blue-400 hover:text-blue-300 underline">
+                          <a href="#" onClick={(e) => e.preventDefault()} className="text-blue-400 hover:text-blue-300 underline">
                             Syarat & Ketentuan
                           </a>{" "}
                           acara ini
-                        </label>
-                      </div>
+                        </span>
+                      </label>
                     </div>
 
                     <Button
                       onClick={handlePayNow}
                       disabled={!selectedWallet || !agreedToTerms || isProcessing}
-                      className="w-full h-12 bg-gradient-to-b from-gray-300 via-gray-500 to-gray-700 hover:from-gray-200 hover:to-gray-600 text-white font-subheading font-semibold text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="w-full h-12 bg-linear-to-b from-gray-300 via-gray-500 to-gray-700 hover:from-gray-200 hover:to-gray-600 text-white font-subheading font-semibold text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isProcessing ? (
                         <>
