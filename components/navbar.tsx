@@ -21,7 +21,7 @@ export function Navbar() {
 
   useEffect(() => {
     checkAuth()
-  }, [])
+  }, [pathname])
 
   const checkAuth = async () => {
     try {
@@ -38,7 +38,7 @@ export function Navbar() {
       setUserRole(user.role)
       setIsLoggedIn(true)
       setUsername(user.username || user.email?.split('@')[0] || 'User')
-      
+
       if (user.walletAddress) {
         setWalletAddress(user.walletAddress)
       }
@@ -61,20 +61,20 @@ export function Navbar() {
       }
 
       const address = await blockchainService.connectWallet()
-      
+
       const nonceResponse = await apiClient.getWalletNonce(address)
       const signature = await blockchainService.signMessage(nonceResponse.message)
-      
+
       const response = await apiClient.connectWallet(address, signature, nonceResponse.message)
-      
+
       console.log('Connect wallet response:', response)
-      
+
       setWalletAddress(address)
-      
+
       if (response.user.username) {
         setUsername(response.user.username)
       }
-      
+
       await checkAuth()
     } catch (error: any) {
       console.error("Error connecting wallet:", error)
@@ -139,11 +139,10 @@ export function Navbar() {
                 <Link href="/events">
                   <Button
                     variant="ghost"
-                    className={`font-body text-sm transition-colors md:text-base ${
-                      pathname === "/events" || pathname?.startsWith("/events/")
-                        ? "bg-white/20 text-white font-semibold"
-                        : "text-white/90 hover:bg-white/10 hover:text-white"
-                    }`}
+                    className={`font-body text-sm transition-colors md:text-base ${pathname === "/events" || pathname?.startsWith("/events/")
+                      ? "bg-white/20 text-white font-semibold"
+                      : "text-white/90 hover:bg-white/10 hover:text-white"
+                      }`}
                   >
                     Beranda Event
                   </Button>
@@ -152,11 +151,10 @@ export function Navbar() {
                 <Link href="/explore-tickets">
                   <Button
                     variant="ghost"
-                    className={`font-body text-sm transition-colors md:text-base ${
-                      pathname === "/explore-tickets"
-                        ? "bg-white/20 text-white font-semibold"
-                        : "text-white/90 hover:bg-white/10 hover:text-white"
-                    }`}
+                    className={`font-body text-sm transition-colors md:text-base ${pathname === "/explore-tickets"
+                      ? "bg-white/20 text-white font-semibold"
+                      : "text-white/90 hover:bg-white/10 hover:text-white"
+                      }`}
                   >
                     Jelajahi Tiket
                   </Button>
@@ -185,31 +183,29 @@ export function Navbar() {
                     </Button>
                   </Link>
                 )}
-                
+
                 {userRole === 'EO' && (
                   <Link href="/tickets/scan">
                     <Button
                       variant="ghost"
-                      className={`font-body text-sm transition-colors md:text-base ${
-                        pathname === "/tickets/scan"
-                          ? "bg-white/20 text-white font-semibold"
-                          : "text-white/90 hover:bg-white/10 hover:text-white"
-                      }`}
+                      className={`font-body text-sm transition-colors md:text-base ${pathname === "/tickets/scan"
+                        ? "bg-white/20 text-white font-semibold"
+                        : "text-white/90 hover:bg-white/10 hover:text-white"
+                        }`}
                     >
                       Scan Tiket
                     </Button>
                   </Link>
                 )}
-                
+
                 {userRole !== 'EO' && (
                   <Link href="/profile">
                     <Button
                       variant="ghost"
-                      className={`font-body text-sm transition-colors md:text-base ${
-                        pathname === "/profile" || pathname?.startsWith("/tickets/")
-                          ? "bg-white/20 text-white font-semibold hover:bg-white hover:text-black"
-                          : "text-white/90 hover:bg-white/10 hover:text-white"
-                      }`}
+                      className={`font-body text-sm transition-colors md:text-base ${pathname === "/profile" || pathname?.startsWith("/tickets/")
+                        ? "bg-white/20 text-white font-semibold hover:bg-white hover:text-black"
+                        : "text-white/90 hover:bg-white/10 hover:text-white"
+                        }`}
                     >
                       Profil
                     </Button>
@@ -222,14 +218,23 @@ export function Navbar() {
               <>
                 <div className="h-6 w-px bg-white/20" />
                 <div className="flex items-center gap-2">
-                  {/* Username Display */}
+                  {/* Username Display
                   <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
                     <User className="h-4 w-4 text-white/70" />
                     <span className="text-sm text-white font-subheading font-semibold">
                       {username}
                     </span>
-                  </div>
-                  
+                  </div> */}
+
+                  {walletAddress && (
+                    <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10">
+                      <Wallet className="h-4 w-4 text-white/70" />
+                      <span className="text-sm text-white font-mono">
+                        {formatAddress(walletAddress)}
+                      </span>
+                    </div>
+                  )}
+
                   <Button
                     variant="ghost"
                     size="icon-sm"
@@ -270,11 +275,10 @@ export function Navbar() {
                 <Link href="/events" onClick={() => setIsMenuOpen(false)}>
                   <Button
                     variant="ghost"
-                    className={`w-full justify-start font-body text-sm transition-colors ${
-                      pathname === "/events" || pathname?.startsWith("/events/")
-                        ? "bg-white/20 text-white font-semibold"
-                        : "text-white/90 hover:bg-white/10 hover:text-white"
-                    }`}
+                    className={`w-full justify-start font-body text-sm transition-colors ${pathname === "/events" || pathname?.startsWith("/events/")
+                      ? "bg-white/20 text-white font-semibold"
+                      : "text-white/90 hover:bg-white/10 hover:text-white"
+                      }`}
                   >
                     Beranda Event
                   </Button>
@@ -283,11 +287,10 @@ export function Navbar() {
                 <Link href="/explore-tickets" onClick={() => setIsMenuOpen(false)}>
                   <Button
                     variant="ghost"
-                    className={`w-full justify-start font-body text-sm transition-colors ${
-                      pathname === "/explore-tickets"
-                        ? "bg-white/20 text-white font-semibold"
-                        : "text-white/90 hover:bg-white/10 hover:text-white"
-                    }`}
+                    className={`w-full justify-start font-body text-sm transition-colors ${pathname === "/explore-tickets"
+                      ? "bg-white/20 text-white font-semibold"
+                      : "text-white/90 hover:bg-white/10 hover:text-white"
+                      }`}
                   >
                     Jelajahi Tiket
                   </Button>
@@ -316,31 +319,29 @@ export function Navbar() {
                     </Button>
                   </Link>
                 )}
-                
+
                 {userRole === 'EO' && (
                   <Link href="/tickets/scan" onClick={() => setIsMenuOpen(false)}>
                     <Button
                       variant="ghost"
-                      className={`w-full justify-start font-body text-sm transition-colors ${
-                        pathname === "/tickets/scan"
-                          ? "bg-white/20 text-white font-semibold"
-                          : "text-white/90 hover:bg-white/10 hover:text-white"
-                      }`}
+                      className={`w-full justify-start font-body text-sm transition-colors ${pathname === "/tickets/scan"
+                        ? "bg-white/20 text-white font-semibold"
+                        : "text-white/90 hover:bg-white/10 hover:text-white"
+                        }`}
                     >
                       Scan Tiket
                     </Button>
                   </Link>
                 )}
-                
+
                 {userRole !== 'EO' && (
                   <Link href="/profile" onClick={() => setIsMenuOpen(false)}>
                     <Button
                       variant="ghost"
-                      className={`w-full justify-start font-body text-sm transition-colors ${
-                        pathname === "/profile" || pathname?.startsWith("/tickets/")
-                          ? "bg-white/20 text-white font-semibold hover:bg-white hover:text-black"
-                          : "text-white/90 hover:bg-white/10 hover:text-white"
-                      }`}
+                      className={`w-full justify-start font-body text-sm transition-colors ${pathname === "/profile" || pathname?.startsWith("/tickets/")
+                        ? "bg-white/20 text-white font-semibold hover:bg-white hover:text-black"
+                        : "text-white/90 hover:bg-white/10 hover:text-white"
+                        }`}
                     >
                       Profil
                     </Button>
@@ -348,7 +349,7 @@ export function Navbar() {
                 )}
               </>
             )}
-            
+
             {isLoggedIn ? (
               <>
                 <div className="border-t border-white/10 my-2" />
@@ -356,7 +357,7 @@ export function Navbar() {
                   <p className="text-xs text-white/50 mb-2">Account</p>
                   <p className="text-sm text-white font-subheading font-semibold mb-1">{username}</p>
                 </div>
-                
+
                 <Button
                   variant="ghost"
                   onClick={() => {
