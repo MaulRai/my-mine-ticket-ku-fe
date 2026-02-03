@@ -190,7 +190,7 @@ class ApiClient {
   ): Promise<T> {
     try {
       const url = `${this.baseUrl}${endpoint}`;
-      
+
       const headers: Record<string, string> = {
         'Content-Type': 'application/json',
         ...(this.token ? { 'Authorization': `Bearer ${this.token}` } : {}),
@@ -238,9 +238,9 @@ class ApiClient {
   }
 
   async register(
-    username: string, 
-    email: string, 
-    password: string, 
+    username: string,
+    email: string,
+    password: string,
     role: string = 'USER'
   ): Promise<AuthResponse> {
     return this.request<AuthResponse>('/auth/register', {
@@ -254,11 +254,11 @@ class ApiClient {
       method: 'POST',
       body: JSON.stringify({ email, password }),
     });
-    
+
     if (response.token) {
       this.setToken(response.token);
     }
-    
+
     return response;
   }
 
@@ -282,7 +282,7 @@ class ApiClient {
   async logout(): Promise<void> {
     try {
       const token = this.getToken()
-      if (!token?.startsWith('dummy-token-for-testing-')) {
+      if (!token?.startsWith('dummy-token-for-testing-') && !token?.startsWith('metamask-auth-token-')) {
         await this.request('/auth/logout', {
           method: 'POST',
         });
@@ -295,7 +295,7 @@ class ApiClient {
 
   async verifyToken(): Promise<{ user: User }> {
     const token = this.getToken()
-    if (token?.startsWith('dummy-token-for-testing-')) {
+    if (token?.startsWith('dummy-token-for-testing-') || token?.startsWith('metamask-auth-token-')) {
       const dummyUser = localStorage.getItem('dummy_user')
       if (dummyUser) {
         return { user: JSON.parse(dummyUser) }

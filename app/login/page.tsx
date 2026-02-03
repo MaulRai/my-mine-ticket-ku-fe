@@ -5,95 +5,46 @@ import Link from "next/link"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Checkbox } from "@/components/ui/checkbox"
 import { apiClient } from "@/lib/api"
-import { Loader2 } from "lucide-react"
+import { blockchainService } from "@/lib/blockchain"
+import { Loader2, Wallet, ArrowRight } from "lucide-react"
 
 export default function LoginPage() {
   const router = useRouter()
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [rememberMe, setRememberMe] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isConnecting, setIsConnecting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const handleDummyLogin = (role: 'USER' | 'EO' = 'USER') => {
-    if (role === 'EO') {
-      setEmail("dummy@eo.com")
-      setPassword("dummyeo123")
-    } else {
-      setEmail("dummy@user.com")
-      setPassword("dummy123")
-    }
-  }
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
+  const handleConnectWallet = async () => {
+    setIsConnecting(true)
     setError(null)
 
     try {
-      // Check for dummy USER login
-      if (email === 'dummy@user.com' && password === 'dummy123') {
-        const dummyToken = 'dummy-token-for-testing-' + Date.now()
-        const dummyUser = {
-          id: 'dummy-user-id',
-          email: 'dummy@user.com',
-          username: 'Dummy User',
-          role: 'USER' as const,
-          walletAddress: undefined,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        }
-        
-        apiClient.setToken(dummyToken)
-        localStorage.setItem('dummy_user', JSON.stringify(dummyUser))
-        
-        router.push('/profile')
-        return
+      // Connect to MetaMask
+      const address = await blockchainService.connectWallet()
+
+      const mockToken = "metamask-auth-token-" + Date.now()
+
+      const mockUser = {
+        id: "wallet-user-" + address.substring(2, 8),
+        email: `${address.substring(0, 6)}...@wallet.com`,
+        username: `Wallet ${address.substring(0, 6)}...`,
+        role: "USER" as const,
+        walletAddress: address,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString()
       }
 
-      // Check for dummy EO login
-      if (email === 'dummy@eo.com' && password === 'dummyeo123') {
-        const dummyToken = 'dummy-token-for-testing-' + Date.now()
-        const dummyEO = {
-          id: 'dummy-eo-id',
-          email: 'dummy@eo.com',
-          username: 'Dummy Event Organizer',
-          role: 'EO' as const,
-          walletAddress: undefined,
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        }
-        
-        apiClient.setToken(dummyToken)
-        localStorage.setItem('dummy_user', JSON.stringify(dummyEO))
-        
-        router.push('/eo/dashboard')
-        return
-      }
+      // Store session
+      apiClient.setToken(mockToken)
+      localStorage.setItem("dummy_user", JSON.stringify(mockUser))
 
-      const response = await apiClient.login(email, password)
-      
-      if (response.token) {
-        apiClient.setToken(response.token)
-        
-        if (response.user.role === 'ADMIN') {
-          router.push('/admin/dashboard')
-        } else if (response.user.role === 'EO') {
-          router.push('/eo/dashboard')
-        } else {
-          router.push('/events')
-        }
-      }
-    } catch (error) {
-      const err = error as Error
-      console.error('Login error:', err)
-      setError(err.message || 'Login failed. Please try again.')
-    } finally {
-      setIsLoading(false)
+      // Redirect to profile
+      router.push("/profile")
+
+    } catch (err) {
+      console.error("Wallet connection error:", err)
+      setError("Failed to connect wallet. Please try again.")
+      setIsConnecting(false)
     }
   }
 
@@ -107,10 +58,10 @@ export default function LoginPage() {
 
       {/* Bottom right overlay */}
       <div className="absolute bottom-0 right-0 w-3/4 h-3/4 pointer-events-none">
-        <Image 
-          src="/images/overlay-5.png" 
-          alt="" 
-          fill 
+        <Image
+          src="/images/overlay-5.png"
+          alt=""
+          fill
           className="object-contain object-bottom-right opacity-60"
         />
       </div>
@@ -120,11 +71,14 @@ export default function LoginPage() {
           <div className="mb-8 flex justify-center">
             <Image src="/images/app-logo.png" alt="App Logo" width={400} height={80} className="h-auto w-100" />
           </div>
-          
-          <div className="glass-fx p-8">
-            <div className="mb-8 text-center">
-              <h1 className="font-heading mb-2 text-2xl text-white">Selamat Datang Kembali!</h1>
-              <p className="font-body text-white/60">Masuk untuk mengakses tiket Anda</p>
+
+          <div className="glass-fx p-8 text-center">
+            <div className="mb-8">
+              <div className="mx-auto w-20 h-20 bg-gradient-to-br from-orange-400/20 to-orange-600/20 rounded-full flex items-center justify-center mb-6 border border-orange-500/30">
+                <Image src="https://upload.wikimedia.org/wikipedia/commons/3/36/MetaMask_Fox.svg" alt="MetaMask" width={48} height={48} />
+              </div>
+              <h1 className="font-heading mb-2 text-2xl text-white">Connect Wallet</h1>
+              <p className="font-body text-white/60">Connect your MetaMask wallet to access your tickets and profile.</p>
             </div>
 
             {error && (
@@ -133,109 +87,44 @@ export default function LoginPage() {
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="email" className="font-body text-sm font-medium text-white/90">
-                  Alamat Email
-                </Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="awak@misalan.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                  disabled={isLoading}
-                  className="font-body border-white/20 bg-white/5 text-white placeholder:text-white/40 focus:border-purple-500/50 focus:ring-purple-500/20"
-                />
-              </div>
-
-              <div className="space-y-2">
-                <Label htmlFor="password" className="font-body text-sm font-medium text-white/90">
-                  Kata Sandi
-                </Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="••••••••"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                  disabled={isLoading}
-                  className="font-body border-white/20 bg-white/5 text-white placeholder:text-white/40 focus:border-purple-500/50 focus:ring-purple-500/20"
-                />
-              </div>
-
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Checkbox
-                    id="remember"
-                    checked={rememberMe}
-                    onCheckedChange={(checked) => setRememberMe(checked as boolean)}
-                    disabled={isLoading}
-                    className="border-white/20 data-[state=checked]:bg-purple-500 data-[state=checked]:border-purple-500"
-                  />
-                  <Label htmlFor="remember" className="font-body text-sm text-white/70 cursor-pointer">
-                    Ingat saya
-                  </Label>
-                </div>
-                <Link href="#" className="font-body text-sm text-purple-400 hover:text-purple-300 transition-colors">
-                  Lupa kata sandi?
-                </Link>
-              </div>
-
+            <div className="space-y-4">
               <Button
-                type="submit"
-                disabled={isLoading}
-                className="font-body w-full bg-gradient-to-r from-purple-600 to-blue-600 text-white hover:from-purple-700 hover:to-blue-700 transition-all duration-300 shadow-lg shadow-purple-500/20"
+                onClick={handleConnectWallet}
+                disabled={isConnecting}
+                className="font-body w-full h-14 bg-gradient-to-r from-orange-500 to-amber-600 text-white hover:from-orange-600 hover:to-amber-700 transition-all duration-300 shadow-lg shadow-orange-500/20 text-lg"
               >
-                {isLoading ? (
+                {isConnecting ? (
                   <>
-                    <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                    Masuk...
+                    <Loader2 className="h-5 w-5 mr-3 animate-spin" />
+                    Connecting...
                   </>
                 ) : (
-                  'Masuk'
+                  <>
+                    <Wallet className="h-5 w-5 mr-3" />
+                    Connect MetaMask
+                  </>
                 )}
               </Button>
 
-              <div className="flex gap-2">
+              <Link href="https://metamask.io/" target="_blank" className="block">
                 <Button
-                  type="button"
-                  onClick={() => handleDummyLogin('USER')}
-                  disabled={isLoading}
-                  variant="outline"
-                  className="font-body flex-1 border-purple-500/30 bg-purple-500/10 text-purple-300 hover:bg-purple-500/20 hover:text-purple-200 hover:border-purple-500/50 transition-all duration-300"
+                  variant="ghost"
+                  className="w-full text-white/40 hover:text-white hover:bg-white/5 font-body text-sm"
                 >
-                  Dummy User
+                  Don't have a wallet? Get MetaMask <ArrowRight className="ml-1 h-3 w-3" />
                 </Button>
-                <Button
-                  type="button"
-                  onClick={() => handleDummyLogin('EO')}
-                  disabled={isLoading}
-                  variant="outline"
-                  className="font-body flex-1 border-blue-500/30 bg-blue-500/10 text-blue-300 hover:bg-blue-500/20 hover:text-blue-200 hover:border-blue-500/50 transition-all duration-300"
-                >
-                  Dummy EO
-                </Button>
-              </div>
-            </form>
-
-            <p className="font-body mt-6 text-center text-sm text-white/60">
-              Belum punya akun?{" "}
-              <Link href="/register" className="text-purple-400 hover:text-purple-300 transition-colors">
-                Daftar
               </Link>
-            </p>
+            </div>
           </div>
 
-          <div className="mt-4">
+          <div className="mt-8 text-center">
             <Link href="/">
               <Button
                 variant="outline"
-                className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-purple-500 font-body text-sm"
+                className="border-white/20 bg-white/5 hover:bg-white/10 text-white hover:text-orange-400 font-body text-sm transition-colors"
+                disabled={isConnecting}
               >
-                ← Kembali ke Landing Page
+                ← Back to Home
               </Button>
             </Link>
           </div>

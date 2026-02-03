@@ -118,7 +118,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
   }
 
   const handlePayNow = async () => {
-    if (!selectedWallet || !agreedToTerms || totalTickets === 0) return
+    if (!agreedToTerms || totalTickets === 0) return
 
     setIsProcessing(true)
 
@@ -243,11 +243,10 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                 <div className="space-y-4">
                   {/* Regular Ticket */}
                   <div
-                    className={`p-4 rounded-lg border-2 transition-all ${
-                      isRegularSoldOut
-                        ? "border-white/5 bg-white/5 opacity-50"
-                        : "border-white/10 hover:border-white/20"
-                    }`}
+                    className={`p-4 rounded-lg border-2 transition-all ${isRegularSoldOut
+                      ? "border-white/5 bg-white/5 opacity-50"
+                      : "border-white/10 hover:border-white/20"
+                      }`}
                   >
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex-1">
@@ -292,9 +291,8 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
 
                   {/* VIP Ticket */}
                   <div
-                    className={`p-4 rounded-lg border-2 transition-all ${
-                      isVipSoldOut ? "border-white/5 bg-white/5 opacity-50" : "border-white/10 hover:border-white/20"
-                    }`}
+                    className={`p-4 rounded-lg border-2 transition-all ${isVipSoldOut ? "border-white/5 bg-white/5 opacity-50" : "border-white/10 hover:border-white/20"
+                      }`}
                   >
                     <div className="flex items-center justify-between mb-3">
                       <div className="flex-1">
@@ -347,59 +345,9 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
                   </div>
                 )}
               </CardContent>
-            </Card>            
-
-            {/* Wallet Selection */}
-            <Card className="border-white/10 bg-gradient-to-br from-gray-900/80 to-gray-950/80 backdrop-blur-md">
-              <CardContent className="p-6">
-                <h2 className="text-2xl font-heading text-white mb-4">Metode Pembayaran</h2>
-                <p className="text-gray-400 font-body text-sm mb-6">Pilih dompet Anda untuk menyelesaikan transaksi</p>
-
-                <div className="space-y-3 mb-4">
-                  {walletOptions.map((wallet) => (
-                    <div
-                      key={wallet.id}
-                      onClick={() => setSelectedWallet(wallet.id)}
-                      className={`p-4 rounded-lg border-2 cursor-pointer transition-all ${
-                        selectedWallet === wallet.id
-                          ? "border-white/40 bg-white/10"
-                          : "border-white/10 hover:border-white/20"
-                      }`}
-                    >
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center gap-3">
-                          <span className="text-3xl">{wallet.icon}</span>
-                          <span className="font-subheading font-semibold text-white">{wallet.name}</span>
-                        </div>
-                        <div
-                          className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                            selectedWallet === wallet.id ? "border-white bg-white" : "border-white/40"
-                          }`}
-                        >
-                          {selectedWallet === wallet.id && <div className="w-2.5 h-2.5 rounded-full bg-black" />}
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {selectedWallet && (
-                  <div>
-                    <Label htmlFor="walletAddress" className="text-white font-subheading mb-2 block">
-                      Alamat Dompet
-                    </Label>
-                    <Input
-                      id="walletAddress"
-                      type="text"
-                      placeholder="0x..."
-                      value={walletAddress}
-                      onChange={(e) => setWalletAddress(e.target.value)}
-                      className="bg-white/5 border-white/20 text-white placeholder:text-gray-500 focus:border-white/40 font-mono"
-                    />
-                  </div>
-                )}
-              </CardContent>
             </Card>
+
+
           </div>
 
           {/* Right Column - Order Summary */}
@@ -484,7 +432,7 @@ export default function CheckoutPage({ params }: { params: Promise<{ id: string 
 
                     <Button
                       onClick={handlePayNow}
-                      disabled={!selectedWallet || !agreedToTerms || isProcessing}
+                      disabled={!agreedToTerms || isProcessing}
                       className="w-full h-12 bg-linear-to-b from-gray-300 via-gray-500 to-gray-700 hover:from-gray-200 hover:to-gray-600 text-white font-subheading font-semibold text-base transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       {isProcessing ? (
